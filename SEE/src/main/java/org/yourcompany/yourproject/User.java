@@ -1,3 +1,5 @@
+package org.yourcompany.yourproject;
+
 public class User {
     private String name;
     private int age;
