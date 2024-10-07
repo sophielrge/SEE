@@ -1,5 +1,7 @@
 package org.yourcompany.yourproject;
 import java.time.LocalDate;
+import java.util.Date;
+
 import org.yourcompany.yourproject.SEE.Stat;
 
 public class Request {
@@ -8,14 +10,16 @@ public class Request {
     private Volunteer volunteer;
     private LocalDate date;
     private String subject;
-    private Stat status;
+    private Character status;
+    private Date helpD;
 
     //Constructeur
-    Request(String subject){
+    Request(String subject, Date helpD){
         this.date = LocalDate.now();
         this.subject = subject;
-        this.status = Stat.PENDING; 
+        this.status = 'P';   // Pending, Approved, Rejected, Completed
         this.volunteer=null;
+        this.helpD=helpD;
     }
 
     //SetGet
@@ -35,11 +39,11 @@ public class Request {
         return this.volunteer;
     }
 
-    public void setStatus(Stat s){
+    public void setStatus(Character s){
         this.status=s;
     }
 
-    public Stat getStatus(){
+    public Character getStatus(){
         return this.status;
     }
 
