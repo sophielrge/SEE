@@ -1,0 +1,6 @@
+CREATE TABLE User (
+    id INT PRIMARY KEY,
+    nom VARCHAR(100),
+    email VARCHAR(100),
+    date_creation TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
