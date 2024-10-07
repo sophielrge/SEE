@@ -2,14 +2,14 @@ CREATE TABLE TApplicant (
     id INT PRIMARY KEY,
     nom VARCHAR(100),
     age INT,
-    dpt INT,
+    dpt INT
 );
 
 CREATE TABLE TVolunteer(
     id INT PRIMARY KEY,
     nom VARCHAR(100),
     age INT,
-    dpt INT,
+    dpt INT
 
 );
 
