@@ -23,8 +23,9 @@ public class Main {
         base.connect();
 
         //base.insertApplicant("Elise", 21, 31);
-        base.insertApplicant("Adèle", 21, 12);
+        //base.insertApplicant("Adèle", 21, 12);
         //base.insertVolunteer("Anna", 21, 31);
+        Menu menu = new Menu(base);
 
     }
 }
