@@ -1,3 +1,5 @@
+USE projet_gei_007;
+
 CREATE TABLE TApplicant (
     id INT PRIMARY KEY,
     nom VARCHAR(100),
@@ -13,16 +15,14 @@ CREATE TABLE TVolunteer(
 
 );
 
-CREATE TYPE statut AS ENUM ('pending', 'approved', 'rejected','completed');
-
 CREATE TABLE TRequest (
     id INT PRIMARY KEY,
     subj VARCHAR(100),
-    id_volunteer INT, --doit lier un Volunteer
-    id_applicant INT, --doit lier un Applicant
-    statut statut, --doit lier un type statut
+    id_volunteer INT,
+    id_applicant INT,
+    statut VARCHAR(1), 
     helpday DATE,
     date_creation TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-    CONSTRAINT fk_volunteer FOREIGN KEY (id_volunteer) REFERENCES TVolunteer(id),
-    CONSTRAINT fk_applicant FOREIGN KEY (id_applicant) REFERENCES TApplicant(id)
+    FOREIGN KEY (id_volunteer) REFERENCES TVolunteer(id),
+    FOREIGN KEY (id_applicant) REFERENCES TApplicant(id)
 );
