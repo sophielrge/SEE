@@ -22,7 +22,7 @@ CREATE TABLE TRequest (
     id_applicant INT,
     statut VARCHAR(1), 
     helpday DATE,
-    date_creation TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    date_creation TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (id_volunteer) REFERENCES TVolunteer(id),
     FOREIGN KEY (id_applicant) REFERENCES TApplicant(id)
 );
