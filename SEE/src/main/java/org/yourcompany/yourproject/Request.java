@@ -2,7 +2,6 @@ package org.yourcompany.yourproject;
 import java.time.LocalDate;
 import java.util.Date;
 
-import org.yourcompany.yourproject.SEE.Stat;
 
 public class Request {
     //attributs
@@ -14,7 +13,7 @@ public class Request {
     private Date helpD;
 
     //Constructeur
-    Request(String subject, Date helpD){
+    public Request(String subject, Date helpD){
         this.date = LocalDate.now();
         this.subject = subject;
         this.status = 'P';   // Pending, Approved, Rejected, Completed

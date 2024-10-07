@@ -14,24 +14,29 @@ public class BDD {
     private Connection conn = null;
     private PreparedStatement pstmt = null;
 
+    int valid, appl, vol, req =0;
+
     public BDD(String url, String user, String password){
         this.url = url;
         this.user = user;
         this.password = password;
     }
 
+
+
     public void connect() throws SQLException{
         this.conn = DriverManager.getConnection(this.url, this.user, this.password);
     }
 
     //A FINIR
-    public void insertRequest(String subj, int vol, int app, Date date) throws SQLException{
-        String sql = "INSERT INTO TRequest(subj, id_volunteer, id_applicant, helpday) VALUES (?,?,?,?)";
+    public void insertRequest(String subj, int app, Date date) throws SQLException{
+        String sql = "INSERT INTO TRequest(id, subj, id_applicant, helpday) VALUES (?,?,?,?)";
         this.pstmt = conn.prepareStatement(sql);
 
         // Paramètres à insérer
-        pstmt.setString(1, subj);  
-        pstmt.setInt(2, vol);
+        pstmt.setInt(1, this.req);
+        this.req ++;
+        pstmt.setString(2, subj);  
         pstmt.setInt(3, app);
         pstmt.setDate(4, date);
 
@@ -40,13 +45,15 @@ public class BDD {
     }
 
     public void insertVolunteer(String nom, int age, int dpt) throws SQLException{
-        String sql = "INSERT INTO TVolunteer (nom, age, dpt) VALUES (?,?,?)";
+        String sql = "INSERT INTO TVolunteer (id, nom, age, dpt) VALUES (?,?,?,?)";
         this.pstmt = conn.prepareStatement(sql);
 
         // Paramètres à insérer
-        pstmt.setString(1, nom);  
-        pstmt.setInt(2, age);
-        pstmt.setInt(3, dpt);
+        pstmt.setInt(1, this.vol);
+        this.vol ++;
+        pstmt.setString(2, nom);  
+        pstmt.setInt(3, age);
+        pstmt.setInt(4, dpt);
 
 
         int rowsAffected = pstmt.executeUpdate();
@@ -54,13 +61,15 @@ public class BDD {
     }
 
     public void insertApplicant(String nom, int age, int dpt) throws SQLException{
-        String sql = "INSERT INTO TVolunteer (nom, age, dpt) VALUES (?,?, ?)";
+        String sql = "INSERT INTO TApplicant (id, nom, age, dpt) VALUES (?,?,?,?)";
         this.pstmt = conn.prepareStatement(sql);
 
         // Paramètres à insérer
-        pstmt.setString(1, nom);  
-        pstmt.setInt(2, age);
-        pstmt.setInt(3, dpt);
+        pstmt.setInt(1, this.appl);
+        this.appl++;
+        pstmt.setString(2, nom);  
+        pstmt.setInt(3, age);
+        pstmt.setInt(4, dpt);
 
         int rowsAffected = pstmt.executeUpdate();
         System.out.println(rowsAffected + " ligne(s) insérée(s)");

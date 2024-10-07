@@ -1,5 +1,6 @@
 package org.yourcompany.yourproject;
 
+import java.sql.Date;
 import java.util.Scanner;
 
 public class Applicant extends User{
@@ -9,11 +10,11 @@ public class Applicant extends User{
     }
 
     //methodes
-    public Request makeRequest(){
+    public Request makeRequest(Date date){
         System.out.println("sujet de la requete ?");
         Scanner scanner = new Scanner(System.in);
         String sub = scanner.nextLine();
-        Request r = new Request(sub);
+        Request r = new Request(sub,date);
         r.setApp(this);
         scanner.close();
         return r;
