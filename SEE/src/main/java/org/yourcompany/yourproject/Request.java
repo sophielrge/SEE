@@ -11,6 +11,7 @@ public class Request {
     private String subject;
     private Character status;
     private Date helpD;
+    private String motif;
 
     //Constructeur
     public Request(String subject, Date helpD){
@@ -52,6 +53,22 @@ public class Request {
 
     public String getSubject(){
         return this.subject;
+    }
+
+    public Date getHelpD() {
+        return helpD;
+    }
+
+    public void setHelpD(Date helpD) {
+        this.helpD = helpD;
+    }
+
+    public String getMotif() {
+        return motif;
+    }
+
+    public void setMotif(String motif) {
+        this.motif = motif;
     }
 
     //methodes

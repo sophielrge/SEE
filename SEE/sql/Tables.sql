@@ -23,6 +23,14 @@ CREATE TABLE TRequest (
     statut VARCHAR(1) DEFAULT 'P', 
     helpday DATE NOT NULL,
     date_creation TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    motif VARCHAR(100),
     FOREIGN KEY (id_volunteer) REFERENCES TVolunteer(id),
     FOREIGN KEY (id_applicant) REFERENCES TApplicant(id)
+);
+
+CREATE TABLE TValidator (
+    id INT PRIMARY KEY NOT NULL,
+    nom VARCHAR(100) NOT NULL,
+    age INT CHECK (age>17),
+    dpt INT NOT NULL
 );
