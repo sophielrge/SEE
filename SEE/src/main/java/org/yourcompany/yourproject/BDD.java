@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class BDD {
@@ -93,5 +94,40 @@ public class BDD {
 
         int rowsAffected = pstmt.executeUpdate();
         System.out.println(rowsAffected + " ligne(s) supprimée(s)");
+    }
+
+    public void printRequest() throws SQLException{
+        String sql = "SELECT * FROM TRequest";
+        this.pstmt = conn.prepareStatement(sql);
+        
+        ResultSet rs = pstmt.executeQuery();
+        
+        while (rs.next()) {
+            System.out.println("-----------------------------------------");
+            int id = rs.getInt("id");
+            Date date = rs.getDate("date_creation");
+            String subject= rs.getString("subj");
+            String status = rs.getString("status");
+            Date helpD = rs.getDate("helpday");
+            String motif = rs.getString("motif");
+
+            switch(status){
+                case "P" -> status = "Pending";
+                case "A" -> status = "Approved";
+                case "R" -> status = "Rejected";
+                case "C" -> status = "Completed";
+            }
+            
+            
+            System.out.println("Request n°" + id);
+            System.out.println("Subject: " + subject);
+            System.out.println("Date: " + date);
+            System.out.println("Status: " + status);
+            if("Rejected".equals(status)){
+                System.out.println("Reason: " + motif);
+            }
+        }
+
+        System.out.println("-----------------------------------------");
     }
 }
