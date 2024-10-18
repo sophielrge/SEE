@@ -32,5 +32,6 @@ CREATE TABLE TValidator (
     id INT PRIMARY KEY NOT NULL,
     nom VARCHAR(100) NOT NULL,
     age INT CHECK (age>17),
-    dpt INT NOT NULL
+    dpt INT NOT NULL,
+    orga VARCHAR(100) NOT NULL
 );
