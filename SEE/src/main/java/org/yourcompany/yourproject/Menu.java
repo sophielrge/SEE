@@ -138,8 +138,36 @@ public class Menu {
                     int i7 = scanner.nextInt();
                     switch (i7) {
                         case 1:
+                        System.out.println("-----------------------------------------");
+                        System.out.println("|Voici les requêtes en attente          |");
+                        base.printRequestPending();
+                        System.out.println("-----------------------------------------");
+                        System.out.println("|Pour changer le statut d'une requête   |");
+                        System.out.println("|entrez son n°                          |");
+                        int i8 = scanner.nextInt();
+                        Request rchange = base.getRequest(i8);
+                        System.out.println("-----------------------------------------");
+                        System.out.println("|1 - Approuver le bénévole              |");
+                        System.out.println("|2 - Refuser le bénévole                |");
+                        int i9 = scanner.nextInt();
+                        switch (i9){
+                            case 1: 
+                            validator.validerR(rchange);
+                            break;
+
+                            case 2:
+                            System.out.println("|Veuillez entrer un motif               |");
+                            System.out.println("-----------------------------------------");
+                            String motif = scanner.nextLine();
+                            validator.refuserR(rchange, motif);
+                            break;
+                        }
                         break;
                         case 2:
+                        System.out.println("-----------------------------------------");
+                        System.out.println("|Voici vos reqêtes                  :   |");
+                        base.printRequestValidator(validator);
+                        System.out.println("-----------------------------------------");
                         break;
                     }
 

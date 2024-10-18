@@ -9,11 +9,9 @@ public class Volunteer extends User{
     //méthodes
     public void choseRequest(Request r){
         r.setVolunteer(this);
-        //A set dans sql aussi
     }
 
     public void completeRequest(Request r){
         r.setStatus('C');
-        //A set dans sql aussi
     }
 }
