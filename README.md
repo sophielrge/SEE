@@ -14,3 +14,6 @@ Faire ajout et supp du validator
 ## Pour tous
 tjr le pb du int qui se remet à 0 pour les id dans les tables 
 pb avec target 
+
+## Problème GIT 
+git config pull.rebase false  
