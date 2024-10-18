@@ -433,10 +433,8 @@ public class BDD {
 
 
     public void printRequestOrderByApplicant() throws SQLException{
-        String sql = "SELECT TRequest.*, TAppliacnt FROM TRequest" + "JOIN TApplicant.id = TRequest.id_applicant" + "ORDER BY TApplicant.nom ASC";
+        String sql = "SELECT TRequest.*, TApplicant FROM TRequest" + "JOIN TApplicant.id = TRequest.id_applicant" + "ORDER BY TApplicant.nom ASC";
         this.pstmt = conn.prepareStatement(sql);
-
-        pstmt.setString(1, app.getNom());
         
         ResultSet rs = pstmt.executeQuery();
         
