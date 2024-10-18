@@ -177,6 +177,24 @@ public class BDD {
         return res;
     }
 
+    public int getID_Request(Request req) throws SQLException{
+        int res = -1;
+        String sql = "SELECT id FROM TRequest WHERE subj = ? AND date_creation = ? AND helpday = ?";
+        this.pstmt = conn.prepareStatement(sql);
+
+        pstmt.setString(1, req.getMotif());
+        pstmt.setDate(2,(Date) req.getDate());
+        pstmt.setDate(3, (Date) req.getHelpD());
+
+        ResultSet rs = pstmt.executeQuery();
+
+        if(rs.next()){
+            res = rs.getInt("id");
+        }
+        return res;
+    }
+
+
     //Ajout et Suppression dans les tables
     public void insertRequest(String subj, int app, Date date) throws SQLException{
         String sql = "INSERT INTO TRequest(id, subj, id_applicant, helpday) VALUES (?,?,?,?)";
@@ -611,12 +629,13 @@ public class BDD {
     }
 
     //Changement 
-
     private boolean isValidStatus(String status) {
         return status.equals("P") || status.equals("A") || status.equals("R") || status.equals("C");
     }
 
-    public void updateRequestStatus(int requestId, String newStatus) throws SQLException {
+    public void updateRequestStatus(Request req, String newStatus) throws SQLException {
+
+        int requestId = getID_Request(req);
 
         if (!isValidStatus(newStatus)) {
             throw new IllegalArgumentException("Statut invalide : " + newStatus);
@@ -626,19 +645,75 @@ public class BDD {
     
         this.pstmt = conn.prepareStatement(sql);
         
-        // Associer les valeurs à la requête préparée
         pstmt.setString(1, newStatus);
         pstmt.setInt(2, requestId);
         
-        // Exécuter la mise à jour
         int rowsAffected = pstmt.executeUpdate();
     
-        // Vérifier si la mise à jour a réussi
         if (rowsAffected > 0) {
             System.out.println("Statut mis à jour avec succès pour la requête n°" + requestId);
         } else {
             System.out.println("Aucune requête trouvée avec l'ID : " + requestId);
         }
     }
+
+    public void updateRequestVolunteer(Request req, Volunteer newVolunteer) throws SQLException {
+        int idVol= getID_Volunteer(newVolunteer);
+        int requestId = getID_Request(req);
+    
+        String sql = "UPDATE TRequest SET id_volunteer = ? WHERE id = ?";
+    
+        this.pstmt = conn.prepareStatement(sql);
+        
+        pstmt.setInt(1, idVol);
+        pstmt.setInt(2, requestId);
+        
+        int rowsAffected = pstmt.executeUpdate();
+    
+        if (rowsAffected > 0) {
+            System.out.println("Volontaire mis à jour avec succès pour la requête n°" + requestId);
+        } else {
+            System.out.println("Aucune requête trouvée avec l'ID : " + requestId);
+        }
+    }
+
+    public void updateRequestValidator(Request req, Validator newValidator) throws SQLException {
+        int idVal= getID_Validator(newValidator);
+        int requestId = getID_Request(req);
+    
+        String sql = "UPDATE TRequest SET id_validator = ? WHERE id = ?";
+    
+        this.pstmt = conn.prepareStatement(sql);
+        
+        pstmt.setInt(1, idVal);
+        pstmt.setInt(2, requestId);
+        
+        int rowsAffected = pstmt.executeUpdate();
+    
+        if (rowsAffected > 0) {
+            System.out.println("Validateur mis à jour avec succès pour la requête n°" + requestId);
+        } else {
+            System.out.println("Aucune requête trouvée avec l'ID : " + requestId);
+        }
+    }
+
+    public void updateRequestMotif(int requestId, String newMotif) throws SQLException {
+    
+        String sql = "UPDATE TRequest SET motif = ? WHERE id = ?";
+    
+        this.pstmt = conn.prepareStatement(sql);
+        
+        pstmt.setString(1, newMotif);
+        pstmt.setInt(2, requestId);
+        
+        int rowsAffected = pstmt.executeUpdate();
+    
+        if (rowsAffected > 0) {
+            System.out.println("Motif mis à jour avec succès pour la requête n°" + requestId);
+        } else {
+            System.out.println("Aucune requête trouvée avec l'ID : " + requestId);
+        }
+    }
+
 
 }

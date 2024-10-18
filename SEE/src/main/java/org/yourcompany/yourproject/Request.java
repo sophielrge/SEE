@@ -9,10 +9,6 @@ public class Request {
     private Volunteer volunteer;
     private LocalDate date;
     private String subject;
-    public void setSubject(String subject) {
-        this.subject = subject;
-    }
-
     private Character status;
     private Date helpD;
     private String motif;
@@ -86,6 +82,10 @@ public class Request {
     
     public void setDate(LocalDate date) {
         this.date = date;
+    }
+
+    public void setSubject(String subject) {
+        this.subject = subject;
     }
 
     //methodes
