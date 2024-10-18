@@ -29,12 +29,57 @@ public class BDD {
         this.conn = DriverManager.getConnection(this.url, this.user, this.password);
     }
 
+    //Getter
+    public int getID_Applicant(Applicant app) throws SQLException{
+        int res = -1;
+        String sql = "SELECT id FROM TApplicant WHERE name = ?";
+        this.pstmt = conn.prepareStatement(sql);
+
+        pstmt.setString(1, app.getName());
+
+        ResultSet rs = pstmt.executeQuery();
+
+        if(rs.next()){
+            res = rs.getInt("id");
+        }
+        return res;
+    }
+
+    public int getID_Volunteer(Volunteer vol) throws SQLException{
+        int res = -1;
+        String sql = "SELECT id FROM TVolunteer WHERE name = ?";
+        this.pstmt = conn.prepareStatement(sql);
+
+        pstmt.setString(1, vol.getName());
+
+        ResultSet rs = pstmt.executeQuery();
+
+        if(rs.next()){
+            res = rs.getInt("id");
+        }
+        return res;
+    }
+
+    public int getID_Validator(Validator val) throws SQLException{
+        int res = -1;
+        String sql = "SELECT id FROM TValidator WHERE name = ?";
+        this.pstmt = conn.prepareStatement(sql);
+
+        pstmt.setString(1, val.getName());
+
+        ResultSet rs = pstmt.executeQuery();
+
+        if(rs.next()){
+            res = rs.getInt("id");
+        }
+        return res;
+    }
+
     //Ajout et Suppression dans les tables
     public void insertRequest(String subj, int app, Date date) throws SQLException{
         String sql = "INSERT INTO TRequest(id, subj, id_applicant, helpday) VALUES (?,?,?,?)";
         this.pstmt = conn.prepareStatement(sql);
 
-        // Paramètres à insérer
         pstmt.setInt(1, this.req);
         this.req ++;
         pstmt.setString(2, subj);  
@@ -156,7 +201,7 @@ public class BDD {
     //Affichage du contenus des tables
 
     public void printRequest() throws SQLException{
-        String sql = "SELECT * FROM TRequest";
+        String sql = "SELECT * FROM TRequest" + "ORDER BY TRequest.helpD DESC";
         this.pstmt = conn.prepareStatement(sql);
         
         ResultSet rs = pstmt.executeQuery();
@@ -196,7 +241,7 @@ public class BDD {
         String sql = "SELECT TRequest.*, TAppliacnt FROM TRequest" + "JOIN TApplicant.id = TRequest.id_applicant" + "WHERE TApplicant.nom =";
         this.pstmt = conn.prepareStatement(sql);
 
-        pstmt.setInt(1, app.getNom());
+        pstmt.setString(1, app.getNom());
         
         ResultSet rs = pstmt.executeQuery();
         
@@ -235,7 +280,7 @@ public class BDD {
         String sql = "SELECT TRequest.*, TVolunteer FROM TRequest" + "JOIN TVolunteer.id = TRequest.id_volunteer" + "WHERE TVolunteer.nom =";
         this.pstmt = conn.prepareStatement(sql);
 
-        pstmt.setInt(1, vol.getNom());
+        pstmt.setString(1, vol.getName());
         
         ResultSet rs = pstmt.executeQuery();
         
@@ -274,7 +319,7 @@ public class BDD {
         String sql = "SELECT TRequest.*, TValidator FROM TRequest" + "JOIN TValidator.id = TValidator.id_validator" + "WHERE TValidator.nom =";
         this.pstmt = conn.prepareStatement(sql);
 
-        pstmt.setInt(1, val.getNom());
+        pstmt.setString(1, val.getName());
         
         ResultSet rs = pstmt.executeQuery();
         
@@ -304,6 +349,161 @@ public class BDD {
             if("Rejected".equals(status)){
                 System.out.println("Reason: " + motif);
                 System.out.println("Validator: " + validator);
+            }
+        }
+
+        System.out.println("-----------------------------------------");
+    }
+
+    public void printRequestByDateCreation() throws SQLException{
+        String sql = "SELECT TRequest.*, TValidator FROM TRequest" + "ORDER BY TRequest.date_creation DESC";
+        this.pstmt = conn.prepareStatement(sql);
+        
+        ResultSet rs = pstmt.executeQuery();
+        
+        while (rs.next()) {
+            System.out.println("-----------------------------------------");
+            int id = rs.getInt("id");
+            Date date = rs.getDate("date_creation");
+            String subject= rs.getString("subj");
+            String status = rs.getString("status");
+            Date helpD = rs.getDate("helpday");
+            String motif = rs.getString("motif");
+            int validator = rs.getInt("id");
+            
+
+            switch(status){
+                case "P" -> status = "Pending";
+                case "A" -> status = "Approved";
+                case "R" -> status = "Rejected";
+                case "C" -> status = "Completed";
+            }
+            
+            
+            System.out.println("Request n°" + id);
+            System.out.println("Subject: " + subject);
+            System.out.println("Date: " + helpD);
+            System.out.println("Status: " + status);
+            if("Rejected".equals(status)){
+                System.out.println("Reason: " + motif);
+                System.out.println("Validator: " + validator);
+            }
+        }
+
+        System.out.println("-----------------------------------------");
+    }
+
+    public void printRequestPending() throws SQLException{
+        String sql = "SELECT * FROM TRequest" + "WHERE TRequest.status = P";
+        this.pstmt = conn.prepareStatement(sql);
+        
+        ResultSet rs = pstmt.executeQuery();
+        
+        while (rs.next()) {
+            System.out.println("-----------------------------------------");
+            int id = rs.getInt("id");
+            Date date = rs.getDate("date_creation");
+            String subject= rs.getString("subj");
+            String status = rs.getString("status");
+            Date helpD = rs.getDate("helpday");
+            String motif = rs.getString("motif");
+            int validator = rs.getInt("id");
+            
+
+            switch(status){
+                case "P" -> status = "Pending";
+                case "A" -> status = "Approved";
+                case "R" -> status = "Rejected";
+                case "C" -> status = "Completed";
+            }
+            
+            
+            System.out.println("Request n°" + id);
+            System.out.println("Subject: " + subject);
+            System.out.println("Date: " + helpD);
+            System.out.println("Status: " + status);
+            if("Rejected".equals(status)){
+                System.out.println("Reason: " + motif);
+                System.out.println("Validator: " + validator);
+            }
+        }
+
+        System.out.println("-----------------------------------------");
+    }
+
+
+    public void printRequestByApplicant() throws SQLException{
+        String sql = "SELECT TRequest.*, TAppliacnt FROM TRequest" + "JOIN TApplicant.id = TRequest.id_applicant" + "ORDER BY TApplicant.nom ASC";
+        this.pstmt = conn.prepareStatement(sql);
+
+        pstmt.setString(1, app.getNom());
+        
+        ResultSet rs = pstmt.executeQuery();
+        
+        while (rs.next()) {
+            System.out.println("-----------------------------------------");
+            int id = rs.getInt("id");
+            Date date = rs.getDate("date_creation");
+            String subject= rs.getString("subj");
+            String status = rs.getString("status");
+            Date helpD = rs.getDate("helpday");
+            String motif = rs.getString("motif");
+            int val = rs.getInt("id");
+
+            switch(status){
+                case "P" -> status = "Pending";
+                case "A" -> status = "Approved";
+                case "R" -> status = "Rejected";
+                case "C" -> status = "Completed";
+            }
+            
+            
+            System.out.println("Request n°" + id);
+            System.out.println("Subject: " + subject);
+            System.out.println("Date: " + helpD);
+            System.out.println("Status: " + status);
+            if("Rejected".equals(status)){
+                System.out.println("Reason: " + motif);
+                System.out.println("Validator: " + val);
+            }
+        }
+
+        System.out.println("-----------------------------------------");
+    }
+
+    public void printRequestByVolunteer(Volunteer vol) throws SQLException{
+        String sql = "SELECT TRequest.*, TVolunteer FROM TRequest" + "JOIN TVolunteer.id = TRequest.id_volunteer" + "ORDER BY TVolunteer.nom ASC";
+        this.pstmt = conn.prepareStatement(sql);
+
+        pstmt.setString(1, vol.getName());
+        
+        ResultSet rs = pstmt.executeQuery();
+        
+        while (rs.next()) {
+            System.out.println("-----------------------------------------");
+            int id = rs.getInt("id");
+            Date date = rs.getDate("date_creation");
+            String subject= rs.getString("subj");
+            String status = rs.getString("status");
+            Date helpD = rs.getDate("helpday");
+            String motif = rs.getString("motif");
+            int val = rs.getInt("id");
+
+            switch(status){
+                case "P" -> status = "Pending";
+                case "A" -> status = "Approved";
+                case "R" -> status = "Rejected";
+                case "C" -> status = "Completed";
+            }
+            
+            
+            System.out.println("Request n°" + id);
+            System.out.println("Subject: " + subject);
+            System.out.println("Date: " + helpD);
+            System.out.println("Status: " + status);
+            if("Rejected".equals(status)){
+                System.out.println("Reason: " + motif);
+                System.out.println("Validator: " + val);
             }
         }
 
