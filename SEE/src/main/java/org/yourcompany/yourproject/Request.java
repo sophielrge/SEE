@@ -12,6 +12,7 @@ public class Request {
     private Character status;
     private Date helpD;
     private String motif;
+    private Validator validator;
 
     //Constructeur
     public Request(String subject, Date helpD){
@@ -69,6 +70,14 @@ public class Request {
 
     public void setMotif(String motif) {
         this.motif = motif;
+    }
+
+    public Validator getValidator() {
+        return validator;
+    }
+
+    public void setValidator(Validator validator) {
+        this.validator = validator;
     }
 
     //methodes

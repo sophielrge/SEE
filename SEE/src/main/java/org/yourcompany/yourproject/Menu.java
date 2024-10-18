@@ -39,6 +39,7 @@ public class Menu {
                     System.out.println("|Veuillez entrer votre département      |");
                     int dpt = scanner.nextInt();
                     scanner.nextLine();
+                    Applicant applicant = new Applicant(name, age, dpt);
                     base.insertApplicant(name, age, dpt);
                     System.out.println("|Compte demandeur créé avec succès !!   |");
                     System.out.println("-----------------------------------------");
@@ -47,6 +48,7 @@ public class Menu {
                     System.out.println("-----------------------------------------");
                     int i3 = scanner.nextInt();
                     switch (i3) {
+                        //ajouter requête
                         case 1:
                         System.out.println("|Veuillez décrire votre requête         |");
                         String subj= scanner.nextLine();
@@ -58,6 +60,10 @@ public class Menu {
                         String d=scanner.nextLine();
                         scanner.nextLine();
                         //base.insertRequest(subj, int vol, app, date);
+                        
+                        //consulter mes requêtes
+                        case 2:
+                        base.printRequestUser(applicant);
 
                     }
                     break;
