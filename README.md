@@ -17,3 +17,6 @@ pb avec target
 
 ## Problème GIT 
 git config pull.rebase false  
+
+## Explication test
+Pour tester BDD, on utilise Mockito pour simuler l'utilisation de la base. Comme ça, on ne touche pas réellement le Base de Données et donc on ne la rend pas éronnée.

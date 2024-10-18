@@ -25,7 +25,6 @@ public class BDD {
     }
 
 
-
     public void connect() throws SQLException{
         this.conn = DriverManager.getConnection(this.url, this.user, this.password);
     }
@@ -182,8 +181,10 @@ public class BDD {
         String sql = "SELECT id FROM TRequest WHERE subj = ? AND date_creation = ? AND helpday = ?";
         this.pstmt = conn.prepareStatement(sql);
 
+        Date d = (Date) Date.from(req.getDate().atStartOfDay(ZoneId.systemDefault()).toInstant());
+
         pstmt.setString(1, req.getMotif());
-        pstmt.setDate(2,(Date) req.getDate());
+        pstmt.setDate(2, d);
         pstmt.setDate(3, (Date) req.getHelpD());
 
         ResultSet rs = pstmt.executeQuery();
@@ -713,6 +714,15 @@ public class BDD {
         } else {
             System.out.println("Aucune requête trouvée avec l'ID : " + requestId);
         }
+    }
+
+    //Getter et Setter attributs
+    public Connection getConn() {
+        return conn;
+    }
+
+    public void setConn(Connection conn) {
+        this.conn = conn;
     }
 
 
