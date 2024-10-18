@@ -63,7 +63,7 @@ public class Menu {
                         
                         //consulter mes requêtes
                         case 2:
-                        base.printRequestUser(applicant);
+                        base.printRequestApplicant(applicant);
 
                     }
                     break;
