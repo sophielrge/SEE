@@ -7,8 +7,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import org.yourcompany.yourproject.Applicant;
-
 public class BDD {
 
     private String url = null;
@@ -153,6 +151,7 @@ public class BDD {
         int rowsAffected = pstmt.executeUpdate();
         System.out.println(rowsAffected + " ligne(s) supprimée(s)");
     }
+
 
     //Affichage du contenus des tables
 
