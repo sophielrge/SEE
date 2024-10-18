@@ -432,7 +432,7 @@ public class BDD {
     }
 
 
-    public void printRequestByApplicant() throws SQLException{
+    public void printRequestOrderByApplicant() throws SQLException{
         String sql = "SELECT TRequest.*, TAppliacnt FROM TRequest" + "JOIN TApplicant.id = TRequest.id_applicant" + "ORDER BY TApplicant.nom ASC";
         this.pstmt = conn.prepareStatement(sql);
 
@@ -471,7 +471,7 @@ public class BDD {
         System.out.println("-----------------------------------------");
     }
 
-    public void printRequestByVolunteer(Volunteer vol) throws SQLException{
+    public void printRequestOrderByVolunteer(Volunteer vol) throws SQLException{
         String sql = "SELECT TRequest.*, TVolunteer FROM TRequest" + "JOIN TVolunteer.id = TRequest.id_volunteer" + "ORDER BY TVolunteer.nom ASC";
         this.pstmt = conn.prepareStatement(sql);
 
