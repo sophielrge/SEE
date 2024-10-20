@@ -1,14 +1,15 @@
 USE projet_gei_007;
 
+DROP TABLE IF EXISTS TApplicant;
 CREATE TABLE TApplicant (
-    id INT PRIMARY KEY NOT NULL AUTOINCREMENT, 
+    id INT AUTO_INCREMENT PRIMARY KEY NOT NULL , 
     nom VARCHAR(100) NOT NULL,
     age INT,
     dpt INT NOT NULL
 );
 
 CREATE TABLE TVolunteer(
-    id INT PRIMARY KEY NOT NULL AUTOINCREMENT,
+    id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
     nom VARCHAR(100) NOT NULL,
     age INT CHECK (age>17),
     dpt INT NOT NULL
@@ -37,3 +38,7 @@ CREATE TABLE TValidator (
     dpt INT NOT NULL,
     orga VARCHAR(100) NOT NULL
 );
+
+USE projet_gei_007;
+INSERT INTO TApplicant (nom, age, dpt) VALUES ("Math",20,83);
+INSERT INTO TApplicant (nom, age, dpt) VALUES ("Rominou",21,31);
