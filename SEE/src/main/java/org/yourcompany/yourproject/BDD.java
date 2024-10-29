@@ -70,7 +70,7 @@ public class BDD {
     public Validator getValidator(int id) throws SQLException{
         Validator val = null;
 
-        String sql = "SELECT id FROM TValidator"
+        String sql = "SELECT id, nom, age, dpt FROM TValidator "
         + "WHERE id = ";
         
         this.pstmt = conn.prepareStatement(sql);
@@ -91,7 +91,7 @@ public class BDD {
     public Volunteer getVolunteer(int id) throws SQLException{
         Volunteer vol = null;
 
-        String sql = "SELECT id FROM TVolunteer"
+        String sql = "SELECT id, nom, age, dpt FROM TVolunteer "
         + "WHERE id = ";
         
         this.pstmt = conn.prepareStatement(sql);
@@ -110,10 +110,10 @@ public class BDD {
     }
 
     public Applicant getApplicant(int id) throws SQLException{
-        Applicant app = null;
+        Applicant app = new Applicant("pierre", 20, 20);
 
-        String sql = "SELECT id FROM TApplicant"
-        + "WHERE id = ";
+        String sql = "SELECT id, nom, age, dpt FROM TApplicant "
+        + "WHERE id = ?";
         
         this.pstmt = conn.prepareStatement(sql);
 
@@ -133,7 +133,7 @@ public class BDD {
     //Getter
     public int getID_Applicant(Applicant app) throws SQLException{
         int res = -1;
-        String sql = "SELECT id FROM TApplicant WHERE name = ?";
+        String sql = "SELECT id FROM TApplicant WHERE nom = ?";
         this.pstmt = conn.prepareStatement(sql);
 
         pstmt.setString(1, app.getName());
@@ -148,7 +148,7 @@ public class BDD {
 
     public int getID_Volunteer(Volunteer vol) throws SQLException{
         int res = -1;
-        String sql = "SELECT id FROM TVolunteer WHERE name = ?";
+        String sql = "SELECT id FROM TVolunteer WHERE nom = ?";
         this.pstmt = conn.prepareStatement(sql);
 
         pstmt.setString(1, vol.getName());
@@ -163,7 +163,7 @@ public class BDD {
 
     public int getID_Validator(Validator val) throws SQLException{
         int res = -1;
-        String sql = "SELECT id FROM TValidator WHERE name = ?";
+        String sql = "SELECT id FROM TValidator WHERE nom = ?";
         this.pstmt = conn.prepareStatement(sql);
 
         pstmt.setString(1, val.getName());
@@ -283,7 +283,7 @@ public class BDD {
     }
 
     public void insertValidator(String nom, int age, int dpt, String orga) throws SQLException{
-        String sql = "INSERT INTO TValidator (id, nom, age, dpt) VALUES (?,?,?,?,?)";
+        String sql = "INSERT INTO TValidator (id, nom, age, dpt, orga) VALUES (?,?,?,?,?)";
         this.pstmt = conn.prepareStatement(sql);
 
         // Paramètres à insérer
@@ -515,7 +515,7 @@ public class BDD {
     }
 
     public void printRequestPending() throws SQLException{
-        String sql = "SELECT * FROM TRequest" + "WHERE TRequest.status = P";
+        String sql = "SELECT * FROM TRequest " + "WHERE TRequest.statut = 'P'";
         this.pstmt = conn.prepareStatement(sql);
         
         ResultSet rs = pstmt.executeQuery();
@@ -525,7 +525,7 @@ public class BDD {
             int id = rs.getInt("id");
             Date date = rs.getDate("date_creation");
             String subject= rs.getString("subj");
-            String status = rs.getString("status");
+            String status = rs.getString("statut");
             Date helpD = rs.getDate("helpday");
             String motif = rs.getString("motif");
             int validator = rs.getInt("id");
@@ -698,7 +698,8 @@ public class BDD {
         }
     }
 
-    public void updateRequestMotif(int requestId, String newMotif) throws SQLException {
+    public void updateRequestMotif(Request req, String newMotif) throws SQLException {
+        int requestId = getID_Request(req);
     
         String sql = "UPDATE TRequest SET motif = ? WHERE id = ?";
     
