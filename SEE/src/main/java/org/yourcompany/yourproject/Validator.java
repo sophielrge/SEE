@@ -26,4 +26,12 @@ public class Validator extends User{
         //A set dans le sql
         r.setMotif(m);
     }
+
+    public String getOrga() {
+        return orga;
+    }
+
+    public void setOrga(String orga) {
+        this.orga = orga;
+    }
 }

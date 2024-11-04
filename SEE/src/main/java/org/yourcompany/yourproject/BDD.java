@@ -70,7 +70,7 @@ public class BDD {
     public Validator getValidator(int id) throws SQLException{
         Validator val = null;
 
-        String sql = "SELECT id, nom, age, dpt FROM TValidator "
+        String sql = "SELECT id, nom, age, dpt, FROM TValidator "
         + "WHERE id = ";
         
         this.pstmt = conn.prepareStatement(sql);
@@ -80,9 +80,11 @@ public class BDD {
         ResultSet rs = pstmt.executeQuery();
 
         if(rs.next()){
+            val = new Validator(rs.getString("nom"),rs.getInt("age"), rs.getInt("dpt"), rs.getString("orga"));
             val.setName(rs.getString("nom"));
             val.setAge(rs.getInt("age"));
             val.setDpt(rs.getInt("dpt"));
+            val.setOrga(rs.getString("orga"));
         }
 
         return val; 
@@ -694,7 +696,7 @@ public class BDD {
         if (rowsAffected > 0) {
             System.out.println("Validateur mis à jour avec succès pour la requête n°" + requestId);
         } else {
-            System.out.println("Aucune requête trouvée avec l'ID : " + requestId);
+            System.out.println("No request with the ID : " + requestId);
         }
     }
 
