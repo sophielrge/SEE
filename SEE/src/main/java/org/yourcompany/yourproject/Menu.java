@@ -4,120 +4,170 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Scanner;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
 public class Menu {
+    Scanner scanner = new Scanner(System.in);
 
-    public Menu(BDD base) throws SQLException {
+    public int menu_depart(){
         System.out.println("-----------------------------------------");
         System.out.println("|               MENU SEE                |");
-        System.out.println("|1 - Creer un compte                    |");
-        System.out.println("|2 - Se Connecter                       |");
+        System.out.println("|1 - Sign in                            |");
+        System.out.println("|2 - Log in                             |");
         System.out.println("-----------------------------------------");
-
-        Scanner scanner = new Scanner(System.in);
-        int i1 = scanner.nextInt();
+        int i = scanner.nextInt();
         scanner.nextLine();
+        return i;
+    }
 
-        switch (i1) {
+    public int creer_compte(){
+        System.out.println("|1 - I am applicant                     |");
+        System.out.println("|2 - I am volunteer                     |");
+        System.out.println("|3 - I am validator                     |");
+        System.out.println("-----------------------------------------");
+        int i2 = scanner.nextInt();
+        scanner.nextLine();
+        return i2;
+    }
 
-            // creer un compte
+    public Applicant crea_demandeur(BDD base) throws SQLException{
+        System.out.println("|Enter your name                        |");
+        String name = scanner.nextLine();
+        System.out.println("|Enter your age                         |");
+        int age = scanner.nextInt();
+        scanner.nextLine();
+        System.out.println("|Enter your dpt                         |");
+        int dpt = scanner.nextInt();
+        scanner.nextLine();
+        Applicant applicant = new Applicant(name, age, dpt);
+        base.insertApplicant(name, age, dpt);
+        System.out.println("|Applicant account created with success |");
+        System.out.println("-----------------------------------------");
+        return applicant;
+    }
+
+    public int menu_demandeur(){
+        System.out.println("|1 - Add a new request                  |");
+        System.out.println("|2 - View my requests                   |");
+        System.out.println("-----------------------------------------");
+        int i = scanner.nextInt();
+        scanner.nextLine();
+        return i;
+    }
+
+    public void ajouter_requete(BDD base, Applicant applicant) throws SQLException, ParseException{
+        System.out.println("|Describe your request                  |");
+        String subj = scanner.nextLine();
+        System.out.println("|Indicate the date dd-MM-yyyy           |");
+        String d=scanner.nextLine(); //transformer mon string en date
+        SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
+        Date date = format.parse(d);
+        java.sql.Date sdate = new java.sql.Date(date.getTime());
+        int id = base.getID_Applicant(applicant);
+        base.insertRequest(subj, id, sdate);
+        System.out.println("|Request added with success !!          |");
+        System.out.println("-----------------------------------------");
+    }
+
+    public void consulter_requetes(BDD base, Applicant applicant) throws SQLException{
+        System.out.println("|Your requests :                        |");
+        base.printRequestApplicant(applicant);
+        System.out.println("-----------------------------------------");
+    }
+
+    public Volunteer crea_bene(BDD base) throws SQLException{
+        System.out.println("|Enter your name                        |");
+        String name2 = scanner.nextLine();
+        System.out.println("|Enter your age                         |");
+        int age2 = scanner.nextInt();
+        scanner.nextLine();
+        System.out.println("|Enter your dpt                         |");
+        int dpt2 = scanner.nextInt();
+        scanner.nextLine();
+        Volunteer volunteer = new Volunteer(name2, age2, dpt2);
+        base.insertVolunteer(name2, age2, dpt2);
+        System.out.println("|Volunteer account created with success!|");
+        System.out.println("-----------------------------------------");
+        return volunteer;
+    }
+
+    public int menu_benevole(){
+        System.out.println("|1 - Print requests pending             |");
+        System.out.println("|2 - View my requests                   |");
+        System.out.println("-----------------------------------------");
+        int i4 = scanner.nextInt();
+        scanner.nextLine();
+        return i4;
+    }
+
+    public void devenir_volontaire(BDD base, Volunteer volunteer) throws SQLException{
+        base.printRequestPending();
+        System.out.println("-----------------------------------------");
+        System.out.println("|To select a request          ,         |");
+        System.out.println("|enter its n°                           |");
+        System.out.println("-----------------------------------------");
+        int i5 = scanner.nextInt();
+        scanner.nextLine();
+        Request rchosen = base.getRequest(i5);
+        System.out.println("|Do you want to be the volunteer       ?|");
+        System.out.println("|1- yes                                 |");
+        System.out.println("|2- no                                  |");
+        System.out.println("-----------------------------------------");
+        int i6 = scanner.nextInt();
+        scanner.nextLine();
+        switch (i6){
             case 1:
-                System.out.println("|1 - Je suis demandeur                  |");
-                System.out.println("|2 - Je suis bénévole                   |");
-                System.out.println("|3 - Je suis valideur                   |");
+                volunteer.choseRequest(rchosen);
+                base.updateRequestStatus(rchosen, "P");
+                base.updateRequestVolunteer(rchosen, volunteer);
+                System.out.println("|You are the volunteer!                 |");
                 System.out.println("-----------------------------------------");
-                int i2 = scanner.nextInt();
-                scanner.nextLine();
+            case 2: 
+                break;
+        }
+    }
 
+    public void terminer_requete(BDD base, Volunteer volunteer) throws SQLException{
+        System.out.println("|Your requests                      :   |");
+        base.printRequestVolunteer(volunteer);
+        System.out.println("-----------------------------------------");
+        System.out.println("|To finish a request,                   |");
+        System.out.println("|enter its n°                           |");
+        System.out.println("-----------------------------------------");
+        int i6 = scanner.nextInt();
+        Request rfinished = base.getRequest(i6);
+        volunteer.completeRequest(rfinished);
+        base.updateRequestStatus(rfinished, "C");
+    }
+
+    public Menu(BDD base) throws SQLException, ParseException {
+        int i1 = menu_depart();
+        switch (i1) {
+            case 1: // creer un compte
+                int i2 = creer_compte();
                 switch (i2) {
-
-                    // Creation demandeur
-                    case 1:
-                        System.out.println("|Veuillez entrer votre nom              |");
-                        String name = scanner.nextLine();
-                        System.out.println("|Veuillez entrer votre age              |");
-                        int age = scanner.nextInt();
-                        scanner.nextLine();
-                        System.out.println("|Veuillez entrer votre département      |");
-                        int dpt = scanner.nextInt();
-                        scanner.nextLine();
-                        Applicant applicant = new Applicant(name, age, dpt);
-                        base.insertApplicant(name, age, dpt);
-                        System.out.println("|Compte demandeur créé avec succès !!   |");
-                        System.out.println("-----------------------------------------");
-                        System.out.println("|1 - ajouter une requête                |");
-                        System.out.println("|2 - Conuslter mes requêtes             |");
-                        System.out.println("-----------------------------------------");
-                        int i3 = scanner.nextInt();
-                        scanner.nextLine();
+                    case 1: // Creation demandeur
+                        Applicant applicant = crea_demandeur(base);
+                        int i3 = menu_demandeur();
                         switch (i3) {
-                            // ajouter requête
-                            case 1:
-                                System.out.println("|Veuillez décrire votre requête         |");
-                                String subj = scanner.nextLine();
-                                // System.out.println("|Veuillez indiquer le jour jj/mm/aaa |");
-                                // String d=scanner.nextLine(); //transformer mon string en date
-                                System.out.println("Sujet à insérer: " + subj);
-                                int id = base.getID_Applicant(applicant);
-                                base.insertRequest(subj, id, null);
-                                System.out.println("|Demande créé avec succès !!            |");
-                                System.out.println("-----------------------------------------");
+                            case 1:  // ajouter requête
+                                ajouter_requete(base, applicant);
                                 break;
-
-                            // consulter mes requêtes
-                            case 2:
-                                System.out.println("-----------------------------------------");
-                                System.out.println("|Voici vos reqêtes                  :   |");
-                                base.printRequestApplicant(applicant);
+                            case 2: // consulter mes requêtes
+                                consulter_requetes(base,applicant);
                                 break;
                         }
                         break;
-
-                    // creation benevole
-                    case 2:
-                        System.out.println("|Veuillez entrer votre nom              |");
-                        String name2 = scanner.nextLine();
-                        System.out.println("|Veuillez entrer votre age              |");
-                        int age2 = scanner.nextInt();
-                        System.out.println("|Veuillez entrer votre département      |");
-                        int dpt2 = scanner.nextInt();
-                        Volunteer volunteer = new Volunteer(name2, age2, dpt2);
-                        base.insertVolunteer(name2, age2, dpt2);
-                        System.out.println("|Compte bénévole créé avec succès !!    |");
-                        System.out.println("-----------------------------------------");
-                        System.out.println("-----------------------------------------");
-                        System.out.println("|1 - Afficher requêtes non attribuées   |");
-                        System.out.println("|2 - Conuslter mes requêtes             |");
-                        System.out.println("-----------------------------------------");
-                        int i4 = scanner.nextInt();
-                        scanner.nextLine();
+                    case 2: // creation benevole
+                        Volunteer volunteer= crea_bene(base);
+                        int i4 = menu_benevole();
                         switch (i4) {
-                            // afficher les reqêtes et en selectionner
-                            case 1:
-                                base.printRequestPending();
-                                System.out.println("-----------------------------------------");
-                                System.out.println("|Pour sélectionner une requête,         |");
-                                System.out.println("|entrez son n°                          |");
-                                System.out.println("-----------------------------------------");
-                                int i5 = scanner.nextInt();
-                                Request rchosen = base.getRequest(i5);
-                                volunteer.choseRequest(rchosen);
-                                base.updateRequestStatus(rchosen, "P");
-                                base.updateRequestVolunteer(rchosen, volunteer);
+                            case 1: // afficher les reqêtes et en selectionner
+                                devenir_volontaire(base, volunteer);
                                 break;
-
-                            // consulter mes requêtes
-                            case 2:
-                                System.out.println("-----------------------------------------");
-                                System.out.println("|Voici vos reqêtes                  :   |");
-                                base.printRequestVolunteer(volunteer);
-                                System.out.println("-----------------------------------------");
-                                System.out.println("|Pour terminer une requête,             |");
-                                System.out.println("|entrez son n°                          |");
-                                int i6 = scanner.nextInt();
-                                Request rfinished = base.getRequest(i6);
-                                volunteer.completeRequest(rfinished);
-                                base.updateRequestStatus(rfinished, "C");
+                            case 2: // consulter mes requêtes
+                                terminer_requete(base,volunteer);
                                 break;
                         }
                         break;
