@@ -4,14 +4,16 @@ CREATE TABLE TApplicant (
      id INT PRIMARY KEY NOT NULL,
     nom VARCHAR(100) NOT NULL,
     age INT,
-    dpt INT NOT NULL
+    dpt INT NOT NULL,
+    psw VARCHAR(100) NOT NULL
 );
 
 CREATE TABLE TVolunteer(
     id INT PRIMARY KEY NOT NULL,
     nom VARCHAR(100) NOT NULL,
     age INT CHECK (age>17),
-    dpt INT NOT NULL
+    dpt INT NOT NULL,
+    psw VARCHAR(100) NOT NULL
 );
 
 CREATE TABLE TValidator (
@@ -19,7 +21,8 @@ CREATE TABLE TValidator (
     nom VARCHAR(100) NOT NULL,
     age INT CHECK (age>17),
     dpt INT NOT NULL,
-    orga VARCHAR(100) NOT NULL
+    orga VARCHAR(100) NOT NULL,
+    psw VARCHAR(100) NOT NULL
 );
 
 CREATE TABLE TRequest (
