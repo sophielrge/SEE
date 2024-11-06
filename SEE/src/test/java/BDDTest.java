@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.ZoneId;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -18,6 +19,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.reset;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import org.mockito.MockitoAnnotations;
@@ -166,7 +168,6 @@ public class BDDTest {
         when(resultSet.getString("status")).thenReturn("A");
         when(resultSet.getDate("helpday")).thenReturn(new Date(System.currentTimeMillis()));
         when(resultSet.getString("motif")).thenReturn("No reason");
-        when(resultSet.getInt("id")).thenReturn(1);
         when(pstmt.executeQuery()).thenReturn(resultSet);
 
         bdd.printRequest();
@@ -181,6 +182,33 @@ public class BDDTest {
                 + "Date: " + formattedDate + "\n"
                 + "Status: Approved\n"
                 + "-----------------------------------------";
+
+        assertTrue(output.contains(expectedOutput));
+    }
+
+
+    @Test
+    public void testPrintRequestPending() throws SQLException {
+        System.setOut(new PrintStream(outputStreamCaptor));
+        when(resultSet.next()).thenReturn(true, false); 
+        when(resultSet.getInt("id")).thenReturn(1);
+        when(resultSet.getDate("date_creation")).thenReturn(Date.valueOf("2024-11-01"));
+        when(resultSet.getString("subj")).thenReturn("Test Subject");
+        when(resultSet.getString("statut")).thenReturn("P");
+        when(resultSet.getDate("helpday")).thenReturn(Date.valueOf("2024-11-05"));
+        when(resultSet.getString("motif")).thenReturn("Test Motif");
+        when(pstmt.executeQuery()).thenReturn(resultSet);
+
+        bdd.printRequestPending();
+
+        String output = outputStreamCaptor.toString().trim();
+
+        String expectedOutput = "-----------------------------------------\n" +
+                                "Request n°1\n" +
+                                "Subject: Test Subject\n" +
+                                "Date: 2024-11-05\n" +
+                                "Status: Pending\n" +
+                                "-----------------------------------------";
 
         assertTrue(output.contains(expectedOutput));
     }

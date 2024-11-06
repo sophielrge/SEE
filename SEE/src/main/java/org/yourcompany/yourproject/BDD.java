@@ -635,7 +635,7 @@ public class BDD {
     }
 
     //Changement 
-    private boolean isValidStatus(String status) {
+    public boolean isValidStatus(String status) {
         return status.equals("P") || status.equals("A") || status.equals("R") || status.equals("C");
     }
 
@@ -657,9 +657,9 @@ public class BDD {
         int rowsAffected = pstmt.executeUpdate();
     
         if (rowsAffected > 0) {
-            System.out.println("Statut mis à jour avec succès pour la requête n°" + requestId);
+            System.out.println("Status updated successfully for query n°" + requestId);
         } else {
-            System.out.println("Aucune requête trouvée avec l'ID : " + requestId);
+            System.out.println("No request with the ID: " + requestId);
         }
     }
 
@@ -677,9 +677,9 @@ public class BDD {
         int rowsAffected = pstmt.executeUpdate();
     
         if (rowsAffected > 0) {
-            System.out.println("Volontaire mis à jour avec succès pour la requête n°" + requestId);
+            System.out.println("Volunteer updated successfully for query n°" + requestId);
         } else {
-            System.out.println("Aucune requête trouvée avec l'ID : " + requestId);
+            System.out.println("No request with the ID: " + requestId);
         }
     }
 
@@ -697,9 +697,9 @@ public class BDD {
         int rowsAffected = pstmt.executeUpdate();
     
         if (rowsAffected > 0) {
-            System.out.println("Validateur mis à jour avec succès pour la requête n°" + requestId);
+            System.out.println("Validator updated successfully for query n°" + requestId);
         } else {
-            System.out.println("No request with the ID : " + requestId);
+            System.out.println("No request with the ID: " + requestId);
         }
     }
 
@@ -716,9 +716,9 @@ public class BDD {
         int rowsAffected = pstmt.executeUpdate();
     
         if (rowsAffected > 0) {
-            System.out.println("Motif mis à jour avec succès pour la requête n°" + requestId);
+            System.out.println("Motif updated successfully for query n°" + requestId);
         } else {
-            System.out.println("Aucune requête trouvée avec l'ID : " + requestId);
+            System.out.println("No request with the ID: " + requestId);
         }
     }
 
