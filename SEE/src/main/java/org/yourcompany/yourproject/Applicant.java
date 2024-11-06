@@ -9,6 +9,10 @@ public class Applicant extends User{
         super(n, age, dpt);
     }
 
+    public Applicant(){
+        
+    }
+
     //methodes
     public Request makeRequest(Date date){
         System.out.println("sujet de la requete ?");

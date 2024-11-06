@@ -11,6 +11,11 @@ public class Validator extends User{
         this.orga = orga;
     }
 
+    public Validator(){
+
+    }
+    
+
     //
     public void validerR(Request r){
         r.setValidator(this);

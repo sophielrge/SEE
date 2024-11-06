@@ -6,6 +6,10 @@ public class Volunteer extends User{
         super(n, age, dpt);
     }
 
+    public Volunteer(){
+        
+    }
+
     //méthodes
     public void choseRequest(Request r){
         r.setVolunteer(this);

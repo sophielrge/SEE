@@ -22,6 +22,10 @@ public class Request {
         this.volunteer=null;
         this.helpD=helpD;
     }
+    
+    public Request(){
+        
+    }
 
     //SetGet
     public void setApp(Applicant a){

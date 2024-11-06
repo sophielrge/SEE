@@ -31,16 +31,16 @@ public class BDD {
 
     //Créateur
     public Request getRequest(int id) throws SQLException{
-        Request req = null;
+        Request req = new Request(); 
         Applicant app = null;
         Volunteer vol = null;
         Validator val = null;
 
-        String sql = "SELECT TRequest.*, TVolunteer.id AS ID_Vol, TValidator.id AS ID_Val, TApplicant.id AS ID_App FROM TRequest" + 
-        "JOIN TVolunteer ON TVolunteer.id = TRequest.id_volunteer" 
-        + "JOIN TValidator ON TValidator.id = TRequest.id_validator" 
-        + "JOIN TApplicant ON TApllicant.id = TRequest.id_applicant" 
-        + "WHERE TRequest.id = ";
+        String sql = "SELECT TRequest.*, TVolunteer.id AS ID_Vol, TValidator.id AS ID_Val, TApplicant.id AS ID_App FROM TRequest " + 
+        "JOIN TVolunteer ON TVolunteer.id = TRequest.id_volunteer " 
+        + "JOIN TValidator ON TValidator.id = TRequest.id_validator " 
+        + "JOIN TApplicant ON TApplicant.id = TRequest.id_applicant " 
+        + "WHERE TRequest.id = ? ";
         
         this.pstmt = conn.prepareStatement(sql);
 
@@ -52,10 +52,11 @@ public class BDD {
             app = getApplicant(rs.getInt("ID_App"));
             vol = getVolunteer(rs.getInt("ID_Vol"));
             val = getValidator(rs.getInt("ID_Val"));
+
             req.setApp(app);
             req.setHelpD(rs.getDate("helpD"));
             req.setMotif(rs.getString("motif"));
-            req.setStatus(rs.getString("status").charAt(1));
+            req.setStatus(rs.getString("status").charAt(0));
             req.setValidator(val);
             req.setVolunteer(vol);
             req.setDate(rs.getDate("date_creation").toInstant()            
@@ -103,6 +104,7 @@ public class BDD {
         ResultSet rs = pstmt.executeQuery();
 
         if(rs.next()){
+            vol = new Volunteer(rs.getString("nom"),rs.getInt("age"), rs.getInt("dpt"));
             vol.setName(rs.getString("nom"));
             vol.setAge(rs.getInt("age"));
             vol.setDpt(rs.getInt("dpt"));
@@ -112,7 +114,7 @@ public class BDD {
     }
 
     public Applicant getApplicant(int id) throws SQLException{
-        Applicant app = new Applicant("pierre", 20, 20);
+        Applicant app = null;
 
         String sql = "SELECT id, nom, age, dpt FROM TApplicant "
         + "WHERE id = ?";
@@ -124,6 +126,7 @@ public class BDD {
         ResultSet rs = pstmt.executeQuery();
 
         if(rs.next()){
+            app = new Applicant(rs.getString("nom"),rs.getInt("age"), rs.getInt("dpt"));
             app.setName(rs.getString("nom"));
             app.setAge(rs.getInt("age"));
             app.setDpt(rs.getInt("dpt"));

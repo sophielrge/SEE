@@ -7,6 +7,10 @@ public class User {
 
     private int dpt;
 
+    public User(){
+        
+    }
+
     public User(String name, int age, int dpt){
         this.name = name;
         this.age = age;
