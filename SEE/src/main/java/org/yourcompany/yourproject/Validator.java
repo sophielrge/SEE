@@ -6,8 +6,8 @@ import java.time.ZoneId;
 public class Validator extends User{
     private String orga;
 
-    public Validator(String n, int a, int d, String orga){
-        super(n,a, d);
+    public Validator(String n, int a, int d, String orga, String p){
+        super(n,a, d, p);
         this.orga = orga;
     }
 

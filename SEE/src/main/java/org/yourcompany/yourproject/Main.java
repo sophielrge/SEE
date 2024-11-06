@@ -5,6 +5,7 @@
 package org.yourcompany.yourproject;
 
 import java.sql.SQLException;
+import java.text.ParseException;
 
 /**
  *
@@ -12,7 +13,7 @@ import java.sql.SQLException;
  */
 public class Main {
 
-    public static void main(String[] args) throws SQLException {
+    public static void main(String[] args) throws SQLException, ParseException {
 
          // URL de connexion au serveur MySQL
         String url = "jdbc:mysql://srv-bdens.insa-toulouse.fr:3306/projet_gei_007"; 

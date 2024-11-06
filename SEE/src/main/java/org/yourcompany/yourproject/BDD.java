@@ -71,8 +71,8 @@ public class BDD {
     public Validator getValidator(int id) throws SQLException{
         Validator val = null;
 
-        String sql = "SELECT id, nom, age, dpt, FROM TValidator "
-        + "WHERE id = ";
+        String sql = "SELECT id, nom, age, dpt, psw FROM TValidator "
+        + "WHERE id = ?";
         
         this.pstmt = conn.prepareStatement(sql);
 
@@ -81,7 +81,7 @@ public class BDD {
         ResultSet rs = pstmt.executeQuery();
 
         if(rs.next()){
-            val = new Validator(rs.getString("nom"),rs.getInt("age"), rs.getInt("dpt"), rs.getString("orga"));
+            val = new Validator(rs.getString("nom"),rs.getInt("age"), rs.getInt("dpt"), rs.getString("orga"), rs.getString("psw"));
             val.setName(rs.getString("nom"));
             val.setAge(rs.getInt("age"));
             val.setDpt(rs.getInt("dpt"));
@@ -94,8 +94,8 @@ public class BDD {
     public Volunteer getVolunteer(int id) throws SQLException{
         Volunteer vol = null;
 
-        String sql = "SELECT id, nom, age, dpt FROM TVolunteer "
-        + "WHERE id = ";
+        String sql = "SELECT id, nom, age, dpt, psw FROM TVolunteer "
+        + "WHERE id = ?";
         
         this.pstmt = conn.prepareStatement(sql);
 
@@ -104,7 +104,7 @@ public class BDD {
         ResultSet rs = pstmt.executeQuery();
 
         if(rs.next()){
-            vol = new Volunteer(rs.getString("nom"),rs.getInt("age"), rs.getInt("dpt"));
+            vol = new Volunteer(rs.getString("nom"),rs.getInt("age"), rs.getInt("dpt"),rs.getString("psw"));
             vol.setName(rs.getString("nom"));
             vol.setAge(rs.getInt("age"));
             vol.setDpt(rs.getInt("dpt"));
@@ -116,7 +116,7 @@ public class BDD {
     public Applicant getApplicant(int id) throws SQLException{
         Applicant app = null;
 
-        String sql = "SELECT id, nom, age, dpt FROM TApplicant "
+        String sql = "SELECT id, nom, age, dpt, psw FROM TApplicant "
         + "WHERE id = ?";
         
         this.pstmt = conn.prepareStatement(sql);
@@ -126,7 +126,7 @@ public class BDD {
         ResultSet rs = pstmt.executeQuery();
 
         if(rs.next()){
-            app = new Applicant(rs.getString("nom"),rs.getInt("age"), rs.getInt("dpt"));
+            app = new Applicant(rs.getString("nom"),rs.getInt("age"), rs.getInt("dpt"),rs.getString("psw"));
             app.setName(rs.getString("nom"));
             app.setAge(rs.getInt("age"));
             app.setDpt(rs.getInt("dpt"));
@@ -151,6 +151,21 @@ public class BDD {
         return res;
     }
 
+    public String get_psw_Applicant(int id) throws SQLException{
+        String res = "";
+        String sql = "SELECT psw FROM TApplicant WHERE id = ?";
+        this.pstmt = conn.prepareStatement(sql);
+
+        pstmt.setInt(1, id);
+
+        ResultSet rs = pstmt.executeQuery();
+
+        if(rs.next()){
+            res = rs.getString("psw");
+        }
+        return res;
+    }
+
     public int getID_Volunteer(Volunteer vol) throws SQLException{
         int res = -1;
         String sql = "SELECT id FROM TVolunteer WHERE nom = ?";
@@ -166,6 +181,24 @@ public class BDD {
         return res;
     }
 
+    public String get_psw_Volunteer(int id) throws SQLException{
+        String res = "";
+        String sql = "SELECT psw FROM TVolunteer WHERE id = ?";
+        this.pstmt = conn.prepareStatement(sql);
+
+        pstmt.setInt(1, id);
+
+        ResultSet rs = pstmt.executeQuery();
+
+        if(rs.next()){
+            res = rs.getString("psw");
+            System.out.println("récupéré : "+res);
+        }else{
+            System.out.println("pas récupéré");
+        }
+        return res;
+    }
+
     public int getID_Validator(Validator val) throws SQLException{
         int res = -1;
         String sql = "SELECT id FROM TValidator WHERE nom = ?";
@@ -177,6 +210,21 @@ public class BDD {
 
         if(rs.next()){
             res = rs.getInt("id");
+        }
+        return res;
+    }
+
+    public String get_psw_Validator(int id) throws SQLException{
+        String res = "";
+        String sql = "SELECT psw FROM TValidator WHERE id = ?";
+        this.pstmt = conn.prepareStatement(sql);
+
+        pstmt.setInt(1, id);
+
+        ResultSet rs = pstmt.executeQuery();
+
+        if(rs.next()){
+            res = rs.getString("psw");
         }
         return res;
     }
@@ -216,8 +264,8 @@ public class BDD {
         System.out.println(rowsAffected + " ligne(s) insérée(s)");
     }
 
-    public void insertVolunteer(String nom, int age, int dpt) throws SQLException{
-        String sql = "INSERT INTO TVolunteer (id, nom, age, dpt) VALUES (?,?,?,?)";
+    public void insertVolunteer(String nom, int age, int dpt, String psw) throws SQLException{
+        String sql = "INSERT INTO TVolunteer (id, nom, age, dpt, psw) VALUES (?,?,?,?,?)";
         this.pstmt = conn.prepareStatement(sql);
 
         // Paramètres à insérer
@@ -226,6 +274,7 @@ public class BDD {
         pstmt.setString(2, nom);  
         pstmt.setInt(3, age);
         pstmt.setInt(4, dpt);
+        pstmt.setString(5, psw);
 
 
         int rowsAffected = pstmt.executeUpdate();
@@ -252,8 +301,8 @@ public class BDD {
         System.out.println(rowsAffected + " ligne(s) supprimée(s)");
     }
 
-    public void insertApplicant(String nom, int age, int dpt) throws SQLException{
-        String sql = "INSERT INTO TApplicant (id, nom, age, dpt) VALUES (?,?,?,?)";
+    public void insertApplicant(String nom, int age, int dpt, String psw) throws SQLException{
+        String sql = "INSERT INTO TApplicant (id, nom, age, dpt, psw) VALUES (?,?,?,?,?)";
         this.pstmt = conn.prepareStatement(sql);
 
         // Paramètres à insérer
@@ -262,6 +311,7 @@ public class BDD {
         pstmt.setString(2, nom);  
         pstmt.setInt(3, age);
         pstmt.setInt(4, dpt);
+        pstmt.setString(5, psw);
 
         int rowsAffected = pstmt.executeUpdate();
         System.out.println(rowsAffected + " ligne(s) insérée(s)");
@@ -287,8 +337,8 @@ public class BDD {
         System.out.println(rowsAffected + " ligne(s) supprimée(s)");
     }
 
-    public void insertValidator(String nom, int age, int dpt, String orga) throws SQLException{
-        String sql = "INSERT INTO TValidator (id, nom, age, dpt, orga) VALUES (?,?,?,?,?)";
+    public void insertValidator(String nom, int age, int dpt, String orga, String psw) throws SQLException{
+        String sql = "INSERT INTO TValidator (id, nom, age, dpt, orga, psw) VALUES (?,?,?,?,?,?)";
         this.pstmt = conn.prepareStatement(sql);
 
         // Paramètres à insérer
@@ -298,6 +348,7 @@ public class BDD {
         pstmt.setInt(3, age);
         pstmt.setInt(4, dpt);
         pstmt.setString(5, orga); 
+        pstmt.setString(6, psw);
 
         int rowsAffected = pstmt.executeUpdate();
         System.out.println(rowsAffected + " ligne(s) insérée(s)");
@@ -364,7 +415,7 @@ public class BDD {
     }
 
     public void printRequestApplicant(Applicant app) throws SQLException{
-        String sql = "SELECT TRequest.*, TAppliacnt FROM TRequest" + "JOIN TApplicant ON TApplicant.id = TRequest.id_applicant" + "WHERE TApplicant.nom =";
+        String sql = "SELECT TRequest.*, TAppliacnt FROM TRequest" + "JOIN TApplicant ON TApplicant.id = TRequest.id_applicant" + "WHERE TApplicant.nom = ?";
         this.pstmt = conn.prepareStatement(sql);
 
         pstmt.setString(1, app.getName());
@@ -403,7 +454,7 @@ public class BDD {
     }
 
     public void printRequestVolunteer(Volunteer vol) throws SQLException{
-        String sql = "SELECT TRequest.*, TVolunteer FROM TRequest" + "JOIN TVolunteer ON TVolunteer.id = TRequest.id_volunteer" + "WHERE TVolunteer.nom =";
+        String sql = "SELECT TRequest.*, TVolunteer FROM TRequest" + "JOIN TVolunteer ON TVolunteer.id = TRequest.id_volunteer" + "WHERE TVolunteer.nom = ?";
         this.pstmt = conn.prepareStatement(sql);
 
         pstmt.setString(1, vol.getName());
@@ -442,7 +493,7 @@ public class BDD {
     }
 
     public void printRequestValidator(Validator val) throws SQLException{
-        String sql = "SELECT TRequest.*, TValidator FROM TRequest" + "JOIN TValidator ON TValidator.id = TValidator.id_validator" + "WHERE TValidator.nom =";
+        String sql = "SELECT TRequest.*, TValidator FROM TRequest" + "JOIN TValidator ON TValidator.id = TValidator.id_validator" + "WHERE TValidator.nom = ?";
         this.pstmt = conn.prepareStatement(sql);
 
         pstmt.setString(1, val.getName());

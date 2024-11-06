@@ -90,6 +90,7 @@ public class BDDTest {
         verify(pstmt).setString(2, subj);
         verify(pstmt).setInt(3, app);
         verify(pstmt).setDate(4, date);
+        verify(pstmt).setDate(4, date);
         verify(pstmt).executeUpdate();
 
     }
@@ -99,12 +100,14 @@ public class BDDTest {
         String nom = "Test";
         int age = 30;
         int dpt = 101;
+        String psw = "psw";
 
-        bdd.insertVolunteer(nom, age, dpt);
+        bdd.insertVolunteer(nom, age, dpt, psw);
 
         verify(pstmt).setString(2, nom);
         verify(pstmt).setInt(3, age);
         verify(pstmt).setInt(4, dpt);
+        verify(pstmt).setString(5, psw);
         verify(pstmt).executeUpdate();
     }
 
@@ -132,12 +135,14 @@ public class BDDTest {
         String nom = "Test";
         int age = 25;
         int dpt = 102;
+        String psw = "psw";
 
-        bdd.insertApplicant(nom, age, dpt);
+        bdd.insertApplicant(nom, age, dpt, psw);
 
         verify(pstmt).setString(2, nom);
         verify(pstmt).setInt(3, age);
         verify(pstmt).setInt(4, dpt);
+        verify(pstmt).setString(5, psw);
         verify(pstmt).executeUpdate();
     }
 
@@ -147,13 +152,15 @@ public class BDDTest {
         int age = 40;
         int dpt = 103;
         String orga = "Organization X";
+        String psw="psw";
 
-        bdd.insertValidator(nom, age, dpt, orga);
+        bdd.insertValidator(nom, age, dpt, orga,psw);
 
         verify(pstmt).setString(2, nom);
         verify(pstmt).setInt(3, age);
         verify(pstmt).setInt(4, dpt);
         verify(pstmt).setString(5, orga);
+        verify(pstmt).setString(6, psw);
         verify(pstmt).executeUpdate();
     }
 

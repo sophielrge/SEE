@@ -5,8 +5,8 @@ import java.util.Scanner;
 
 public class Applicant extends User{
     
-    public Applicant(String n, int age, int dpt){
-        super(n, age, dpt);
+    public Applicant(String n, int age, int dpt, String psw){
+        super(n, age, dpt, psw);
     }
 
     public Applicant(){
