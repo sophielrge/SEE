@@ -22,6 +22,8 @@ CREATE TABLE TValidator (
     age INT CHECK (age>17),
     dpt INT NOT NULL,
     orga VARCHAR(100) NOT NULL,
+    note INT DEFAULT NULL,
+    nb_avis INT DEFAULT 0
     psw VARCHAR(100) NOT NULL
 );
 
