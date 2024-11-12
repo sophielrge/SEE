@@ -683,6 +683,36 @@ public class BDD {
         System.out.println("-----------------------------------------");
     }
 
+    public void printVolunteer(Request req) throws SQLException{
+        Volunteer vol = req.getVolunteer();
+        int id_vol = getID_Volunteer(vol);
+
+        String sql = "SELECT * FROM TVolunteer" + "Where id = ?";
+        this.pstmt = conn.prepareStatement(sql);
+
+        pstmt.setInt(1, id_vol);
+        ResultSet rs = pstmt.executeQuery();
+        
+        System.out.println("-----------------------------------------");
+        int id = rs.getInt("id");
+        String nom = rs.getString("nom");
+        int age = rs.getInt("age");
+        int dpt = rs.getInt("dpt");
+        int note = rs.getInt("note");
+        int nb_avis = rs.getInt("nb_avis");
+        
+        System.out.println("Volunteer n°" + id);
+        System.out.println("Name: " + nom);
+        System.out.println("Age: " + age);
+        System.out.println("Department: " + dpt);
+        System.out.println("Score: " + note);
+        System.out.println("Number of comments: " + nb_avis);
+
+        System.out.println("-----------------------------------------");
+
+    }
+
+
     //Changement 
     public boolean isValidStatus(String status) {
         return status.equals("P") || status.equals("A") || status.equals("R") || status.equals("C");
