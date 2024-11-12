@@ -9,6 +9,7 @@ import java.text.SimpleDateFormat;
 
 public class Menu {
     Scanner scanner = new Scanner(System.in);
+    boolean choix_compteB = true;
 
     public int menu_depart(){
         System.out.println("-----------------------------------------");
@@ -137,17 +138,30 @@ public class Menu {
         }
     }
 
-    public void terminer_requete(BDD base, Volunteer volunteer) throws SQLException{
+    public void print_request_volunteer(BDD base, Volunteer volunteer) throws SQLException{
         System.out.println("|Your requests                      :   |");
         base.printRequestVolunteer(volunteer);
+        System.out.println("-----------------------------------------");
+    }
+
+    public void terminer_requete(BDD base, Applicant applicant) throws SQLException{
+        System.out.println("|Your requests                      :   |");
+        base.printRequestApplicant(applicant);
         System.out.println("-----------------------------------------");
         System.out.println("|To finish a request,                   |");
         System.out.println("|enter its n°                           |");
         System.out.println("-----------------------------------------");
         int i6 = scanner.nextInt();
         Request rfinished = base.getRequest(i6);
-        volunteer.completeRequest(rfinished);
+        applicant.completeRequest(rfinished);
         base.updateRequestStatus(rfinished, "C");
+        System.out.println("|Request completed                      |");
+        System.out.println("|Enter a score for the volunteer        |");
+        System.out.println("-----------------------------------------");
+        int i7 = scanner.nextInt();
+        //base.updateVolunteerScore(rfinished, i7);
+        System.out.println("|Thank you                              |");
+        System.out.println("-----------------------------------------");
     }
 
     public Validator crea_valideur(BDD base) throws SQLException{
@@ -288,70 +302,81 @@ public class Menu {
     }
 
     public Menu(BDD base) throws SQLException, ParseException {
-        int i1 = menu_depart();
-        switch (i1) {
-            case 1: // creer un compte
-                int i2 = choix_compte();
-                switch (i2) {
-                    case 1: // Creation demandeur
-                        Applicant applicant = crea_demandeur(base);
+        while (true){
+            int i1 = menu_depart();//menu principal
+            switch (i1) {
+                case 0: 
+                    System.exit(0);
+                case 1: // creer un compte
+                    int i2 = choix_compte();
+                    switch (i2) {
+                        case 0: //retour
+                            break;   
+                        case 1: // Creation demandeur
+                            Applicant applicant = crea_demandeur(base);
+                            break;
+                        case 2: // creation benevole
+                            Volunteer volunteer= crea_bene(base);
+                            break;
+                        case 3: // compte valideur
+                            Validator validator = crea_valideur(base);
+                            break;
+                    }
+                    continue;
+                case 2:// se connecter
+                    int i10 = choix_compte();
+                    switch (i10){
+                        case 0:
                         break;
-                    case 2: // creation benevole
-                        Volunteer volunteer= crea_bene(base);
-                        break;
-                    case 3: // compte valideur
-                        Validator validator = crea_valideur(base);
-                        break;
-                }
-            break;
-            case 2:// se connecter
-                int i10 = choix_compte();
-                switch (i10){
-                    case 1: //demandeur
-                        Applicant applicant = charge_applicant(base);
-                        int i3 = menu_demandeur();
-                        switch (i3) {
-                            case 1:  // ajouter requête
-                                ajouter_requete(base, applicant);
-                                break;
-                            case 2: // consulter mes requêtes
-                                consulter_requetesA(base,applicant);
-                                break;
-                        }
-                    break;
-                    case 2: //volontaire
-                        Volunteer volunteer = charge_volontaire(base);
-                        int i4 = menu_benevole();
-                        switch (i4) {
-                            case 1: // afficher les reqêtes et en selectionner
-                                devenir_volontaire(base, volunteer);
-                                break;
-                            case 2: // consulter mes requêtes
-                                terminer_requete(base,volunteer);
-                                break;
-                        }
-                    break;
-                    case 3: //valideur
-                        Validator validator = charge_valideur(base);
-                        int i7 = menu_valideur();
-                        switch (i7) {
-                            case 1: //afficher requêtes en attente
-                                Request rchange = change_status(validator, base);
-                                int i9 = choisis_status();
-                                switch (i9) {
-                                    case 1: //Valider
-                                        valider_r(base, rchange, validator);
-                                        break;
-                                    case 2: //Refuser
-                                        refuser_r(base, rchange, validator);
-                                        break;
-                                }
-                                break;
-                            case 2: //afficher mes requêtes
-                                afficher_requetesV(validator, base);
-                                break;
-                        }
-                }
+                        case 1: //demandeur
+                            Applicant applicant = charge_applicant(base);
+                            int i3 = menu_demandeur();
+                            switch (i3) {
+                                case 1:  // ajouter requête
+                                    ajouter_requete(base, applicant);
+                                    break;
+                                case 2: // consulter mes requêtes
+                                    terminer_requete(base, applicant);
+                                    break;
+                            }
+                            break; 
+                        case 2: //volontaire
+                            Volunteer volunteer = charge_volontaire(base);
+                            int i4 = menu_benevole();
+                            switch (i4) {
+                                case 1: // afficher les reqêtes et en selectionner
+                                    devenir_volontaire(base, volunteer);
+                                    break;
+                                case 2: // consulter mes requêtes
+                                    print_request_volunteer(base, volunteer);
+                                    break;
+                            }
+                            break;
+                        case 3: //valideur
+                            Validator validator = charge_valideur(base);
+                            int i7 = menu_valideur();
+                            switch (i7) {
+                                case 1: //afficher requêtes en attente
+                                    Request rchange = change_status(validator, base);
+                                    //base.printVolunteer(rchange);
+                                    int i9 = choisis_status();
+                                    switch (i9) {
+                                        case 1: //Valider
+                                            valider_r(base, rchange, validator);
+                                            break;
+                                        case 2: //Refuser
+                                            refuser_r(base, rchange, validator);
+                                            break;
+                                    }
+                                    break;
+                                case 2: //afficher mes requêtes
+                                    afficher_requetesV(validator, base);
+                                    break;
+                            }
+                            break;
+                    }
+                    
+            }
         }
     }
 

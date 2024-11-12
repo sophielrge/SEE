@@ -24,4 +24,8 @@ public class Applicant extends User{
         return r;
     }
 
+    public void completeRequest(Request r){
+        r.setStatus('C');
+    }
+
 }
