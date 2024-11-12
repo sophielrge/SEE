@@ -7,14 +7,17 @@ public class User {
 
     private int dpt;
 
+    private String psw;
+
     public User(){
         
     }
 
-    public User(String name, int age, int dpt){
+    public User(String name, int age, int dpt, String psw){
         this.name = name;
         this.age = age;
         this.dpt = dpt;
+        this.psw = psw;
     }
 
     public int getDpt() {
@@ -39,5 +42,13 @@ public class User {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getPsw() {
+        return psw;
+    }
+
+    public void setPsw(String psw) {
+        this.psw = psw;
     }
 }

@@ -2,8 +2,8 @@ package org.yourcompany.yourproject;
 
 
 public class Volunteer extends User{
-    public Volunteer(String n, int age, int dpt){
-        super(n, age, dpt);
+    public Volunteer(String n, int age, int dpt, String psw){
+        super(n, age, dpt, psw);
     }
 
     public Volunteer(){
