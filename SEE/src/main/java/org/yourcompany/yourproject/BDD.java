@@ -318,8 +318,6 @@ public class BDD {
         System.out.println(rowsAffected + " ligne(s) supprimée(s)");
     }
 
-<<<<<<< HEAD
-=======
     public void insertApplicant(String nom, int age, int dpt, String psw) throws SQLException{
         String sql = "INSERT INTO TApplicant (id, nom, age, dpt, psw) VALUES (?,?,?,?,?)";
         this.pstmt = conn.prepareStatement(sql);
@@ -396,7 +394,6 @@ public class BDD {
 
     //Affichage du contenus des tables
 
->>>>>>> d5d1630 (ajout mdp)
     public void printRequest() throws SQLException{
         String sql = "SELECT * FROM TRequest";
         this.pstmt = conn.prepareStatement(sql);
@@ -432,19 +429,11 @@ public class BDD {
         System.out.println("-----------------------------------------");
     }
 
-<<<<<<< HEAD
-    public void printVolunteer(Request req) throws SQLException{
-        Volunteer vol = req.getVolunteer();
-        int id_vol = getID_Volunteer(vol);
-
-        String sql = "SELECT * FROM TVolunteer" + "Where id = ?";
-=======
     public void printRequestApplicant(Applicant app) throws SQLException{
         String sql = "SELECT TRequest.*, TAppliacnt FROM TRequest" + "JOIN TApplicant ON TApplicant.id = TRequest.id_applicant" + "WHERE TApplicant.nom = ?";
->>>>>>> d5d1630 (ajout mdp)
         this.pstmt = conn.prepareStatement(sql);
 
-        pstmt.setInt(1, id_vol);
+        pstmt.setString(1, app.getName());
         ResultSet rs = pstmt.executeQuery();
         
         System.out.println("-----------------------------------------");
@@ -466,8 +455,6 @@ public class BDD {
 
     }
 
-<<<<<<< HEAD
-=======
     public void printRequestVolunteer(Volunteer vol) throws SQLException{
         String sql = "SELECT TRequest.*, TVolunteer FROM TRequest" + "JOIN TVolunteer ON TVolunteer.id = TRequest.id_volunteer" + "WHERE TVolunteer.nom = ?";
         this.pstmt = conn.prepareStatement(sql);
@@ -699,7 +686,6 @@ public class BDD {
 
         System.out.println("-----------------------------------------");
     }
->>>>>>> d5d1630 (ajout mdp)
 
     //Changement 
     public boolean isValidStatus(String status) {
