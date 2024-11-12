@@ -9,14 +9,18 @@ import java.text.SimpleDateFormat;
 
 public class Menu {
     Scanner scanner = new Scanner(System.in);
+    boolean global_menu = true;
     boolean choix_compteB = true;
+    boolean applicant_menu = true;
+    boolean volunteer_menu = true;
+    boolean validator_menu = true;
 
     public int menu_depart(){
         System.out.println("-----------------------------------------");
         System.out.println("|               MENU SEE                |");
+        System.out.println("|0 - Quit                               |");
         System.out.println("|1 - Sign in                            |");
         System.out.println("|2 - Log in                             |");
-        System.out.println("|At any moment, enter 0 to go back      |");
         System.out.println("-----------------------------------------");
         int i = scanner.nextInt();
         scanner.nextLine();
@@ -159,7 +163,7 @@ public class Menu {
         System.out.println("|Enter a score for the volunteer        |");
         System.out.println("-----------------------------------------");
         int i7 = scanner.nextInt();
-        //base.updateVolunteerScore(rfinished, i7);
+        base.updateVolunteerScore(rfinished, i7);
         System.out.println("|Thank you                              |");
         System.out.println("-----------------------------------------");
     }
@@ -301,150 +305,14 @@ public class Menu {
         return va;
     }
 
-    public Validator crea_valideur(BDD base) throws SQLException{
-        System.out.println("|Enter your name                        |");
-        String name3 = scanner.nextLine();
-        System.out.println("|Enter your age                         |");
-        int age3 = scanner.nextInt();
-        scanner.nextLine();
-        System.out.println("|Enter your dpt                         |");
-        int dpt3 = scanner.nextInt();
-        scanner.nextLine();
-        System.out.println("|Enter your organization                |");
-        String org = scanner.nextLine();
-        System.out.println("|Enter a password                       |");
-        String psw = scanner.nextLine();
-        Validator validator = new Validator(name3, age3, dpt3, org, psw);
-        base.insertValidator(name3, age3, dpt3, org, psw);
-        System.out.println("|Applicant account created with success |");
-        System.out.println("-----------------------------------------");
-        return validator;
-    }
-
-    public int menu_valideur(){
-        System.out.println("|1 - Print pending requests             |");
-        System.out.println("|2 - View my requests                   |");
-        System.out.println("-----------------------------------------");
-        int i7 = scanner.nextInt();
-        scanner.nextLine();
-        return i7;
-    }
-
-    public Request change_status(Validator validator, BDD base) throws SQLException{
-        System.out.println("|Pending requests:                      |");
-        base.printRequestPending();
-        System.out.println("-----------------------------------------");
-        System.out.println("|To change a status request             |");
-        System.out.println("|enter its  n°                          |");
-        int i8 = scanner.nextInt();
-        scanner.nextLine();
-        Request rchange = base.getRequest(i8);
-        base.updateRequestValidator(rchange, validator);
-        System.out.println("-----------------------------------------");
-        return rchange;
-    }
-
-    public int choisis_status(){
-        System.out.println("|1 - Approve the volunteer              |");
-        System.out.println("|2 - Refuse the volunteer                 |");
-        int i9 = scanner.nextInt();
-        scanner.nextLine();
-        return i9;
-    }
-
-    public void valider_r(BDD base, Request rchange, Validator validator) throws SQLException{
-        validator.validerR(rchange);
-        base.updateRequestStatus(rchange, "A");
-    }
-
-    public void refuser_r(BDD base, Request rchange, Validator validator) throws SQLException{
-        System.out.println("|Please enter a motif                   |");
-        System.out.println("-----------------------------------------");
-        String motif = scanner.nextLine();
-        validator.refuserR(rchange, motif);
-        base.updateRequestStatus(rchange, "R");
-        base.updateRequestMotif(rchange, motif);
-    }
-
-    public void afficher_requetesV(Validator validator, BDD base) throws SQLException{
-        System.out.println("|Your requests                      :   |");
-        base.printRequestValidator(validator);
-        System.out.println("-----------------------------------------");
-    }
-
-    public Applicant charge_applicant(BDD base) throws SQLException{
-        boolean psw_ok = false;
-        int id = -1;
-        while(!psw_ok){
-            System.out.println("|Enter your id                          |");
-            id = scanner.nextInt();
-            scanner.nextLine();
-            System.out.println("|Enter your password                    |");
-            String psw = scanner.nextLine();
-            if (psw.equals(base.get_psw_Applicant(id))){
-                psw_ok = true;
-            }else {
-                System.out.println("|Wrong id or psw                    |");
-            }
-        }
-        System.out.println("-----------------------------------------");
-        Applicant ap = base.getApplicant(id);
-        System.out.println("Welcome " + ap.getName());
-        System.out.println("-----------------------------------------");
-        return ap;
-    }
-
-    public Volunteer charge_volontaire(BDD base) throws SQLException{
-        boolean psw_ok = false;
-        int id = -1;
-        while(!psw_ok){
-            System.out.println("|Enter your id                          |");
-            id = scanner.nextInt();
-            scanner.nextLine();
-            System.out.println("|Enter your password                    |");
-            String psw = scanner.nextLine();
-            if (psw.trim().equals(base.get_psw_Volunteer(id).trim())){
-                psw_ok = true;
-            }else {
-                System.out.println("|Wrong id or psw                    |");
-            }
-        }
-        System.out.println("-----------------------------------------");
-        Volunteer vo = base.getVolunteer(id);
-        System.out.println("Welcome " + vo.getName());
-        System.out.println("-----------------------------------------");
-        return vo;
-    }
-
-    public Validator charge_valideur(BDD base) throws SQLException{
-        boolean psw_ok = false;
-        int id = -1;
-        while(!psw_ok){
-            System.out.println("|Enter your id                          |");
-            id = scanner.nextInt();
-            scanner.nextLine();
-            System.out.println("|Enter your password                    |");
-            String psw = scanner.nextLine();
-            if (psw == base.get_psw_Validator(id)){
-                psw_ok = true;
-            }else {
-                System.out.println("|Wrong id or psw                    |");
-            }
-        }
-        System.out.println("-----------------------------------------");
-        Validator va = base.getValidator(id);
-        System.out.println("Welcome " + va.getName());
-        System.out.println("-----------------------------------------");
-        return va;
-    }
-
     public Menu(BDD base) throws SQLException, ParseException {
-<<<<<<< HEAD
-        while (true){
+        while (global_menu){
+            choix_compteB = true;
             int i1 = menu_depart();//menu principal
             switch (i1) {
                 case 0: 
-                    System.exit(0);
+                    global_menu = false;
+                    break;
                 case 1: // creer un compte
                     int i2 = choix_compte();
                     switch (i2) {
@@ -460,128 +328,83 @@ public class Menu {
                             Validator validator = crea_valideur(base);
                             break;
                     }
-                    continue;
+                    break;
                 case 2:// se connecter
-                    int i10 = choix_compte();
-                    switch (i10){
-                        case 0:
-                        break;
-                        case 1: //demandeur
-                            Applicant applicant = charge_applicant(base);
-                            int i3 = menu_demandeur();
-                            switch (i3) {
-                                case 1:  // ajouter requête
-                                    ajouter_requete(base, applicant);
-                                    break;
-                                case 2: // consulter mes requêtes
-                                    terminer_requete(base, applicant);
-                                    break;
-                            }
-                            break; 
-                        case 2: //volontaire
-                            Volunteer volunteer = charge_volontaire(base);
-                            int i4 = menu_benevole();
-                            switch (i4) {
-                                case 1: // afficher les reqêtes et en selectionner
-                                    devenir_volontaire(base, volunteer);
-                                    break;
-                                case 2: // consulter mes requêtes
-                                    print_request_volunteer(base, volunteer);
-                                    break;
-                            }
-                            break;
-                        case 3: //valideur
-                            Validator validator = charge_valideur(base);
-                            int i7 = menu_valideur();
-                            switch (i7) {
-                                case 1: //afficher requêtes en attente
-                                    Request rchange = change_status(validator, base);
-                                    //base.printVolunteer(rchange);
-                                    int i9 = choisis_status();
-                                    switch (i9) {
-                                        case 1: //Valider
-                                            valider_r(base, rchange, validator);
+                    while (choix_compteB){
+                        applicant_menu = true;
+                        volunteer_menu = true;
+                        validator_menu = true;
+                        int i10 = choix_compte();
+                        switch (i10){
+                            case 0:
+                                choix_compteB = false;
+                                break;
+                            case 1: //demandeur
+                                Applicant applicant = charge_applicant(base);
+                                while (applicant_menu){
+                                    int i3 = menu_demandeur();
+                                    switch (i3) {
+                                        case 0: 
+                                            applicant_menu = false;
                                             break;
-                                        case 2: //Refuser
-                                            refuser_r(base, rchange, validator);
+                                        case 1:  // ajouter requête
+                                            ajouter_requete(base, applicant);
+                                            break;
+                                        case 2: // consulter mes requêtes
+                                            terminer_requete(base, applicant);
                                             break;
                                     }
-                                    break;
-                                case 2: //afficher mes requêtes
-                                    afficher_requetesV(validator, base);
-                                    break;
-                            }
-                            break;
-                    }
-                    
-            }
-=======
-        int i1 = menu_depart();
-        switch (i1) {
-            case 1: // creer un compte
-                int i2 = choix_compte();
-                switch (i2) {
-                    case 1: // Creation demandeur
-                        Applicant applicant = crea_demandeur(base);
-                        break;
-                    case 2: // creation benevole
-                        Volunteer volunteer= crea_bene(base);
-                        break;
-                    case 3: // compte valideur
-                        Validator validator = crea_valideur(base);
-                        break;
-                }
-            break;
-            case 2:// se connecter
-                int i10 = choix_compte();
-                switch (i10){
-                    case 1: //demandeur
-                        Applicant applicant = charge_applicant(base);
-                        int i3 = menu_demandeur();
-                        switch (i3) {
-                            case 1:  // ajouter requête
-                                ajouter_requete(base, applicant);
-                                break;
-                            case 2: // consulter mes requêtes
-                                consulter_requetesA(base,applicant);
-                                break;
-                        }
-                    break;
-                    case 2: //volontaire
-                        Volunteer volunteer = charge_volontaire(base);
-                        int i4 = menu_benevole();
-                        switch (i4) {
-                            case 1: // afficher les reqêtes et en selectionner
-                                devenir_volontaire(base, volunteer);
-                                break;
-                            case 2: // consulter mes requêtes
-                                terminer_requete(base,volunteer);
-                                break;
-                        }
-                    break;
-                    case 3: //valideur
-                        Validator validator = charge_valideur(base);
-                        int i7 = menu_valideur();
-                        switch (i7) {
-                            case 1: //afficher requêtes en attente
-                                Request rchange = change_status(validator, base);
-                                int i9 = choisis_status();
-                                switch (i9) {
-                                    case 1: //Valider
-                                        valider_r(base, rchange, validator);
-                                        break;
-                                    case 2: //Refuser
-                                        refuser_r(base, rchange, validator);
-                                        break;
+                                }
+                                break; 
+                            case 2: //volontaire
+                                Volunteer volunteer = charge_volontaire(base);
+                                while (volunteer_menu){
+                                    int i4 = menu_benevole();
+                                    switch (i4) {
+                                        case 0:
+                                            volunteer_menu = false;
+                                            break;
+                                        case 1: // afficher les reqêtes et en selectionner
+                                            devenir_volontaire(base, volunteer);
+                                            break;
+                                        case 2: // consulter mes requêtes
+                                            print_request_volunteer(base, volunteer);
+                                            break;
+                                    }
                                 }
                                 break;
-                            case 2: //afficher mes requêtes
-                                afficher_requetesV(validator, base);
+                            case 3: //valideur
+                                Validator validator = charge_valideur(base);
+                                while (validator_menu){
+                                    int i7 = menu_valideur();
+                                    switch (i7) {
+                                        case 0:
+                                            validator_menu = false;
+                                            break;
+                                        case 1: //afficher requêtes en attente
+                                            Request rchange = change_status(validator, base);
+                                            //base.printVolunteer(rchange);
+                                            int i9 = choisis_status();
+                                            switch (i9) {
+                                                case 1: //Valider
+                                                    valider_r(base, rchange, validator);
+                                                    break;
+                                                case 2: //Refuser
+                                                    refuser_r(base, rchange, validator);
+                                                    break;
+                                            }
+                                            break;
+                                        case 2: //afficher mes requêtes
+                                            afficher_requetesV(validator, base);
+                                            break;
+                                    }
+                                }
                                 break;
                         }
-                }
->>>>>>> d5d1630 (ajout mdp)
+                    }  
+            }
         }
+        System.exit(0);
     }
 
 }

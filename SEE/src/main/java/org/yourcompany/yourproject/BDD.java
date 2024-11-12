@@ -430,7 +430,7 @@ public class BDD {
     }
 
     public void printRequestApplicant(Applicant app) throws SQLException{
-        String sql = "SELECT TRequest.*, TAppliacnt FROM TRequest" + "JOIN TApplicant ON TApplicant.id = TRequest.id_applicant" + "WHERE TApplicant.nom = ?";
+        String sql = "SELECT * FROM TRequest " + "JOIN TApplicant ON TApplicant.id = TRequest.id_applicant " + "WHERE TApplicant.nom = ?";
         this.pstmt = conn.prepareStatement(sql);
 
         pstmt.setString(1, app.getName());
@@ -441,22 +441,18 @@ public class BDD {
         String nom = rs.getString("nom");
         int age = rs.getInt("age");
         int dpt = rs.getInt("dpt");
-        int note = rs.getInt("note");
-        int nb_avis = rs.getInt("nb_avis");
         
         System.out.println("Volunteer n°" + id);
         System.out.println("Name: " + nom);
         System.out.println("Age: " + age);
         System.out.println("Department: " + dpt);
-        System.out.println("Score: " + note);
-        System.out.println("Number of comments: " + nb_avis);
 
         System.out.println("-----------------------------------------");
 
     }
 
     public void printRequestVolunteer(Volunteer vol) throws SQLException{
-        String sql = "SELECT TRequest.*, TVolunteer FROM TRequest" + "JOIN TVolunteer ON TVolunteer.id = TRequest.id_volunteer" + "WHERE TVolunteer.nom = ?";
+        String sql = "SELECT TRequest.*, TVolunteer FROM TRequest " + "JOIN TVolunteer ON TVolunteer.id = TRequest.id_volunteer " + "WHERE TVolunteer.nom = ?";
         this.pstmt = conn.prepareStatement(sql);
 
         pstmt.setString(1, vol.getName());
@@ -495,7 +491,7 @@ public class BDD {
     }
 
     public void printRequestValidator(Validator val) throws SQLException{
-        String sql = "SELECT TRequest.*, TValidator FROM TRequest" + "JOIN TValidator ON TValidator.id = TValidator.id_validator" + "WHERE TValidator.nom = ?";
+        String sql = "SELECT TRequest.*, TValidator FROM TRequest " + "JOIN TValidator ON TValidator.id = TValidator.id_validator " + "WHERE TValidator.nom = ?";
         this.pstmt = conn.prepareStatement(sql);
 
         pstmt.setString(1, val.getName());
