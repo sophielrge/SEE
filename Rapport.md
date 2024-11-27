@@ -4,14 +4,13 @@
 ## 1. Introduction
 
 ### Contexte du projet :
-Présentation succincte de l’application : une plateforme pour aider les personnes vulnérables grâce à des bénévoles.
-Objectifs principaux (ex. simplifier la mise en relation entre demandeurs d'aide et bénévoles, assurer la validation des missions).
 
-Rôles des membres :
-Description des responsabilités des membres de l’équipe.
+De nombreuses personnes se trouvent isolées, que ce soit à cause d’un éloignement familial ou de problèmes de santé invalidants. Ces situations créent des besoins spécifiques, souvent impossibles à satisfaire sans aide extérieure. Par exemple, il peut s’agir de récupérer un colis pour une personne âgée ou d’assurer le lavage de vêtements durant une hospitalisation, des tâches qui requièrent un soutien extérieur fiable.
 
-Technologies utilisées :
-Langage de programmation (ex. Java), outils de gestion (Jira, GitHub), outils DevOps (Maven, GitHub Actions).
+
+Ce projet vise à concevoir une application destinée au bénévolat. Elle permettra aux personnes en difficulté de faire leurs demandes, et que ces dernières soietn alors pris en charge par un bénévole.
+
+Pour organiser ce projet, nous avons utilisé Jira afin de définir et prioriser les user stories, suivre l’avancement des tâches et gérer les sprints de manière agile. Côté développement, nous avons choisi Java comme langage principal. Nous avons également utilisé GitHub pour le contrôle de version, facilitant la travail au sein de l’équipe.
 
 ## 2. Application de la méthode Agile
 Framework choisi :
