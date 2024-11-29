@@ -429,26 +429,35 @@ public class BDD {
         System.out.println("-----------------------------------------");
     }
 
-    public void printRequestApplicant(Applicant app) throws SQLException{
-        String sql = "SELECT * FROM TRequest " + "JOIN TApplicant ON TApplicant.id = TRequest.id_applicant " + "WHERE TApplicant.nom = ?";
+    public void printRequestApplicant(Applicant app) throws SQLException {
+        String sql = "SELECT * FROM TRequest "
+                   + "JOIN TApplicant ON TApplicant.id = TRequest.id_applicant "
+                   + "WHERE TApplicant.nom = ?";
         this.pstmt = conn.prepareStatement(sql);
-
+    
         pstmt.setString(1, app.getName());
         ResultSet rs = pstmt.executeQuery();
         
         System.out.println("-----------------------------------------");
-        int id = rs.getInt("id");
-        String nom = rs.getString("nom");
-        int age = rs.getInt("age");
-        int dpt = rs.getInt("dpt");
-        
-        System.out.println("Volunteer n°" + id);
-        System.out.println("Name: " + nom);
-        System.out.println("Age: " + age);
-        System.out.println("Department: " + dpt);
-
+    
+        // Vérifie si le ResultSet contient des lignes avant de tenter de lire
+        if (rs.next()) {
+            // Si une ligne existe, on peut lire les données
+            int id = rs.getInt("id");
+            String nom = rs.getString("nom");
+            int age = rs.getInt("age");
+            int dpt = rs.getInt("dpt");
+    
+            System.out.println("Volunteer n°" + id);
+            System.out.println("Name: " + nom);
+            System.out.println("Age: " + age);
+            System.out.println("Department: " + dpt);
+        } else {
+            // Si aucune ligne n'est retournée, on affiche un message d'erreur
+            System.out.println("No request found for applicant: " + app.getName());
+        }
+    
         System.out.println("-----------------------------------------");
-
     }
 
     public void printRequestVolunteer(Volunteer vol) throws SQLException{
@@ -739,6 +748,52 @@ public class BDD {
             System.out.println("Status updated successfully for query n°" + requestId);
         } else {
             System.out.println("No request with the ID: " + requestId);
+        }
+    }
+
+    public void updateRequestStatusApplicant(Request req, String newStatus) throws SQLException {
+        int requestId = getID_Request(req);
+    
+        // Vérifie que le statut actuel est "A"
+        String currentStatus = getCurrentStatus(requestId); // Méthode à définir pour obtenir le statut actuel de la requête
+    
+        if (!"A".equals(currentStatus)) {
+            System.out.println("Le statut actuel n'est pas 'Aprouvé', aucune mise à jour n'a été effectuée.");
+            return; // Si le statut actuel n'est pas "A", ne rien faire
+        }
+    
+        if (!isValidStatus(newStatus)) {
+            throw new IllegalArgumentException("Statut invalide : " + newStatus);
+        }
+    
+        String sql = "UPDATE TRequest SET status = ? WHERE id = ?";
+    
+        this.pstmt = conn.prepareStatement(sql);
+        
+        pstmt.setString(1, newStatus);
+        pstmt.setInt(2, requestId);
+        
+        int rowsAffected = pstmt.executeUpdate();
+    
+        if (rowsAffected > 0) {
+            System.out.println("Status updated successfully for query n°" + requestId);
+        } else {
+            System.out.println("No request with the ID: " + requestId);
+        }
+    }
+    
+    // Méthode pour obtenir le statut actuel de la requête
+    private String getCurrentStatus(int requestId) throws SQLException {
+        String sql = "SELECT status FROM TRequest WHERE id = ?";
+        this.pstmt = conn.prepareStatement(sql);
+        pstmt.setInt(1, requestId);
+    
+        ResultSet rs = pstmt.executeQuery();
+        
+        if (rs.next()) {
+            return rs.getString("status"); // Retourne le statut actuel
+        } else {
+            throw new SQLException("Request with ID " + requestId + " not found.");
         }
     }
 

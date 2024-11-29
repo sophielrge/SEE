@@ -161,7 +161,7 @@ public class Menu {
         int i6 = scanner.nextInt();
         Request rfinished = base.getRequest(i6);
         applicant.completeRequest(rfinished);
-        base.updateRequestStatus(rfinished, "C");
+        base.updateRequestStatusApplicant(rfinished, "C");
         System.out.println("|Request completed                      |");
         System.out.println("|Enter a score for the volunteer        |");
         System.out.println("-----------------------------------------");
