@@ -1,19 +1,22 @@
 package org.yourcompany.yourproject;
 
-import java.util.Calendar;
-import java.util.Date;
-import java.util.Scanner;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Scanner;
 
 public class Menu {
-    Scanner scanner = new Scanner(System.in);
+    Scanner scanner;
     boolean global_menu = true;
     boolean choix_compteB = true;
     boolean applicant_menu = true;
     boolean volunteer_menu = true;
     boolean validator_menu = true;
+
+    public Menu(){
+        this.scanner = new Scanner(System.in);
+    }
 
     public int menu_depart(){
         System.out.println("-----------------------------------------");
@@ -305,7 +308,7 @@ public class Menu {
         return va;
     }
 
-    public Menu(BDD base) throws SQLException, ParseException {
+    public void menu(BDD base) throws SQLException, ParseException {
         while (global_menu){
             choix_compteB = true;
             int i1 = menu_depart();//menu principal
@@ -405,6 +408,14 @@ public class Menu {
             }
         }
         System.exit(0);
+    }
+
+    public Scanner getScanner() {
+        return scanner;
+    }
+
+    public void setScanner(Scanner scanner) {
+        this.scanner = scanner;
     }
 
 }
