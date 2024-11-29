@@ -13,28 +13,21 @@ Ce projet vise à concevoir une application destinée au bénévolat. Elle perme
 Pour organiser ce projet, nous avons utilisé Jira afin de définir et prioriser les user stories, suivre l’avancement des tâches et gérer les sprints de manière agile. Côté développement, nous avons choisi Java comme langage principal. Nous avons également utilisé GitHub pour le contrôle de version, facilitant la travail au sein de l’équipe.
 
 ## 2. Application de la méthode Agile
-Framework choisi :
-Justification du choix (Scrum, Kanban ou autre). Par exemple, Scrum est pertinent pour gérer des sprints et prioriser les tâches.
+Metchode Scrum :
+Avant de se lancer dans le développement, nous avons cherché à définir les acteurs concernés par l’application, ainsi que les fonctionnalités les plus importantes en se basant sur le cahier des charges. Il s’agit ici de trois types de personnes, celles en situation de vulnérabilité, les bénévoles, et des personnes responsables, dont l’approbation est indispensable pour permettre à un volontaire de répondre à un service. Pour s’organiser au mieux, nous avons planifié notre travail en suivant la méthode Scrum, à l’aide d’un Jira. 
 
 Gestion des user stories :
-Création des user stories avec Jira pour chaque fonctionnalité :
-Exemple : "En tant que bénévole, je veux pouvoir m'inscrire pour répondre à des demandes d'aide."
-Priorisation des tâches avec un backlog.
+Lors de nos premières réunions, nous avons réalisé le backlog de notre projet. Pour cela, nous avons exprimé toutes les fonctionnalités nécessaires sous la forme d’user stories. Par exemple “En tant que bénévole, je veux pouvoir créer un compte pour répondre à des demandes d’aide”. Nous avons ensuite ordonné ces tâches à l’aide de niveau de priorité afin de respecter les demandes du client.
 
-Planification des sprints :
-Organisation en sprints (par exemple, chaque sprint dure 2 semaines).
-Objectifs des sprints (fonctionnalités livrées, tests, etc.).
-
-Réunions et suivi :
-Récapitulatif des réunions effectuées (si applicable) : daily scrum, planification, rétrospective.
+Planification et suivi des sprints :
+Nous avons ensuite organisé notre avancement en sprints. Chaque semaine dans l’idéal, nous avons choisis deux ou trois user stories réalisable par les membres de notre équipe dans le temps imparti. Les réunions nous ont permise de discuter ensemble des sous-tâches nécessaires à concevoir, programmer et tester afin d’implémenter chaque nouvelle fonctionnalité. La semaine suivante, nous terminions le sprint en récapitulant ce qui fonctionnait ou non, puis planifions le suivant.
 
 ## 3. Organisation de Git
 ### Structure du dépôt :
-Branches principales :
-main pour les versions stables.
-develop pour les fonctionnalités en cours.
-Branches secondaires :
-Une branche par fonctionnalité (ex. feature/add-user).
+Afin de collaborer facilement et de pouvoir travailler à distance, nous avons utilisé un dépôt Git. Chaque membre a ainsi pu travailler de son côté en synchronisant le développement à l’aide des commandes git tout en respectant certaines conditions. Lors de la création du projet, nous avons commencé par ajouter un fichier .gitignore comportant les fichiers à ne pas ajouter sur le dépôt lors des commit (par exemple les fichiers .class) afin d’éviter des conflits inutils. Chaque nouveau fichier a dû être ajouté au dépôt avec git add. Tout au long du développement, il nous a été nécessaire de bien répartir le travail et de communiquer pour être sûres que l’on ne modifiait pas les mêmes classes au même moment. Nous avons régulièrement réalisé des commit, avec des noms clairs pour y revenir facilement en cas de besoin, et des tags lors de moments clefs. 
+
+### Ameliorations possibles
+Malgré nos précautions, nous avons parfois eu des conflits que nous avons heureusement pu résoudre dans le merge editor. Afin d’éviter ce genre de problème la prochaine fois, il faut en fait travailler sur différentes branches, principale et secondaires. La branche main contient les versions stables, et on créé une branche secondaire pour chaque fonctionnalité en cours d’implémentation. On s’assure qu’une branche est stable avant de la merge avec la branche principale. Cette méthode de travail permet d’éviter tout conflit.
 
 Workflow Git :
 Explication du processus de développement :
@@ -44,9 +37,6 @@ Pull requests pour fusionner des branches.
 Gestion des conflits et validation des merges.
 Exemple de commandes utilisées :
 git pull, git branch, git merge, git rebase, etc.
-
-Collaborations via GitHub :
-Répartition des tâches et attribution des issues.
 
 ## 4. Mise en place de l'intégration continue (DevOps)
 
@@ -63,8 +53,11 @@ Notifications :
 Configuration d’alertes (par mail ou dans GitHub) pour signaler les erreurs ou succès.
 Difficultés et solutions :
 Problèmes rencontrés lors de la configuration ou des tests.
+parler du gitignore aussi je pense 
 
 ## 5. Conclusion
+Ce projet nous a permis de développer une application en Java avec la manipulation de base de données, tout en nous familiarisant avec des méthodes de travail indispensables pour le travail en équipe pour des clients. Nous avons aussi pu remarquer l’importance de l’utilisation des outils disponibles pour l’automatisation du développement tels que Maven et JUnit.  Le PDLA nous a ainsi apporté une expérience non négligeable dans la réalisation de projet autant par ses aspects techniques, qu’organisationnels.
+
 Résumé des réalisations :
 Points forts de la méthode agile, de l'organisation Git, et de l'intégration continue.
 
