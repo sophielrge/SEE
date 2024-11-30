@@ -8,8 +8,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.ZoneId;
 
-import org.Traitement_texte;
-
 public class BDD {
 
     private String url = null;

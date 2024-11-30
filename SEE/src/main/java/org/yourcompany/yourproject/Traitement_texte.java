@@ -1,4 +1,4 @@
-package org;
+package org.yourcompany.yourproject;
 
 import java.io.Console;
 
