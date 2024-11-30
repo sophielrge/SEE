@@ -444,10 +444,12 @@ public class BDD {
     }
 
     public Boolean printRequestVolunteer(Volunteer vol) throws SQLException{
-        String sql = "SELECT TRequest.*, TVolunteer FROM TRequest " + "JOIN TVolunteer ON TVolunteer.id = TRequest.id_volunteer " + "WHERE TVolunteer.nom = ?";
+        String sql = "SELECT TRequest.*, TVolunteer FROM TRequest " + "JOIN TVolunteer ON TVolunteer.id = TRequest.id_volunteer " + "WHERE TVolunteer.nom = ? AND TVolunteer.age = ? AND TVolunteer.dpt = ?";
         this.pstmt = conn.prepareStatement(sql);
 
         pstmt.setString(1, vol.getName());
+        pstmt.setInt(2, vol.getAge());
+        pstmt.setInt(3, vol.getDpt());
         
         ResultSet rs = pstmt.executeQuery();
 
@@ -464,7 +466,7 @@ public class BDD {
             String status = rs.getString("status");
             Date helpD = rs.getDate("helpday");
             String motif = rs.getString("motif");
-            int val = rs.getInt("id");
+            int val = rs.getInt("id_validator");
 
             switch(status){
                 case "P" -> status = "Pending";
@@ -489,10 +491,12 @@ public class BDD {
     }
 
     public Boolean printRequestValidator(Validator val) throws SQLException{
-        String sql = "SELECT TRequest.*, TValidator FROM TRequest " + "JOIN TValidator ON TValidator.id = TValidator.id_validator " + "WHERE TValidator.nom = ?";
+        String sql = "SELECT TRequest.*, TValidator FROM TRequest " + "JOIN TValidator ON TValidator.id = TValidator.id_validator " + "WHERE TValidator.nom = ? AND TValidator.age = ? AND TValidator.dpt = ?";
         this.pstmt = conn.prepareStatement(sql);
 
         pstmt.setString(1, val.getName());
+        pstmt.setInt(2, val.getAge());
+        pstmt.setInt(3, val.getDpt());
         
         ResultSet rs = pstmt.executeQuery();
 
@@ -509,7 +513,8 @@ public class BDD {
             String status = rs.getString("status");
             Date helpD = rs.getDate("helpday");
             String motif = rs.getString("motif");
-            int validator = rs.getInt("id");
+            int validator = rs.getInt("id_validator");
+            int volunteer = rs.getInt("id_volunteer");
             
 
             switch(status){
@@ -524,6 +529,7 @@ public class BDD {
             System.out.println("Subject: " + subject);
             System.out.println("Date: " + helpD);
             System.out.println("Status: " + status);
+
             if("Rejected".equals(status)){
                 System.out.println("Reason: " + motif);
                 System.out.println("Validator: " + validator);
@@ -554,7 +560,7 @@ public class BDD {
             String status = rs.getString("status");
             Date helpD = rs.getDate("helpday");
             String motif = rs.getString("motif");
-            int validator = rs.getInt("id");
+            int validator = rs.getInt("id_validator");
             
 
             switch(status){
@@ -598,7 +604,7 @@ public class BDD {
             String status = rs.getString("statut");
             Date helpD = rs.getDate("helpday");
             String motif = rs.getString("motif");
-            int validator = rs.getInt("id");
+            int validator = rs.getInt("id_validator");
             
 
             switch(status){
@@ -938,7 +944,7 @@ public class BDD {
         int score = rs.getInt("score");
         System.out.println("|Score:                                    |" + score);
         int nb_avis = rs.getInt("nb_avis");
-        System.out.println("|Number of comments:                       |" + nb_avis);
+        System.out.println("|Number of scores:                       |" + nb_avis);
         System.out.println("-----------------------------------------");
 
     }
