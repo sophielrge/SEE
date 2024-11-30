@@ -190,14 +190,7 @@ public class BDD {
 
         pstmt.setInt(1, id);
 
-        ResultSet rs = pstmt.executeQuery();
-
-        if(rs.next()){
-            res = rs.getString("psw");
-            System.out.println("récupéré : "+res);
-        }else{
-            System.out.println("pas récupéré");
-        }
+        pstmt.executeQuery();
         return res;
     }
 
@@ -816,9 +809,9 @@ public class BDD {
         int rowsAffected = pstmt.executeUpdate();
     
         if (rowsAffected > 0) {
-            tt.write_green("Statut mis à jour avec succès pour la requête n°" + requestId);
+            tt.write_green("Status updated successfully for query n°" + requestId);
         } else {
-            tt.write_red("Aucune requête avec l'ID: " + requestId);
+            tt.write_red("No request with the ID: " + requestId);
         }
     }
     
