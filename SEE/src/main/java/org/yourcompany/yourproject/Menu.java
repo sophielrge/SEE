@@ -55,7 +55,7 @@ public class Menu {
         scanner.nextLine();
         tt.write_yellow("|Enter a password                       |");
         //String psw = scanner.nextLine();
-        String psw = tt.ask_password();
+        String psw = tt.ask_password_sign();
         Applicant applicant = new Applicant(name, age, dpt, psw);
         base.insertApplicant(name, age, dpt, psw);
         tt.write_green("-----------------------------------------");
@@ -115,7 +115,7 @@ public class Menu {
         scanner.nextLine();
         tt.write_yellow("Enter a password                       |");
         //String psw = scanner.nextLine();
-        String psw = tt.ask_password();
+        String psw = tt.ask_password_sign();
         Volunteer volunteer = new Volunteer(name2, age2, dpt2, psw);
         base.insertVolunteer(name2, age2, dpt2, psw);
         tt.write_green("-----------------------------------------");
@@ -156,14 +156,15 @@ public class Menu {
         int i6 = scanner.nextInt();
         scanner.nextLine();
         switch (i6){
-            case 1:
+            case 1 -> {
                 volunteer.choseRequest(rchosen);
                 base.updateRequestStatus(rchosen, "P");
                 base.updateRequestVolunteer(rchosen, volunteer);
                 tt.write_green("|You are the volunteer!                 |");
                 System.out.println("-----------------------------------------");
-            case 2: 
-            break;
+            }
+            case 2 -> tt.write_yellow("|You are not the volunteer!             |");
+            default -> tt.write_red("|Wrong choice                         |");
         }
         return true;
     }
@@ -215,7 +216,7 @@ public class Menu {
         String org = scanner.nextLine();
         tt.write_yellow("|Enter a password                       |");   
         //String psw = scanner.nextLine();
-        String psw = tt.ask_password();
+        String psw = tt.ask_password_sign();
         Validator validator = new Validator(name3, age3, dpt3, org, psw);
         base.insertValidator(name3, age3, dpt3, org, psw);
         tt.write_green("-----------------------------------------");
@@ -225,7 +226,7 @@ public class Menu {
         tt.write_green("-----------------------------------------");
         return validator;
     }
-    
+
     public int menu_valideur(){
         tt.write_yellow("-----------------------------------------");
         tt.write_yellow("|0 - Go back                            |");
@@ -303,7 +304,8 @@ public class Menu {
             id = scanner.nextInt();
             scanner.nextLine();
             tt.write_yellow("|Enter your password                    |");
-            String psw = scanner.nextLine();
+            //String psw = scanner.nextLine();
+            String psw = tt.ask_password_log();
             if (psw.equals(base.get_psw_Applicant(id))){
                 psw_ok = true;
             }else {
@@ -327,7 +329,7 @@ public class Menu {
             scanner.nextLine();
             tt.write_yellow("|Enter your password                    |");
             //String psw = scanner.nextLine();
-            String psw = tt.ask_password();
+            String psw = tt.ask_password_log();
             if (psw.trim().equals(base.get_psw_Volunteer(id).trim())){
                 psw_ok = true;
             }else {
@@ -351,8 +353,8 @@ public class Menu {
             scanner.nextLine();
             tt.write_yellow("|Enter your password                    |");
             //String psw = scanner.nextLine();
-            String psw = tt.ask_password();
-            if (psw == base.get_psw_Validator(id)){
+            String psw = tt.ask_password_log();
+            if (psw.equals(base.get_psw_Validator(id))){
                 psw_ok = true;
             }else {
                 tt.write_red("|Wrong id or psw                    |");
@@ -465,7 +467,10 @@ public class Menu {
                                             }
                                             break;
                                         case 2: //afficher mes requêtes
-                                            afficher_requetesV(validator, base);
+                                            boolean are_requests = afficher_requetesV(validator, base);
+                                            if (!are_requests){
+                                                break;
+                                            }
                                             break;
                                         default:
                                             tt.write_red("|Wrong choice                         |");

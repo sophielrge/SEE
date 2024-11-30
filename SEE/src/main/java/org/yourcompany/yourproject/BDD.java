@@ -73,7 +73,7 @@ public class BDD {
     public Validator getValidator(int id) throws SQLException{
         Validator val = null;
 
-        String sql = "SELECT id, nom, age, dpt, psw FROM TValidator "
+        String sql = "SELECT id, nom, age, dpt, orga, psw FROM TValidator "
         + "WHERE id = ?";
         
         this.pstmt = conn.prepareStatement(sql);
@@ -87,6 +87,7 @@ public class BDD {
             val.setName(rs.getString("nom"));
             val.setAge(rs.getInt("age"));
             val.setDpt(rs.getInt("dpt"));
+            val.setPsw(rs.getString("psw"));
             val.setOrga(rs.getString("orga"));
         }
 
@@ -140,10 +141,12 @@ public class BDD {
     //Getter
     public int getID_Applicant(Applicant app) throws SQLException{
         int res = -1;
-        String sql = "SELECT id FROM TApplicant WHERE nom = ?";
+        String sql = "SELECT id FROM TApplicant WHERE nom = ? AND age = ? AND dpt = ?";
         this.pstmt = conn.prepareStatement(sql);
 
         pstmt.setString(1, app.getName());
+        pstmt.setInt(2, app.getAge());
+        pstmt.setInt(3, app.getDpt());
 
         ResultSet rs = pstmt.executeQuery();
 
@@ -170,10 +173,12 @@ public class BDD {
 
     public int getID_Volunteer(Volunteer vol) throws SQLException{
         int res = -1;
-        String sql = "SELECT id FROM TVolunteer WHERE nom = ?";
+        String sql = "SELECT id FROM TVolunteer WHERE nom = ? AND age = ? AND dpt = ?";
         this.pstmt = conn.prepareStatement(sql);
 
         pstmt.setString(1, vol.getName());
+        pstmt.setInt(2, vol.getAge());
+        pstmt.setInt(3, vol.getDpt());
 
         ResultSet rs = pstmt.executeQuery();
 
@@ -196,10 +201,12 @@ public class BDD {
 
     public int getID_Validator(Validator val) throws SQLException{
         int res = -1;
-        String sql = "SELECT id FROM TValidator WHERE nom = ?";
+        String sql = "SELECT id FROM TValidator WHERE nom = ? AND age = ? AND dpt = ?";
         this.pstmt = conn.prepareStatement(sql);
 
         pstmt.setString(1, val.getName());
+        pstmt.setInt(2, val.getAge());
+        pstmt.setInt(3, val.getDpt());
 
         ResultSet rs = pstmt.executeQuery();
 
@@ -246,45 +253,27 @@ public class BDD {
 
     //Ajout et Suppression dans les tables
     public void insertRequest(String subj, int app, Date date) throws SQLException{
-        String sql = "INSERT INTO TRequest(id, subj, id_applicant, helpday) VALUES (?,?,?,?)";
+        String sql = "INSERT INTO TRequest(subj, id_applicant, helpday) VALUES (?,?,?)";
         this.pstmt = conn.prepareStatement(sql);
 
         // Paramètres à insérer
-        pstmt.setInt(1, this.req);
-        this.req ++;
-        pstmt.setString(2, subj);  
-        pstmt.setInt(3, app);
-        pstmt.setDate(4, date);
-
-        int rowsAffected = pstmt.executeUpdate();
-    }
-
-    public void insertVolunteer(String nom, int age, int dpt, String psw) throws SQLException{
-        String sql = "INSERT INTO TVolunteer (id, nom, age, dpt, psw) VALUES (?,?,?,?,?)";
-        this.pstmt = conn.prepareStatement(sql);
-
-        // Paramètres à insérer
-        pstmt.setInt(1, this.vol);
-        this.vol ++;
-        pstmt.setString(2, nom);  
-        pstmt.setInt(3, age);
-        pstmt.setInt(4, dpt);
-        pstmt.setString(5, psw);
-
+        pstmt.setString(1, subj);  
+        pstmt.setInt(2, app);
+        pstmt.setDate(3, date);
 
         pstmt.executeUpdate();
     }
 
-    public void insertApplicant(String nom, int age, int dpt) throws SQLException{
-        String sql = "INSERT INTO TApplicant (id, nom, age, dpt) VALUES (?,?,?,?)";
+    public void insertVolunteer(String nom, int age, int dpt, String psw) throws SQLException{
+        String sql = "INSERT INTO TVolunteer (nom, age, dpt, psw) VALUES (?,?,?,?)";
         this.pstmt = conn.prepareStatement(sql);
 
         // Paramètres à insérer
-        pstmt.setInt(1, this.appl);
-        this.appl++;
-        pstmt.setString(2, nom);  
-        pstmt.setInt(3, age);
-        pstmt.setInt(4, dpt);
+        pstmt.setString(1, nom);  
+        pstmt.setInt(2, age);
+        pstmt.setInt(3, dpt);
+        pstmt.setString(4, psw);
+
 
         pstmt.executeUpdate();
     }
@@ -308,16 +297,14 @@ public class BDD {
     }
 
     public void insertApplicant(String nom, int age, int dpt, String psw) throws SQLException{
-        String sql = "INSERT INTO TApplicant (id, nom, age, dpt, psw) VALUES (?,?,?,?,?)";
+        String sql = "INSERT INTO TApplicant (nom, age, dpt, psw) VALUES (?,?,?,?)";
         this.pstmt = conn.prepareStatement(sql);
 
         // Paramètres à insérer
-        pstmt.setInt(1, this.appl);
-        this.appl++;
-        pstmt.setString(2, nom);  
-        pstmt.setInt(3, age);
-        pstmt.setInt(4, dpt);
-        pstmt.setString(5, psw);
+        pstmt.setString(1, nom);  
+        pstmt.setInt(2, age);
+        pstmt.setInt(3, dpt);
+        pstmt.setString(4, psw);
 
         pstmt.executeUpdate();
     }
@@ -341,17 +328,15 @@ public class BDD {
     }
 
     public void insertValidator(String nom, int age, int dpt, String orga, String psw) throws SQLException{
-        String sql = "INSERT INTO TValidator (id, nom, age, dpt, orga, psw) VALUES (?,?,?,?,?,?)";
+        String sql = "INSERT INTO TValidator (nom, age, dpt, orga, psw) VALUES (?,?,?,?,?)";
         this.pstmt = conn.prepareStatement(sql);
 
         // Paramètres à insérer
-        pstmt.setInt(1, this.appl);
-        this.appl++;
-        pstmt.setString(2, nom);  
-        pstmt.setInt(3, age);
-        pstmt.setInt(4, dpt);
-        pstmt.setString(5, orga); 
-        pstmt.setString(6, psw);
+        pstmt.setString(1, nom);  
+        pstmt.setInt(2, age);
+        pstmt.setInt(3, dpt);
+        pstmt.setString(4, orga); 
+        pstmt.setString(5, psw);
 
         pstmt.executeUpdate();
     }
