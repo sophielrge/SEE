@@ -8,27 +8,27 @@ public class Traitement_texte {
     }
 
     public void write_red(String text) {
-        System.out.println("\001B[31m" + text + "\001B[0m");
+        System.out.println("\u001B[31m" + text + "\u001B[0m");
     }
 
     public void write_green(String text) {
-        System.out.println("\001B[32m" + text + "\001B[0m");
+        System.out.println("\u001B[32m" + text + "\u001B[0m");
     }
 
     public void write_yellow(String text) {
-        System.out.println("\001B[33m" + text + "\033[0m");
+        System.out.println("\u001B[33m" + text + "\u001B[0m");
     }   
 
     public void write_blue(String text) {
-        System.out.println("\001B[34m" + text + "\001B[0m");
+        System.out.println("\u001B[34m" + text + "\u001B[0m");
     }
 
     public void write_purple(String text) {
-        System.out.println("\001B[35m" + text + "\001B[0m");
+        System.out.println("\u001B[35m" + text + "\u001B[0m");
     }
 
     public void write_cyan(String text) {
-        System.out.println("\001B[36m" + text + "\001B[0m");
+        System.out.println("\u001B[36m" + text + "\u001B[0m");
     }
 
     public String ask_password() {
