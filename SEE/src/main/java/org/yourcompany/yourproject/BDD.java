@@ -394,11 +394,16 @@ public class BDD {
 
     //Affichage du contenus des tables
 
-    public void printRequest() throws SQLException{
+    public Boolean printRequest() throws SQLException{
         String sql = "SELECT * FROM TRequest";
         this.pstmt = conn.prepareStatement(sql);
         
         ResultSet rs = pstmt.executeQuery();
+
+        if(!rs.next()){
+            System.out.println("No request");
+            return false;
+        }
         
         while (rs.next()) {
             System.out.println("-----------------------------------------");
@@ -427,9 +432,11 @@ public class BDD {
         }
 
         System.out.println("-----------------------------------------");
+
+        return true;
     }
 
-    public void printRequestApplicant(Applicant app) throws SQLException {
+    public Boolean printRequestApplicant(Applicant app) throws SQLException {
         String sql = "SELECT * FROM TRequest "
                    + "JOIN TApplicant ON TApplicant.id = TRequest.id_applicant "
                    + "WHERE TApplicant.nom = ?";
@@ -439,6 +446,11 @@ public class BDD {
         ResultSet rs = pstmt.executeQuery();
         
         System.out.println("-----------------------------------------");
+
+        if(!rs.next()){
+            System.out.println("No request");
+            return false;
+        }
     
         // Vérifie si le ResultSet contient des lignes avant de tenter de lire
         if (rs.next()) {
@@ -458,15 +470,21 @@ public class BDD {
         }
     
         System.out.println("-----------------------------------------");
+        return true;
     }
 
-    public void printRequestVolunteer(Volunteer vol) throws SQLException{
+    public Boolean printRequestVolunteer(Volunteer vol) throws SQLException{
         String sql = "SELECT TRequest.*, TVolunteer FROM TRequest " + "JOIN TVolunteer ON TVolunteer.id = TRequest.id_volunteer " + "WHERE TVolunteer.nom = ?";
         this.pstmt = conn.prepareStatement(sql);
 
         pstmt.setString(1, vol.getName());
         
         ResultSet rs = pstmt.executeQuery();
+
+        if(!rs.next()){
+            System.out.println("No request");
+            return false;
+        }
         
         while (rs.next()) {
             System.out.println("-----------------------------------------");
@@ -497,15 +515,21 @@ public class BDD {
         }
 
         System.out.println("-----------------------------------------");
+        return true;
     }
 
-    public void printRequestValidator(Validator val) throws SQLException{
+    public Boolean printRequestValidator(Validator val) throws SQLException{
         String sql = "SELECT TRequest.*, TValidator FROM TRequest " + "JOIN TValidator ON TValidator.id = TValidator.id_validator " + "WHERE TValidator.nom = ?";
         this.pstmt = conn.prepareStatement(sql);
 
         pstmt.setString(1, val.getName());
         
         ResultSet rs = pstmt.executeQuery();
+
+        if(!rs.next()){
+            System.out.println("No request");
+            return false;
+        }
         
         while (rs.next()) {
             System.out.println("-----------------------------------------");
@@ -537,13 +561,20 @@ public class BDD {
         }
 
         System.out.println("-----------------------------------------");
+
+        return true;
     }
 
-    public void printRequestByDateCreation() throws SQLException{
+    public Boolean printRequestByDateCreation() throws SQLException{
         String sql = "SELECT TRequest.*, TValidator FROM TRequest" + "ORDER BY TRequest.date_creation DESC";
         this.pstmt = conn.prepareStatement(sql);
         
         ResultSet rs = pstmt.executeQuery();
+
+        if(!rs.next()){
+            System.out.println("No request");
+            return false;
+        }
         
         while (rs.next()) {
             System.out.println("-----------------------------------------");
@@ -575,13 +606,19 @@ public class BDD {
         }
 
         System.out.println("-----------------------------------------");
+        return true;
     }
 
-    public void printRequestPending() throws SQLException{
+    public Boolean printRequestPending() throws SQLException{
         String sql = "SELECT * FROM TRequest " + "WHERE TRequest.statut = 'P'";
         this.pstmt = conn.prepareStatement(sql);
         
         ResultSet rs = pstmt.executeQuery();
+
+        if(!rs.next()){
+            System.out.println("No pending request");
+            return false;
+        }
         
         while (rs.next()) {
             System.out.println("-----------------------------------------");
@@ -613,15 +650,21 @@ public class BDD {
         }
 
         System.out.println("-----------------------------------------");
+        return true;
     }
 
 
-    public void printRequestOrderByApplicant() throws SQLException{
+    public Boolean printRequestOrderByApplicant() throws SQLException{
         String sql = "SELECT TRequest.*, TApplicant FROM TRequest" + "JOIN TApplicant.id = TRequest.id_applicant" + "ORDER BY TApplicant.nom ASC";
         this.pstmt = conn.prepareStatement(sql);
         
         ResultSet rs = pstmt.executeQuery();
         
+        if(!rs.next()){
+            System.out.println("No request");
+            return false;
+        }
+
         while (rs.next()) {
             System.out.println("-----------------------------------------");
             int id = rs.getInt("id");
@@ -651,15 +694,21 @@ public class BDD {
         }
 
         System.out.println("-----------------------------------------");
+        return true;
     }
 
-    public void printRequestOrderByVolunteer(Volunteer vol) throws SQLException{
+    public Boolean printRequestOrderByVolunteer(Volunteer vol) throws SQLException{
         String sql = "SELECT TRequest.*, TVolunteer FROM TRequest" + "JOIN TVolunteer.id = TRequest.id_volunteer" + "ORDER BY TVolunteer.nom ASC";
         this.pstmt = conn.prepareStatement(sql);
 
         pstmt.setString(1, vol.getName());
         
         ResultSet rs = pstmt.executeQuery();
+
+        if(!rs.next()){
+            System.out.println("No request");
+            return false;
+        }   
         
         while (rs.next()) {
             System.out.println("-----------------------------------------");
@@ -690,6 +739,8 @@ public class BDD {
         }
 
         System.out.println("-----------------------------------------");
+
+        return true;
     }
 
     public void printVolunteer(Request req) throws SQLException{
