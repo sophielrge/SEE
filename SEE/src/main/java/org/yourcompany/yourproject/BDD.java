@@ -198,17 +198,6 @@ public class BDD {
         pstmt.executeQuery();
         return res;
     }
-
-    public String get_score_Volunteer(int id) throws SQLException{
-        String res = "";
-        String sql = "SELECT psw FROM TVolunteer WHERE id = ?";
-        this.pstmt = conn.prepareStatement(sql);
-
-        pstmt.setInt(1, id);
-
-        pstmt.executeQuery();
-        return res;
-    }
     
 
     public int getID_Validator(Validator val) throws SQLException{
@@ -912,6 +901,27 @@ public class BDD {
         
         pstmt.executeUpdate();
     }
+
+    public int get_score_Volunteer(Volunteer vol) throws SQLException{
+        int id_vol = getID_Volunteer(vol);
+
+        int res = -1;
+        String sql = "SELECT score FROM TVolunteer WHERE id = ?";
+
+        this.pstmt = conn.prepareStatement(sql);
+
+        pstmt.setInt(1, id_vol);
+        ResultSet rs = pstmt.executeQuery();
+
+        if(rs.next()){
+            res = rs.getInt("id");
+        }
+
+        return res;
+
+    }
+
+
 
     //Getter et Setter attributs
     public Connection getConn() {
