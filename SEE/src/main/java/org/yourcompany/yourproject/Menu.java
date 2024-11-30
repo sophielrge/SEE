@@ -131,6 +131,7 @@ public class Menu {
         tt.write_yellow("|0 - Go back                            |");
         tt.write_yellow("|1 - Print pending requests             |");
         tt.write_yellow("|2 - View my requests                   |");
+        tt.write_yellow("|3 - View my score                      |");
         tt.write_yellow("-----------------------------------------");
         int i4 = scanner.nextInt();
         scanner.nextLine();
@@ -334,7 +335,7 @@ public class Menu {
             tt.write_yellow("|Enter your password                    |");
             //String psw = scanner.nextLine();
             String psw = tt.ask_password_log();
-            if (psw.trim().equals(base.get_psw_Volunteer(id).trim())){
+            if (psw.trim().equals(base.get_psw_Volunteer(id))){
                 psw_ok = true;
             }else {
                 tt.write_red("|Wrong id or psw                    |");
@@ -438,6 +439,9 @@ public class Menu {
                                             break;
                                         case 2: // consulter mes requêtes
                                             print_request_volunteer(base, volunteer);
+                                            break;
+                                        case 3:
+                                            base.print_score_volunteer(volunteer);
                                             break;
                                         default:
                                             tt.write_red("|Wrong choice                         |");
