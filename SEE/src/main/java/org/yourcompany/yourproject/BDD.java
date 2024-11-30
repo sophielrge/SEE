@@ -491,7 +491,7 @@ public class BDD {
     }
 
     public Boolean printRequestValidator(Validator val) throws SQLException{
-        String sql = "SELECT TRequest.*, TValidator FROM TRequest " + "JOIN TValidator ON TValidator.id = TValidator.id_validator " + "WHERE TValidator.nom = ? AND TValidator.age = ? AND TValidator.dpt = ?";
+        String sql = "SELECT TRequest.*, TValidator.* FROM TRequest " + "JOIN TValidator ON TValidator.id = TRequest.id_validator " + "WHERE TValidator.nom = ? AND TValidator.age = ? AND TValidator.dpt = ?";
         this.pstmt = conn.prepareStatement(sql);
 
         pstmt.setString(1, val.getName());
