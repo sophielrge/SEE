@@ -1,6 +1,8 @@
 package org.yourcompany.yourproject;
 
 import java.io.Console;
+import java.io.IOException;
+import java.util.Scanner;
 
 public class Traitement_texte {
 
@@ -32,16 +34,34 @@ public class Traitement_texte {
     }
 
     public String ask_password() {
-        Console console = System.console();
-        
-        if (console == null) {
-            write_red("La console n'est pas disponible.");
-            throw new UnsupportedOperationException();
-        }
+         StringBuilder password = new StringBuilder();
 
-        // Affiche le message et masque les entrées de l'utilisateur
-        char[] passwordArray = console.readPassword();
-        return new String(passwordArray);
+        while (true) {
+            try {
+                // Lire un caractère
+                char inputChar = (char) System.in.read();
+
+                switch (inputChar) {
+                    case '\n':
+                        // Fin de la saisie (l'utilisateur appuie sur Entrée)
+                        return password.toString();
+                    case '\b':
+                        // Gestion du retour arrière
+                        if (password.length() > 0) {
+                            password.deleteCharAt(password.length() - 1);
+                            System.out.print("\b \b"); // Supprime une étoile affichée
+                        }
+                        break;
+                    default:
+                        // Ajouter le caractère au mot de passe
+                        password.append(inputChar);
+                        System.out.print("*"); // Affiche une étoile pour chaque caractère
+                        break;
+                }
+            } catch (IOException e) {
+                System.out.println("Erreur lors de la lecture : " + e.getMessage());
+            }
+        }
     }
     
 }

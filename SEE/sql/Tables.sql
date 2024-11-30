@@ -1,7 +1,7 @@
 USE projet_gei_007;
 
 CREATE TABLE TApplicant (
-     id INT PRIMARY KEY NOT NULL,
+     id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
     nom VARCHAR(100) NOT NULL,
     age INT,
     dpt INT NOT NULL,
@@ -9,7 +9,7 @@ CREATE TABLE TApplicant (
 );
 
 CREATE TABLE TVolunteer(
-    id INT PRIMARY KEY NOT NULL,
+    id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
     nom VARCHAR(100) NOT NULL,
     age INT CHECK (age>17),
     dpt INT NOT NULL,
@@ -28,7 +28,7 @@ CREATE TABLE TValidator (
 );
 
 CREATE TABLE TRequest (
-    id INT PRIMARY KEY NOT NULL,
+    id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
     subj VARCHAR(100) NOT NULL,
     id_volunteer INT DEFAULT NULL,
     id_applicant INT NOT NULL,

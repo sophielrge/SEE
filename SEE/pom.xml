@@ -64,5 +64,10 @@
             <version>4.11</version>
         </dependency>
     </dependencies>
+    <dependency>
+        <groupId>org.jline</groupId>
+        <artifactId>jline</artifactId>
+        <version>3.21.0</version>
+    </dependency>
 
 </project>
