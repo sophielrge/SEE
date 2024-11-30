@@ -180,10 +180,13 @@ public class Menu {
         return true;
     }
 
-    public void terminer_requete(BDD base, Applicant applicant) throws SQLException{
+    public boolean terminer_requete(BDD base, Applicant applicant) throws SQLException{
         tt.write_yellow("|Your requests                      :   |");
-        base.printRequestApplicant(applicant);
+        boolean are_request = base.printRequestApplicant(applicant);
         tt.write_yellow("-----------------------------------------");
+        if (!are_request){
+            return false;
+        }
         tt.write_yellow("|To finish a request,                   |");
         tt.write_yellow("|enter its n°                           |");
         tt.write_yellow("-----------------------------------------");
@@ -200,6 +203,7 @@ public class Menu {
         tt.write_yellow("-----------------------------------------");
         tt.write_yellow("|Thank you                              |");
         tt.write_yellow("-----------------------------------------");
+        return true;
     }
 
     public Validator crea_valideur(BDD base) throws SQLException{

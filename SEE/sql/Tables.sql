@@ -32,9 +32,11 @@ CREATE TABLE TRequest (
     subj VARCHAR(100) NOT NULL,
     id_volunteer INT DEFAULT NULL,
     id_applicant INT NOT NULL,
+    id_validator INT DEFAULT NULL,
     statut VARCHAR(1) DEFAULT 'P', 
     helpday DATE NOT NULL,
     date_creation TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (id_volunteer) REFERENCES TVolunteer(id),
+    FOREIGN KEY (id_validator) REFERENCES TValidator(id),
     FOREIGN KEY (id_applicant) REFERENCES TApplicant(id)
 );
