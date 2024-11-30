@@ -65,7 +65,7 @@ public class BDD {
             req.setApp(app);
             req.setHelpD(rs.getDate("helpD"));
             req.setMotif(rs.getString("motif"));
-            req.setStatus(rs.getString("status").charAt(0));
+            req.setStatus(rs.getString("statut").charAt(0));
             req.setValidator(val);
             req.setVolunteer(vol);
             req.setDate(rs.getDate("date_creation").toInstant()            
@@ -245,14 +245,11 @@ public class BDD {
 
     public int getID_Request(Request req) throws SQLException{
         int res = -1;
-        String sql = "SELECT id FROM TRequest WHERE subj = ? AND date_creation = ? AND helpday = ?";
+        String sql = "SELECT id FROM TRequest WHERE subj = ? AND helpday = ?";
         this.pstmt = conn.prepareStatement(sql);
 
-        Date d = (Date) Date.from(req.getDate().atStartOfDay(ZoneId.systemDefault()).toInstant());
-
         pstmt.setString(1, req.getMotif());
-        pstmt.setDate(2, d);
-        pstmt.setDate(3, (Date) req.getHelpD());
+        pstmt.setDate(2, (Date) req.getHelpD());
 
         ResultSet rs = pstmt.executeQuery();
 
@@ -385,12 +382,12 @@ public class BDD {
             return false;
         }
         
-        while (rs.next()) {
+        do {
             System.out.println("-----------------------------------------");
             int id = rs.getInt("id");
             Date date = rs.getDate("date_creation");
             String subject= rs.getString("subj");
-            String status = rs.getString("status");
+            String status = rs.getString("statut");
             Date helpD = rs.getDate("helpday");
             String motif = rs.getString("motif");
 
@@ -409,7 +406,7 @@ public class BDD {
             if("Rejected".equals(status)){
                 System.out.println("Reason: " + motif);
             }
-        }
+        }while (rs.next());
 
         System.out.println("-----------------------------------------");
 
@@ -419,36 +416,60 @@ public class BDD {
     public Boolean printRequestApplicant(Applicant app) throws SQLException {
         String sql = "SELECT * FROM TRequest "
                    + "JOIN TApplicant ON TApplicant.id = TRequest.id_applicant "
-                   + "WHERE TApplicant.nom = ?";
+                   + "WHERE TApplicant.nom = ? AND TApplicant.age = ? AND TApplicant.dpt = ?";
         this.pstmt = conn.prepareStatement(sql);
     
         pstmt.setString(1, app.getName());
+        pstmt.setInt(2, app.getAge());
+        pstmt.setInt(3, app.getDpt());
         ResultSet rs = pstmt.executeQuery();
         
         System.out.println("-----------------------------------------");
 
-        if(!rs.next()){
+        if (!rs.next()) {
             tt.write_red("No request found for applicant: " + app.getName());
             return false;
         }
     
-        // Vérifie si le ResultSet contient des lignes avant de tenter de lire
-        while(rs.next()) {
-            // Si une ligne existe, on peut lire les données
+        // Traiter la première ligne (déjà "atteinte" par rs.next())
+        do {
             int id = rs.getInt("id");
-            String nom = rs.getString("nom");
-            int age = rs.getInt("age");
-            int dpt = rs.getInt("dpt");
-            int score = rs.getInt("score");
-            int nb_avis = rs.getInt("nb_avis");
+            Date date = rs.getDate("date_creation");
+            String subject = rs.getString("subj");
+            String status = rs.getString("statut");
+            Date helpD = rs.getDate("helpday");
+            String motif = rs.getString("motif");
+           
     
-            System.out.println("Volunteer n°" + id);
-            System.out.println("Name: " + nom);
-            System.out.println("Age: " + age);
-            System.out.println("Department: " + dpt);
-            System.out.println("Score: " + score);
+            switch (status) {
+                case "P" -> status = "Pending";
+                case "A" -> status = "Approved";
+                case "R" -> status = "Rejected";
+                case "C" -> status = "Completed";
+            }
+    
+            System.out.println("Request n°" + id);
+            System.out.println("Subject: " + subject);
+            System.out.println("Date: " + helpD);
+            System.out.println("Status: " + status);
+            if ("Rejected".equals(status)) {
+                int val = rs.getInt("id_validator");
+                System.out.println("Reason: " + motif);
+                System.out.println("Validator: " + val);
+            }
+            if("Approved".equals(status)){
+                int vol_id = rs.getInt("id_volunteer");
+                Volunteer vol = getVolunteer(vol_id);
+                System.out.println("Volunteer: ");
+                System.out.println("Name: " + vol.getName());
+                System.out.println("Age: " + vol.getAge());
+                System.out.println("Department: " + vol.getDpt());
+
+
+            }
             
-        }
+    
+        } while (rs.next()); // Continue avec les lignes suivantes, s'il y en a
     
         System.out.println("-----------------------------------------");
         return true;
@@ -469,12 +490,12 @@ public class BDD {
             return false;
         }
         
-        while (rs.next()) {
+        do {
             System.out.println("-----------------------------------------");
             int id = rs.getInt("id");
             Date date = rs.getDate("date_creation");
             String subject= rs.getString("subj");
-            String status = rs.getString("status");
+            String status = rs.getString("statut");
             Date helpD = rs.getDate("helpday");
             String motif = rs.getString("motif");
             int val = rs.getInt("id_validator");
@@ -495,7 +516,7 @@ public class BDD {
                 System.out.println("Reason: " + motif);
                 System.out.println("Validator: " + val);
             }
-        }
+        }while (rs.next());
 
         System.out.println("-----------------------------------------");
         return true;
@@ -516,12 +537,12 @@ public class BDD {
             return false;
         }
         
-        while (rs.next()) {
+        do {
             System.out.println("-----------------------------------------");
             int id = rs.getInt("id");
             Date date = rs.getDate("date_creation");
             String subject= rs.getString("subj");
-            String status = rs.getString("status");
+            String status = rs.getString("statut");
             Date helpD = rs.getDate("helpday");
             String motif = rs.getString("motif");
             int validator = rs.getInt("id_validator");
@@ -545,7 +566,7 @@ public class BDD {
                 System.out.println("Reason: " + motif);
                 System.out.println("Validator: " + validator);
             }
-        }
+        }while (rs.next());
 
         System.out.println("-----------------------------------------");
 
@@ -563,51 +584,7 @@ public class BDD {
             return false;
         }
         
-        while (rs.next()) {
-            System.out.println("-----------------------------------------");
-            int id = rs.getInt("id");
-            Date date = rs.getDate("date_creation");
-            String subject= rs.getString("subj");
-            String status = rs.getString("status");
-            Date helpD = rs.getDate("helpday");
-            String motif = rs.getString("motif");
-            int validator = rs.getInt("id_validator");
-            
-
-            switch(status){
-                case "P" -> status = "Pending";
-                case "A" -> status = "Approved";
-                case "R" -> status = "Rejected";
-                case "C" -> status = "Completed";
-            }
-            
-            
-            System.out.println("Request n°" + id);
-            System.out.println("Subject: " + subject);
-            System.out.println("Date: " + helpD);
-            System.out.println("Status: " + status);
-            if("Rejected".equals(status)){
-                System.out.println("Reason: " + motif);
-                System.out.println("Validator: " + validator);
-            }
-        }
-
-        System.out.println("-----------------------------------------");
-        return true;
-    }
-
-    public Boolean printRequestPending() throws SQLException{
-        String sql = "SELECT * FROM TRequest " + "WHERE TRequest.statut = 'P'";
-        this.pstmt = conn.prepareStatement(sql);
-        
-        ResultSet rs = pstmt.executeQuery();
-
-        if(!rs.next()){
-            tt.write_red("No pending request");
-            return false;
-        }
-        
-        while (rs.next()) {
+        do {
             System.out.println("-----------------------------------------");
             int id = rs.getInt("id");
             Date date = rs.getDate("date_creation");
@@ -634,7 +611,51 @@ public class BDD {
                 System.out.println("Reason: " + motif);
                 System.out.println("Validator: " + validator);
             }
+        } while (rs.next());
+
+        System.out.println("-----------------------------------------");
+        return true;
+    }
+
+    public Boolean printRequestPending() throws SQLException{
+        String sql = "SELECT * FROM TRequest " + "WHERE TRequest.statut = 'P'";
+        this.pstmt = conn.prepareStatement(sql);
+        
+        ResultSet rs = pstmt.executeQuery();
+
+        if(!rs.next()){
+            tt.write_red("No pending request");
+            return false;
         }
+        
+        do {
+            System.out.println("-----------------------------------------");
+            int id = rs.getInt("id");
+            Date date = rs.getDate("date_creation");
+            String subject= rs.getString("subj");
+            String status = rs.getString("statut");
+            Date helpD = rs.getDate("helpday");
+            String motif = rs.getString("motif");
+            int validator = rs.getInt("id_validator");
+            
+
+            switch(status){
+                case "P" -> status = "Pending";
+                case "A" -> status = "Approved";
+                case "R" -> status = "Rejected";
+                case "C" -> status = "Completed";
+            }
+            
+            
+            System.out.println("Request n°" + id);
+            System.out.println("Subject: " + subject);
+            System.out.println("Date: " + helpD);
+            System.out.println("Status: " + status);
+            if("Rejected".equals(status)){
+                System.out.println("Reason: " + motif);
+                System.out.println("Validator: " + validator);
+            }
+        } while (rs.next());
 
         System.out.println("-----------------------------------------");
         return true;
@@ -652,12 +673,12 @@ public class BDD {
             return false;
         }
 
-        while (rs.next()) {
+        do {
             System.out.println("-----------------------------------------");
             int id = rs.getInt("id");
             Date date = rs.getDate("date_creation");
             String subject= rs.getString("subj");
-            String status = rs.getString("status");
+            String status = rs.getString("statut");
             Date helpD = rs.getDate("helpday");
             String motif = rs.getString("motif");
             int val = rs.getInt("id");
@@ -678,7 +699,7 @@ public class BDD {
                 System.out.println("Reason: " + motif);
                 System.out.println("Validator: " + val);
             }
-        }
+        } while (rs.next());
 
         System.out.println("-----------------------------------------");
         return true;
@@ -697,12 +718,12 @@ public class BDD {
             return false;
         }   
         
-        while (rs.next()) {
+        do {
             System.out.println("-----------------------------------------");
             int id = rs.getInt("id");
             Date date = rs.getDate("date_creation");
             String subject= rs.getString("subj");
-            String status = rs.getString("status");
+            String status = rs.getString("statut");
             Date helpD = rs.getDate("helpday");
             String motif = rs.getString("motif");
             int val = rs.getInt("id");
@@ -723,7 +744,7 @@ public class BDD {
                 System.out.println("Reason: " + motif);
                 System.out.println("Validator: " + val);
             }
-        }
+        } while (rs.next());
 
         System.out.println("-----------------------------------------");
 
@@ -774,7 +795,7 @@ public class BDD {
             throw new IllegalArgumentException();
         }
     
-        String sql = "UPDATE TRequest SET status = ? WHERE id = ?";
+        String sql = "UPDATE TRequest SET statut = ? WHERE id = ?";
     
         this.pstmt = conn.prepareStatement(sql);
         
@@ -790,15 +811,14 @@ public class BDD {
         }
     }
 
-    public void updateRequestStatusApplicant(Request req, String newStatus) throws SQLException {
-        int requestId = getID_Request(req);
+    public Boolean updateRequestStatusApplicant(int requestId, String newStatus) throws SQLException {
     
         // Vérifie que le statut actuel est "A"
         String currentStatus = getCurrentStatus(requestId); // Méthode à définir pour obtenir le statut actuel de la requête
     
         if (!"A".equals(currentStatus)) {
             tt.write_red("Le statut actuel n'est pas 'Aprouvé', aucune mise à jour n'a été effectuée.");
-            return; // Si le statut actuel n'est pas "A", ne rien faire
+            return false; // Si le statut actuel n'est pas "A", ne rien faire
         }
     
         if (!isValidStatus(newStatus)) {
@@ -806,7 +826,7 @@ public class BDD {
             throw new IllegalArgumentException();
         }
     
-        String sql = "UPDATE TRequest SET status = ? WHERE id = ?";
+        String sql = "UPDATE TRequest SET statut = ? WHERE id = ?";
     
         this.pstmt = conn.prepareStatement(sql);
         
@@ -817,21 +837,23 @@ public class BDD {
     
         if (rowsAffected > 0) {
             tt.write_green("Status updated successfully for query n°" + requestId);
+            return true;
         } else {
             tt.write_red("No request with the ID: " + requestId);
+            return false;
         }
     }
     
     // Méthode pour obtenir le statut actuel de la requête
     private String getCurrentStatus(int requestId) throws SQLException {
-        String sql = "SELECT status FROM TRequest WHERE id = ?";
+        String sql = "SELECT statut FROM TRequest WHERE id = ?";
         this.pstmt = conn.prepareStatement(sql);
         pstmt.setInt(1, requestId);
     
         ResultSet rs = pstmt.executeQuery();
         
         if (rs.next()) {
-            return rs.getString("status"); // Retourne le statut actuel
+            return rs.getString("statut"); // Retourne le statut actuel
         } else {
             throw new SQLException("Request with ID " + requestId + " not found.");
         }
@@ -951,15 +973,31 @@ public class BDD {
         pstmt.setInt(1, id_vol);
         ResultSet rs = pstmt.executeQuery();
 
-        System.out.println("-----------------------------------------");
-        int score = rs.getInt("note");
-        System.out.println("|Score:                                   |" + score);
-        int nb_avis = rs.getInt("nb_avis");
-        System.out.println("|Number of scores:                        |" + nb_avis);
-        System.out.println("-----------------------------------------");
+        if (rs.next()) {  // Move to the first row of the result set
+            System.out.println("-----------------------------------------");
+    
+            // Handling NULL for score
+            Object scoreObj = rs.getObject("note");
+            if (scoreObj != null) {
+                int score = (int) scoreObj;
+                System.out.println("|Score: " + score );
+            } else {
+                tt.write_red("|You don't have a score yet         |");
+            }
+    
+            // Handling NULL for number of reviews
+            Object nbAvisObj = rs.getObject("nb_avis");
+            if (nbAvisObj != null) {
+                int nb_avis = (int) nbAvisObj;
+                System.out.println("|Number of scores: " + nb_avis);
+            } 
+    
+            System.out.println("-----------------------------------------");
+        } else {
+            tt.write_red("No data found for volunteer with ID " + id_vol);
+        }
 
     }
-
 
 
     //Getter et Setter attributs

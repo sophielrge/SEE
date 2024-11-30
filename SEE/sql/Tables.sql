@@ -37,6 +37,7 @@ CREATE TABLE TRequest (
     id_validator INT DEFAULT NULL,
     statut VARCHAR(1) DEFAULT 'P', 
     helpday DATE NOT NULL,
+    motif VARCHAR(100) DEFAULT NULL,
     date_creation TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (id_volunteer) REFERENCES TVolunteer(id),
     FOREIGN KEY (id_validator) REFERENCES TValidator(id),

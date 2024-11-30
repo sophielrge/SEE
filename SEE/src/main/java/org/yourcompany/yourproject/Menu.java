@@ -87,6 +87,7 @@ public class Menu {
         java.sql.Date sdate = new java.sql.Date(date.getTime());
         int id = base.getID_Applicant(applicant);
         base.insertRequest(subj, id, sdate);
+        Request request = new Request(subj, date);
         tt.write_green("-----------------------------------------");
         tt.write_green("|Request added with success !!          |");
         tt.write_green("-----------------------------------------");
@@ -194,16 +195,18 @@ public class Menu {
         int i6 = scanner.nextInt();
         Request rfinished = base.getRequest(i6);
         applicant.completeRequest(rfinished);
-        base.updateRequestStatusApplicant(rfinished, "C");
-        tt.write_yellow("-----------------------------------------");
-        tt.write_green("|Request completed                      |");
-        tt.write_yellow("|Enter a score for the volunteer        |");
-        tt.write_yellow("-----------------------------------------");
-        int i7 = scanner.nextInt();
-        base.updateVolunteerScore(rfinished, i7);
-        tt.write_yellow("-----------------------------------------");
-        tt.write_yellow("|Thank you                              |");
-        tt.write_yellow("-----------------------------------------");
+        boolean isUpdated = base.updateRequestStatusApplicant(i6, "C");
+        if(isUpdated){
+            tt.write_yellow("-----------------------------------------");
+            tt.write_green("|Request completed                      |");
+            tt.write_yellow("|Enter a score for the volunteer        |");
+            tt.write_yellow("-----------------------------------------");
+            int i7 = scanner.nextInt();
+            base.updateVolunteerScore(rfinished, i7);
+            tt.write_yellow("-----------------------------------------");
+            tt.write_yellow("|Thank you                              |");
+            tt.write_yellow("-----------------------------------------");
+        }
         return true;
     }
 
