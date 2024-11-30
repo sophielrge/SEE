@@ -457,16 +457,15 @@ public class BDD {
                 System.out.println("Reason: " + motif);
                 System.out.println("Validator: " + val);
             }
-            if("Approved".equals(status)){
+            /* if("Approved".equals(status)){
                 int vol_id = rs.getInt("id_volunteer");
-                Volunteer vol = getVolunteer(vol_id);
+                Volunteer volunteer = getVolunteer(vol_id);
                 System.out.println("Volunteer: ");
-                System.out.println("Name: " + vol.getName());
-                System.out.println("Age: " + vol.getAge());
-                System.out.println("Department: " + vol.getDpt());
+                System.out.println("Name: " + volunteer.getName());
+                System.out.println("Age: " + volunteer.getAge());
+                System.out.println("Department: " + volunteer.getDpt());
 
-
-            }
+            } */
             
     
         } while (rs.next()); // Continue avec les lignes suivantes, s'il y en a
@@ -786,9 +785,9 @@ public class BDD {
         return status.equals("P") || status.equals("A") || status.equals("R") || status.equals("C");
     }
 
-    public void updateRequestStatus(Request req, String newStatus) throws SQLException {
+    public void updateRequestStatus(int requestId, String newStatus) throws SQLException {
 
-        int requestId = getID_Request(req);
+        //int requestId = getID_Request(req);
 
         if (!isValidStatus(newStatus)) {
             tt.write_red(newStatus + " is not a valid status.");
@@ -859,9 +858,9 @@ public class BDD {
         }
     }
 
-    public void updateRequestVolunteer(Request req, Volunteer newVolunteer) throws SQLException {
+    public void updateRequestVolunteer(int requestId, Volunteer newVolunteer) throws SQLException {
         int idVol= getID_Volunteer(newVolunteer);
-        int requestId = getID_Request(req);
+        //int requestId = getID_Request(req);
     
         String sql = "UPDATE TRequest SET id_volunteer = ? WHERE id = ?";
     
@@ -879,9 +878,9 @@ public class BDD {
         }
     }
 
-    public void updateRequestValidator(Request req, Validator newValidator) throws SQLException {
+    public void updateRequestValidator(int requestId, Validator newValidator) throws SQLException {
         int idVal= getID_Validator(newValidator);
-        int requestId = getID_Request(req);
+        //int requestId = getID_Request(req);
     
         String sql = "UPDATE TRequest SET id_validator = ? WHERE id = ?";
     
@@ -899,8 +898,8 @@ public class BDD {
         }
     }
 
-    public void updateRequestMotif(Request req, String newMotif) throws SQLException {
-        int requestId = getID_Request(req);
+    public void updateRequestMotif(int requestId, String newMotif) throws SQLException {
+        //int requestId = getID_Request(req);
     
         String sql = "UPDATE TRequest SET motif = ? WHERE id = ?";
     

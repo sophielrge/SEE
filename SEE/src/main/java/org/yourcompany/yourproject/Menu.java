@@ -160,8 +160,8 @@ public class Menu {
         switch (i6){
             case 1 -> {
                 volunteer.choseRequest(rchosen);
-                base.updateRequestStatus(rchosen, "P");
-                base.updateRequestVolunteer(rchosen, volunteer);
+                base.updateRequestStatus(i5, "P");
+                base.updateRequestVolunteer(i5, volunteer);
                 tt.write_green("|You are the volunteer!                 |");
                 System.out.println("-----------------------------------------");
             }
@@ -257,15 +257,15 @@ public class Menu {
         return true;
     }
 
-    public Request change_status(Validator validator, BDD base) throws SQLException{
+    public int change_status(Validator validator, BDD base) throws SQLException{
         tt.write_yellow("|To change a status request             |");
         tt.write_yellow("|enter its  n°                          |");
         int i8 = scanner.nextInt();
         scanner.nextLine();
         Request rchange = base.getRequest(i8);
-        base.updateRequestValidator(rchange, validator);
+        base.updateRequestValidator(i8, validator);
         tt.write_yellow("-----------------------------------------");
-        return rchange;
+        return i8;
     }
 
     public int choisis_status(){
@@ -278,16 +278,18 @@ public class Menu {
         return i9;
     }
 
-    public void valider_r(BDD base, Request rchange, Validator validator) throws SQLException{
-        validator.validerR(rchange);
+    public void valider_r(BDD base, int rchange, Validator validator) throws SQLException{
+        Request request = base.getRequest(rchange);
+        validator.validerR(request);
         base.updateRequestStatus(rchange, "A");
     }
 
-    public void refuser_r(BDD base, Request rchange, Validator validator) throws SQLException{
+    public void refuser_r(BDD base, int rchange, Validator validator) throws SQLException{
         tt.write_yellow("|Please enter a motif                   |");
         tt.write_yellow("-----------------------------------------");
         String motif = scanner.nextLine();
-        validator.refuserR(rchange, motif);
+        Request r = base.getRequest(rchange);
+        validator.refuserR(r, motif);
         base.updateRequestStatus(rchange, "R");
         base.updateRequestMotif(rchange, motif);
     }
@@ -465,15 +467,15 @@ public class Menu {
                                             if (!are_request){
                                                 break;
                                             }
-                                            Request rchange = change_status(validator, base);
+                                            int rchangeId = change_status(validator, base);
                                             //base.printVolunteer(rchange);
                                             int i9 = choisis_status();
                                             switch (i9) {
                                                 case 1: //Valider
-                                                    valider_r(base, rchange, validator);
+                                                    valider_r(base, rchangeId, validator);
                                                     break;
                                                 case 2: //Refuser
-                                                    refuser_r(base, rchange, validator);
+                                                    refuser_r(base, rchangeId, validator);
                                                     break;
                                             }
                                             break;
