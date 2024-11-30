@@ -210,6 +210,7 @@ public class Menu {
     }
 
     public int menu_valideur(){
+        System.out.println("|0 - Go back                            |");
         System.out.println("|1 - Print pending requests             |");
         System.out.println("|2 - View my requests                   |");
         System.out.println("-----------------------------------------");
