@@ -27,6 +27,8 @@ CREATE TABLE TValidator (
     psw VARCHAR(100) NOT NULL
 );
 
+SHOW STATUS WHERE `variable_name` = 'Threads_connected';
+
 CREATE TABLE TRequest (
     id INT AUTO_INCREMENT PRIMARY KEY,
     subj VARCHAR(100) NOT NULL,

@@ -28,7 +28,14 @@ public class BDD {
 
 
     public void connect() throws SQLException{
-        this.conn = DriverManager.getConnection(this.url, this.user, this.password);
+        //this.conn = DriverManager.getConnection(this.url, this.user, this.password);
+        try {
+            this.conn = DriverManager.getConnection(this.url, this.user, this.password);
+            System.out.println("Connection successful");
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw e;  // Propager l'exception pour signaler l'échec
+        }
     }
 
     //Créateur
@@ -894,18 +901,18 @@ public class BDD {
         Volunteer vol = req.getVolunteer();
         int id_vol = getID_Volunteer(vol);
 
-        String sql = "SELECT score, nb_avis FROM TVolunteer WHERE id = ?";
+        String sql = "SELECT note, nb_avis FROM TVolunteer WHERE id = ?";
         this.pstmt = conn.prepareStatement(sql);
         pstmt.setInt(1, id_vol);
 
         ResultSet rs = pstmt.executeQuery();
 
-        int nowScore = rs.getInt("score");
+        int nowScore = rs.getInt("note");
         int nb_avis = rs.getInt("nb_avis");
         int newNb = nb_avis + 1;
         int newScore = (nowScore + score)/newNb;
 
-        String sql2 = "UPDATE TVolunteer SET score = ? AND nb_avis = ? WHERE id = ?";
+        String sql2 = "UPDATE TVolunteer SET note = ? AND nb_avis = ? WHERE id = ?";
     
         this.pstmt = conn.prepareStatement(sql2);
         
@@ -920,7 +927,7 @@ public class BDD {
         int id_vol = getID_Volunteer(vol);
 
         int res = -1;
-        String sql = "SELECT score FROM TVolunteer WHERE id = ?";
+        String sql = "SELECT note FROM TVolunteer WHERE id = ?";
 
         this.pstmt = conn.prepareStatement(sql);
 
@@ -928,7 +935,7 @@ public class BDD {
         ResultSet rs = pstmt.executeQuery();
 
         if(rs.next()){
-            res = rs.getInt("id");
+            res = rs.getInt("note");
         }
 
         return res;
@@ -938,17 +945,17 @@ public class BDD {
     public void print_score_volunteer(Volunteer vol) throws SQLException{
         int id_vol = getID_Volunteer(vol);
 
-        String sql = "SELECT score FROM TVolunteer WHERE id = ?";
+        String sql = "SELECT * FROM TVolunteer WHERE id = ?";
         this.pstmt = conn.prepareStatement(sql);
 
         pstmt.setInt(1, id_vol);
         ResultSet rs = pstmt.executeQuery();
 
         System.out.println("-----------------------------------------");
-        int score = rs.getInt("score");
-        System.out.println("|Score:                                    |" + score);
+        int score = rs.getInt("note");
+        System.out.println("|Score:                                   |" + score);
         int nb_avis = rs.getInt("nb_avis");
-        System.out.println("|Number of scores:                       |" + nb_avis);
+        System.out.println("|Number of scores:                        |" + nb_avis);
         System.out.println("-----------------------------------------");
 
     }
