@@ -428,11 +428,15 @@ public class BDD {
             String nom = rs.getString("nom");
             int age = rs.getInt("age");
             int dpt = rs.getInt("dpt");
+            int score = rs.getInt("score");
+            int nb_avis = rs.getInt("nb_avis");
     
             System.out.println("Volunteer n°" + id);
             System.out.println("Name: " + nom);
             System.out.println("Age: " + age);
             System.out.println("Department: " + dpt);
+            System.out.println("Score: " + score);
+            
         }
     
         System.out.println("-----------------------------------------");
@@ -918,6 +922,24 @@ public class BDD {
         }
 
         return res;
+
+    }
+
+    public void print_score_volunteer(Volunteer vol) throws SQLException{
+        int id_vol = getID_Volunteer(vol);
+
+        String sql = "SELECT score FROM TVolunteer WHERE id = ?";
+        this.pstmt = conn.prepareStatement(sql);
+
+        pstmt.setInt(1, id_vol);
+        ResultSet rs = pstmt.executeQuery();
+
+        System.out.println("-----------------------------------------");
+        int score = rs.getInt("score");
+        System.out.println("|Score:                                    |" + score);
+        int nb_avis = rs.getInt("nb_avis");
+        System.out.println("|Number of comments:                       |" + nb_avis);
+        System.out.println("-----------------------------------------");
 
     }
 
