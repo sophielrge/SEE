@@ -448,7 +448,7 @@ public class BDD {
     }
 
     public Boolean printRequestVolunteer(Volunteer vol) throws SQLException{
-        String sql = "SELECT TRequest.*, TVolunteer FROM TRequest " + "JOIN TVolunteer ON TVolunteer.id = TRequest.id_volunteer " + "WHERE TVolunteer.nom = ? AND TVolunteer.age = ? AND TVolunteer.dpt = ?";
+        String sql = "SELECT TRequest.*, TVolunteer.* FROM TRequest " + "JOIN TVolunteer ON TVolunteer.id = TRequest.id_volunteer " + "WHERE TVolunteer.nom = ? AND TVolunteer.age = ? AND TVolunteer.dpt = ?";
         this.pstmt = conn.prepareStatement(sql);
 
         pstmt.setString(1, vol.getName());
