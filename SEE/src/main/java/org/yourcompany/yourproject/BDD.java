@@ -195,7 +195,11 @@ public class BDD {
 
         pstmt.setInt(1, id);
 
-        pstmt.executeQuery();
+        ResultSet rs = pstmt.executeQuery();
+
+        if(rs.next()){
+            res = rs.getString("psw");
+        }
         return res;
     }
     
