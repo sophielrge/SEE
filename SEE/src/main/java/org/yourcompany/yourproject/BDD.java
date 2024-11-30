@@ -8,6 +8,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.ZoneId;
 
+import org.Traitement_texte;
+
 public class BDD {
 
     private String url = null;
@@ -15,6 +17,7 @@ public class BDD {
     private String password = null;
     private Connection conn = null;
     private PreparedStatement pstmt = null;
+    private Traitement_texte tt = new Traitement_texte();
 
     int valid, appl, vol, req =0;
 
@@ -263,7 +266,6 @@ public class BDD {
         pstmt.setDate(4, date);
 
         int rowsAffected = pstmt.executeUpdate();
-        System.out.println(rowsAffected + " ligne(s) insérée(s)");
     }
 
     public void insertVolunteer(String nom, int age, int dpt, String psw) throws SQLException{
@@ -279,8 +281,7 @@ public class BDD {
         pstmt.setString(5, psw);
 
 
-        int rowsAffected = pstmt.executeUpdate();
-        System.out.println(rowsAffected + " ligne(s) insérée(s)");
+        pstmt.executeUpdate();
     }
 
     public void insertApplicant(String nom, int age, int dpt) throws SQLException{
@@ -294,8 +295,7 @@ public class BDD {
         pstmt.setInt(3, age);
         pstmt.setInt(4, dpt);
 
-        int rowsAffected = pstmt.executeUpdate();
-        System.out.println(rowsAffected + " ligne(s) insérée(s)");
+        pstmt.executeUpdate();
     }
 
     public void deleteVolunteerByName(String nom) throws SQLException{
@@ -304,8 +304,7 @@ public class BDD {
 
         pstmt.setString(1, nom);  
 
-        int rowsAffected = pstmt.executeUpdate();
-        System.out.println(rowsAffected + " ligne(s) supprimée(s)");
+       pstmt.executeUpdate();
     }
 
     public void deleteVolunteerById(int id) throws SQLException{
@@ -314,8 +313,7 @@ public class BDD {
 
         pstmt.setInt(1, id);  
 
-        int rowsAffected = pstmt.executeUpdate();
-        System.out.println(rowsAffected + " ligne(s) supprimée(s)");
+        pstmt.executeUpdate();
     }
 
     public void insertApplicant(String nom, int age, int dpt, String psw) throws SQLException{
@@ -330,8 +328,7 @@ public class BDD {
         pstmt.setInt(4, dpt);
         pstmt.setString(5, psw);
 
-        int rowsAffected = pstmt.executeUpdate();
-        System.out.println(rowsAffected + " ligne(s) insérée(s)");
+        pstmt.executeUpdate();
     }
 
     public void deleteApplicantByName(String nom) throws SQLException{
@@ -340,8 +337,7 @@ public class BDD {
 
         pstmt.setString(1, nom);  
 
-        int rowsAffected = pstmt.executeUpdate();
-        System.out.println(rowsAffected + " ligne(s) supprimée(s)");
+        pstmt.executeUpdate();
     }
 
     public void deleteApplicantById(int id) throws SQLException{
@@ -350,8 +346,7 @@ public class BDD {
 
         pstmt.setInt(1, id);  
 
-        int rowsAffected = pstmt.executeUpdate();
-        System.out.println(rowsAffected + " ligne(s) supprimée(s)");
+        pstmt.executeUpdate();
     }
 
     public void insertValidator(String nom, int age, int dpt, String orga, String psw) throws SQLException{
@@ -367,8 +362,7 @@ public class BDD {
         pstmt.setString(5, orga); 
         pstmt.setString(6, psw);
 
-        int rowsAffected = pstmt.executeUpdate();
-        System.out.println(rowsAffected + " ligne(s) insérée(s)");
+        pstmt.executeUpdate();
     }
 
     public void deleteValidatorByName(String nom) throws SQLException{
@@ -377,8 +371,7 @@ public class BDD {
 
         pstmt.setString(1, nom);  
 
-        int rowsAffected = pstmt.executeUpdate();
-        System.out.println(rowsAffected + " ligne(s) supprimée(s)");
+        pstmt.executeUpdate();
     }
 
     public void deleteValidatorById(int id) throws SQLException{
@@ -387,8 +380,7 @@ public class BDD {
 
         pstmt.setInt(1, id);  
 
-        int rowsAffected = pstmt.executeUpdate();
-        System.out.println(rowsAffected + " ligne(s) supprimée(s)");
+       pstmt.executeUpdate();
     }
 
 
@@ -401,7 +393,7 @@ public class BDD {
         ResultSet rs = pstmt.executeQuery();
 
         if(!rs.next()){
-            System.out.println("No request");
+            tt.write_red("No request");
             return false;
         }
         
@@ -448,12 +440,12 @@ public class BDD {
         System.out.println("-----------------------------------------");
 
         if(!rs.next()){
-            System.out.println("No request");
+            tt.write_red("No request found for applicant: " + app.getName());
             return false;
         }
     
         // Vérifie si le ResultSet contient des lignes avant de tenter de lire
-        if (rs.next()) {
+        while(rs.next()) {
             // Si une ligne existe, on peut lire les données
             int id = rs.getInt("id");
             String nom = rs.getString("nom");
@@ -464,9 +456,6 @@ public class BDD {
             System.out.println("Name: " + nom);
             System.out.println("Age: " + age);
             System.out.println("Department: " + dpt);
-        } else {
-            // Si aucune ligne n'est retournée, on affiche un message d'erreur
-            System.out.println("No request found for applicant: " + app.getName());
         }
     
         System.out.println("-----------------------------------------");
@@ -482,7 +471,7 @@ public class BDD {
         ResultSet rs = pstmt.executeQuery();
 
         if(!rs.next()){
-            System.out.println("No request");
+           tt.write_red("No request");
             return false;
         }
         
@@ -527,7 +516,7 @@ public class BDD {
         ResultSet rs = pstmt.executeQuery();
 
         if(!rs.next()){
-            System.out.println("No request");
+            tt.write_red("No request");
             return false;
         }
         
@@ -572,7 +561,7 @@ public class BDD {
         ResultSet rs = pstmt.executeQuery();
 
         if(!rs.next()){
-            System.out.println("No request");
+            tt.write_red("No request");
             return false;
         }
         
@@ -616,7 +605,7 @@ public class BDD {
         ResultSet rs = pstmt.executeQuery();
 
         if(!rs.next()){
-            System.out.println("No pending request");
+            tt.write_red("No pending request");
             return false;
         }
         
@@ -661,7 +650,7 @@ public class BDD {
         ResultSet rs = pstmt.executeQuery();
         
         if(!rs.next()){
-            System.out.println("No request");
+            tt.write_red("No request");
             return false;
         }
 
@@ -706,7 +695,7 @@ public class BDD {
         ResultSet rs = pstmt.executeQuery();
 
         if(!rs.next()){
-            System.out.println("No request");
+            tt.write_red("No request");
             return false;
         }   
         
@@ -783,7 +772,8 @@ public class BDD {
         int requestId = getID_Request(req);
 
         if (!isValidStatus(newStatus)) {
-            throw new IllegalArgumentException("Statut invalide : " + newStatus);
+            tt.write_red(newStatus + " is not a valid status.");
+            throw new IllegalArgumentException();
         }
     
         String sql = "UPDATE TRequest SET status = ? WHERE id = ?";
@@ -796,9 +786,9 @@ public class BDD {
         int rowsAffected = pstmt.executeUpdate();
     
         if (rowsAffected > 0) {
-            System.out.println("Status updated successfully for query n°" + requestId);
+            tt.write_green("Status updated successfully for query n°" + requestId);
         } else {
-            System.out.println("No request with the ID: " + requestId);
+            tt.write_red(sql + "No request with the ID: " + requestId);
         }
     }
 
@@ -809,12 +799,13 @@ public class BDD {
         String currentStatus = getCurrentStatus(requestId); // Méthode à définir pour obtenir le statut actuel de la requête
     
         if (!"A".equals(currentStatus)) {
-            System.out.println("Le statut actuel n'est pas 'Aprouvé', aucune mise à jour n'a été effectuée.");
+            tt.write_red("Le statut actuel n'est pas 'Aprouvé', aucune mise à jour n'a été effectuée.");
             return; // Si le statut actuel n'est pas "A", ne rien faire
         }
     
         if (!isValidStatus(newStatus)) {
-            throw new IllegalArgumentException("Statut invalide : " + newStatus);
+            tt.write_red(newStatus + " n'est pas un statut valide.");
+            throw new IllegalArgumentException();
         }
     
         String sql = "UPDATE TRequest SET status = ? WHERE id = ?";
@@ -827,9 +818,9 @@ public class BDD {
         int rowsAffected = pstmt.executeUpdate();
     
         if (rowsAffected > 0) {
-            System.out.println("Status updated successfully for query n°" + requestId);
+            tt.write_green("Statut mis à jour avec succès pour la requête n°" + requestId);
         } else {
-            System.out.println("No request with the ID: " + requestId);
+            tt.write_red("Aucune requête avec l'ID: " + requestId);
         }
     }
     
@@ -862,9 +853,9 @@ public class BDD {
         int rowsAffected = pstmt.executeUpdate();
     
         if (rowsAffected > 0) {
-            System.out.println("Volunteer updated successfully for query n°" + requestId);
+            tt.write_green("Volunteer updated successfully for query n°" + requestId);
         } else {
-            System.out.println("No request with the ID: " + requestId);
+            tt.write_red("No request with the ID: " + requestId);
         }
     }
 
@@ -882,9 +873,9 @@ public class BDD {
         int rowsAffected = pstmt.executeUpdate();
     
         if (rowsAffected > 0) {
-            System.out.println("Validator updated successfully for query n°" + requestId);
+            tt.write_green("Validator updated successfully for query n°" + requestId);
         } else {
-            System.out.println("No request with the ID: " + requestId);
+            tt.write_red("No request with the ID: " + requestId);
         }
     }
 
@@ -901,9 +892,9 @@ public class BDD {
         int rowsAffected = pstmt.executeUpdate();
     
         if (rowsAffected > 0) {
-            System.out.println("Motif updated successfully for query n°" + requestId);
+            tt.write_green("Motif updated successfully for query n°" + requestId);
         } else {
-            System.out.println("No request with the ID: " + requestId);
+            tt.write_red("No request with the ID: " + requestId);
         }
     }
 
@@ -931,7 +922,7 @@ public class BDD {
         pstmt.setInt(2, newNb);
         pstmt.setInt(3, id_vol);
         
-        int rowsAffected = pstmt.executeUpdate();
+        pstmt.executeUpdate();
     }
 
     //Getter et Setter attributs
