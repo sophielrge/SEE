@@ -31,6 +31,7 @@ public class Menu {
     }
 
     public int choix_compte(){
+        System.out.println("|0 - Go back                            |");
         System.out.println("|1 - I am applicant                     |");
         System.out.println("|2 - I am volunteer                     |");
         System.out.println("|3 - I am validator                     |");
@@ -61,6 +62,7 @@ public class Menu {
     }
 
     public int menu_demandeur(){
+        System.out.println("|0 - Go back                            |");
         System.out.println("|1 - Add a new request                  |");
         System.out.println("|2 - View my requests                   |");
         System.out.println("-----------------------------------------");
@@ -83,10 +85,15 @@ public class Menu {
         System.out.println("-----------------------------------------");
     }
 
-    public void consulter_requetesA(BDD base, Applicant applicant) throws SQLException{
+    public boolean consulter_requetesA(BDD base, Applicant applicant) throws SQLException{
         System.out.println("|Your requests :                        |");
-        base.printRequestApplicant(applicant);
+        boolean are_request = base.printRequestApplicant(applicant);
+        if (!are_request){
+            System.out.println("-----------------------------------------");
+            return false;
+        }
         System.out.println("-----------------------------------------");
+        return true;
     }
 
     public Volunteer crea_bene(BDD base) throws SQLException{
@@ -110,6 +117,7 @@ public class Menu {
     }
 
     public int menu_benevole(){
+        System.out.println("|0 - Go back                            |");
         System.out.println("|1 - Print pending requests             |");
         System.out.println("|2 - View my requests                   |");
         System.out.println("-----------------------------------------");
@@ -118,8 +126,12 @@ public class Menu {
         return i4;
     }
 
-    public void devenir_volontaire(BDD base, Volunteer volunteer) throws SQLException{
-        base.printRequestPending();
+    public boolean devenir_volontaire(BDD base, Volunteer volunteer) throws SQLException{
+        boolean are_request = base.printRequestPending();
+        if (!are_request){
+            System.out.println("-----------------------------------------");
+            return false;
+        }
         System.out.println("-----------------------------------------");
         System.out.println("|To select a request          ,         |");
         System.out.println("|enter its n°                           |");
@@ -141,14 +153,20 @@ public class Menu {
                 System.out.println("|You are the volunteer!                 |");
                 System.out.println("-----------------------------------------");
             case 2: 
-                break;
+            break;
         }
+        return true;
     }
 
-    public void print_request_volunteer(BDD base, Volunteer volunteer) throws SQLException{
+    public boolean print_request_volunteer(BDD base, Volunteer volunteer) throws SQLException{
         System.out.println("|Your requests                      :   |");
-        base.printRequestVolunteer(volunteer);
+        boolean are_request = base.printRequestVolunteer(volunteer);
+        if (!are_request){
+            System.out.println("-----------------------------------------");
+            return false;
+        }
         System.out.println("-----------------------------------------");
+        return true;
     }
 
     public void terminer_requete(BDD base, Applicant applicant) throws SQLException{
@@ -200,10 +218,18 @@ public class Menu {
         return i7;
     }
 
-    public Request change_status(Validator validator, BDD base) throws SQLException{
+    public boolean print_request_validator(BDD base) throws SQLException{
         System.out.println("|Pending requests:                      |");
-        base.printRequestPending();
+        boolean are_request = base.printRequestPending();
+        if (!are_request){
+            System.out.println("-----------------------------------------");
+            return false;
+        }
         System.out.println("-----------------------------------------");
+        return true;
+    }
+
+    public Request change_status(Validator validator, BDD base) throws SQLException{
         System.out.println("|To change a status request             |");
         System.out.println("|enter its  n°                          |");
         int i8 = scanner.nextInt();
@@ -236,10 +262,15 @@ public class Menu {
         base.updateRequestMotif(rchange, motif);
     }
 
-    public void afficher_requetesV(Validator validator, BDD base) throws SQLException{
+    public boolean afficher_requetesV(Validator validator, BDD base) throws SQLException{
         System.out.println("|Your requests                      :   |");
-        base.printRequestValidator(validator);
+        boolean are_request = base.printRequestValidator(validator);
+        if (!are_request){
+            System.out.println("-----------------------------------------");
+            return false;
+        }
         System.out.println("-----------------------------------------");
+        return true;
     }
 
     public Applicant charge_applicant(BDD base) throws SQLException{
@@ -385,6 +416,10 @@ public class Menu {
                                             validator_menu = false;
                                             break;
                                         case 1: //afficher requêtes en attente
+                                            boolean are_request = print_request_validator(base);
+                                            if (!are_request){
+                                                break;
+                                            }
                                             Request rchange = change_status(validator, base);
                                             //base.printVolunteer(rchange);
                                             int i9 = choisis_status();
