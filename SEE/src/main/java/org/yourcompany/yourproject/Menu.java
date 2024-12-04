@@ -156,8 +156,12 @@ public class Menu {
         }
         tt.write_yellow("|Select a request to volunteer          |");
         tt.write_yellow("|Enter its n°                           |");
+        tt.write_yellow("|To quit this page, enter 0             |");
         tt.write_yellow("-----------------------------------------");
         int i5 = scanner.nextInt();
+        if(i5 == 0){
+            return false;
+        }
         scanner.nextLine();
         Request rchosen = base.getRequest(i5);
         tt.write_yellow("|Do you want to be the volunteer       ?|");
@@ -200,7 +204,7 @@ public class Menu {
         }
         tt.write_yellow("|To finish a request,                   |");
         tt.write_yellow("|enter its n°                           |");
-        tt.write_yellow("|To quit this page enter 0             |");
+        tt.write_yellow("|To quit this page, enter 0             |");
         tt.write_yellow("-----------------------------------------");
         int i6 = scanner.nextInt();
         if(i6 == 0){
@@ -213,6 +217,7 @@ public class Menu {
             tt.write_yellow("-----------------------------------------");
             tt.write_green("|Request completed                      |");
             tt.write_yellow("|Enter a score for the volunteer        |");
+            tt.write_yellow("|from 0 to 5                            |");
             tt.write_yellow("-----------------------------------------");
             int i7 = scanner.nextInt();
             base.updateVolunteerScore(rfinished, i7);
@@ -273,11 +278,15 @@ public class Menu {
     public int change_status(Validator validator, BDD base) throws SQLException{
         tt.write_yellow("|To change a status request             |");
         tt.write_yellow("|enter its  n°                          |");
+        tt.write_yellow("|To quit this page, enter 0             |");
+        tt.write_yellow("-----------------------------------------");
         int i8 = scanner.nextInt();
+        if(i8 == 0){
+            return 0;
+        }
         scanner.nextLine();
         Request rchange = base.getRequest(i8);
         base.updateRequestValidator(i8, validator);
-        tt.write_yellow("-----------------------------------------");
         return i8;
     }
 
@@ -324,8 +333,14 @@ public class Menu {
         while(!psw_ok){
             tt.write_yellow("-----------------------------------------");
             tt.write_yellow("|Enter your id                          |");
-            id = scanner.nextInt();
-            scanner.nextLine();
+            try{
+                id = scanner.nextInt();
+                scanner.nextLine();}
+            catch(Exception e){
+                tt.write_red("|Try again                              |");
+                id = scanner.nextInt();
+                scanner.nextLine();
+            }
             tt.write_yellow("|Enter your password                    |");
             //String psw = scanner.nextLine();
             String psw = tt.ask_password_log();
@@ -348,8 +363,14 @@ public class Menu {
         while(!psw_ok){
             tt.write_yellow("-----------------------------------------");
             tt.write_yellow("|Enter your id                          |");
-            id = scanner.nextInt();
-            scanner.nextLine();
+            try{
+                id = scanner.nextInt();
+                scanner.nextLine();}
+            catch(Exception e){
+                tt.write_red("|Try again                              |");
+                id = scanner.nextInt();
+                scanner.nextLine();
+            }
             tt.write_yellow("|Enter your password                    |");
             //String psw = scanner.nextLine();
             String psw = tt.ask_password_log();
@@ -372,8 +393,14 @@ public class Menu {
         while(!psw_ok){
             tt.write_yellow("-----------------------------------------");
             tt.write_yellow("|Enter your id                          |");
-            id = scanner.nextInt();
-            scanner.nextLine();
+            try{
+                id = scanner.nextInt();
+                scanner.nextLine();}
+            catch(Exception e){
+                tt.write_red("|Try again                              |");
+                id = scanner.nextInt();
+                scanner.nextLine();
+            }
             tt.write_yellow("|Enter your password                    |");
             //String psw = scanner.nextLine();
             String psw = tt.ask_password_log();
@@ -482,6 +509,9 @@ public class Menu {
                                             }
                                             int rchangeId = change_status(validator, base);
                                             //base.printVolunteer(rchange);
+                                            if (rchangeId == 0){
+                                                break;
+                                            }
                                             int i9 = choisis_status();
                                             switch (i9) {
                                                 case 1: //Valider

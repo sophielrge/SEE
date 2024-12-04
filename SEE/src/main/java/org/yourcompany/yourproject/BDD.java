@@ -6,7 +6,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.ZoneId;
+import java.sql.Timestamp;
 
 public class BDD {
 
@@ -63,14 +63,16 @@ public class BDD {
             val = getValidator(rs.getInt("ID_Val"));
 
             req.setApp(app);
-            req.setHelpD(rs.getDate("helpD"));
+            req.setHelpD(rs.getDate("helpday"));
             req.setMotif(rs.getString("motif"));
             req.setStatus(rs.getString("statut").charAt(0));
             req.setValidator(val);
             req.setVolunteer(vol);
-            req.setDate(rs.getDate("date_creation").toInstant()            
-            .atZone(ZoneId.systemDefault()) 
-            .toLocalDate());
+            //req.setDate(rs.getDate("date_creation").toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
+            Timestamp timestamp = rs.getTimestamp("date_creation");
+            if (timestamp != null) {
+                req.setDate(timestamp.toLocalDateTime().toLocalDate());
+            }
             req.setSubject(rs.getString("subj"));
         }
 
