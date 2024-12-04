@@ -83,7 +83,16 @@ public class Menu {
         tt.write_yellow("|Indicate the date dd-MM-yyyy           |");
         String d=scanner.nextLine(); //transformer mon string en date
         SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
-        Date date = format.parse(d);
+        Date date;
+        try {
+            date = format.parse(d);
+        } catch (ParseException e) {
+            tt.write_red("The date is not valid");
+            tt.write_yellow("|Indicate the date dd-MM-yyyy           |");
+            d=scanner.nextLine(); //transformer mon string en date
+            format = new SimpleDateFormat("dd-MM-yyyy");
+            date = format.parse(d);
+        }
         java.sql.Date sdate = new java.sql.Date(date.getTime());
         int id = base.getID_Applicant(applicant);
         base.insertRequest(subj, id, sdate);
@@ -191,8 +200,12 @@ public class Menu {
         }
         tt.write_yellow("|To finish a request,                   |");
         tt.write_yellow("|enter its n°                           |");
+        tt.write_yellow("|To quit this page enter 0             |");
         tt.write_yellow("-----------------------------------------");
         int i6 = scanner.nextInt();
+        if(i6 == 0){
+            return false;
+        }
         Request rfinished = base.getRequest(i6);
         applicant.completeRequest(rfinished);
         boolean isUpdated = base.updateRequestStatusApplicant(i6, "C");

@@ -406,9 +406,8 @@ public class BDD {
             if("Rejected".equals(status)){
                 System.out.println("Reason: " + motif);
             }
+            System.out.println("-----------------------------------------");
         }while (rs.next());
-
-        System.out.println("-----------------------------------------");
 
         return true;
     }
@@ -466,11 +465,12 @@ public class BDD {
                 System.out.println("Department: " + volunteer.getDpt());
 
             } */
+
+            System.out.println("-----------------------------------------");
             
     
         } while (rs.next()); // Continue avec les lignes suivantes, s'il y en a
     
-        System.out.println("-----------------------------------------");
         return true;
     }
 
@@ -515,9 +515,9 @@ public class BDD {
                 System.out.println("Reason: " + motif);
                 System.out.println("Validator: " + val);
             }
+            System.out.println("-----------------------------------------");
         }while (rs.next());
 
-        System.out.println("-----------------------------------------");
         return true;
     }
 
@@ -565,9 +565,8 @@ public class BDD {
                 System.out.println("Reason: " + motif);
                 System.out.println("Validator: " + validator);
             }
+            System.out.println("-----------------------------------------");
         }while (rs.next());
-
-        System.out.println("-----------------------------------------");
 
         return true;
     }
@@ -610,9 +609,9 @@ public class BDD {
                 System.out.println("Reason: " + motif);
                 System.out.println("Validator: " + validator);
             }
+            System.out.println("-----------------------------------------");
         } while (rs.next());
 
-        System.out.println("-----------------------------------------");
         return true;
     }
 
@@ -654,9 +653,8 @@ public class BDD {
                 System.out.println("Reason: " + motif);
                 System.out.println("Validator: " + validator);
             }
+            System.out.println("-----------------------------------------");
         } while (rs.next());
-
-        System.out.println("-----------------------------------------");
         return true;
     }
 
@@ -698,9 +696,9 @@ public class BDD {
                 System.out.println("Reason: " + motif);
                 System.out.println("Validator: " + val);
             }
+            System.out.println("-----------------------------------------");
         } while (rs.next());
 
-        System.out.println("-----------------------------------------");
         return true;
     }
 
