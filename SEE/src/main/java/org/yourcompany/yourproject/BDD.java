@@ -928,6 +928,11 @@ public class BDD {
 
         ResultSet rs = pstmt.executeQuery();
 
+        if (!rs.next()) {
+            tt.write_red("No volunteer found with ID " + id_vol);
+            return;
+        }
+
         int nowScore = rs.getInt("note");
         int nb_avis = rs.getInt("nb_avis");
         int newNb = nb_avis + 1;

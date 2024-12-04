@@ -217,7 +217,7 @@ public class Menu {
             tt.write_yellow("-----------------------------------------");
             tt.write_green("|Request completed                      |");
             tt.write_yellow("|Enter a score for the volunteer        |");
-            tt.write_yellow("|from 0 to 5                            |");
+            tt.write_yellow("|from 1 to 5                            |");
             tt.write_yellow("-----------------------------------------");
             int i7 = scanner.nextInt();
             base.updateVolunteerScore(rfinished, i7);
