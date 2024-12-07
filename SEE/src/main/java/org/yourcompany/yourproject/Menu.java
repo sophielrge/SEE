@@ -9,6 +9,7 @@ import java.util.Scanner;
 public class Menu {
     Scanner scanner;
     boolean global_menu = true;
+    boolean log_menu = true;
     boolean choix_compteB = true;
     boolean applicant_menu = true;
     boolean volunteer_menu = true;
@@ -48,11 +49,27 @@ public class Menu {
         tt.write_yellow("|Enter your name                        |");
         String name = scanner.nextLine();
         tt.write_yellow("|Enter your age                         |");
-        int age = scanner.nextInt();
-        scanner.nextLine();
+        int age;
+        try{
+            age = scanner.nextInt();
+            scanner.nextLine();}
+        catch(Exception e){
+            tt.write_red("|Try again                              |");
+            scanner = new Scanner(System.in);
+            age = scanner.nextInt();
+            scanner.nextLine();
+        }
         tt.write_yellow("|Enter your dpt                         |");
-        int dpt = scanner.nextInt();
-        scanner.nextLine();
+        int dpt;
+        try{
+            dpt = scanner.nextInt();
+            scanner.nextLine();}
+        catch(Exception e){
+            tt.write_red("|Try again                              |");
+            scanner = new Scanner(System.in);
+            dpt = scanner.nextInt();
+            scanner.nextLine();
+        }
         tt.write_yellow("|Enter a password                       |");
         //String psw = scanner.nextLine();
         String psw = tt.ask_password_sign();
@@ -123,11 +140,27 @@ public class Menu {
         tt.write_yellow("Enter your name                        |");
         String name2 = scanner.nextLine();
         tt.write_yellow("Enter your age                         |");
-        int age2 = scanner.nextInt();
-        scanner.nextLine();
-        tt.write_yellow("Enter your dpt                         |");
-        int dpt2 = scanner.nextInt();
-        scanner.nextLine();
+        int age2;
+        try{
+            age2 = scanner.nextInt();
+            scanner.nextLine();}
+        catch(Exception e){
+            tt.write_red("|Try again                              |");
+            scanner = new Scanner(System.in);
+            age2 = scanner.nextInt();
+            scanner.nextLine();
+        }
+        tt.write_yellow("|Enter your dpt                         |");
+        int dpt2;
+        try{
+            dpt2 = scanner.nextInt();
+            scanner.nextLine();}
+        catch(Exception e){
+            tt.write_red("|Try again                              |");
+            scanner = new Scanner(System.in);
+            dpt2 = scanner.nextInt();
+            scanner.nextLine();
+        }
         tt.write_yellow("Enter a password                       |");
         //String psw = scanner.nextLine();
         String psw = tt.ask_password_sign();
@@ -243,11 +276,27 @@ public class Menu {
         tt.write_yellow("|Enter your name                        |");
         String name3 = scanner.nextLine();
         tt.write_yellow("|Enter your age                         |");
-        int age3 = scanner.nextInt();
-        scanner.nextLine();
+        int age3;
+        try{
+            age3 = scanner.nextInt();
+            scanner.nextLine();}
+        catch(Exception e){
+            tt.write_red("|Try again                              |");
+            scanner = new Scanner(System.in);
+            age3 = scanner.nextInt();
+            scanner.nextLine();
+        }
         tt.write_yellow("|Enter your dpt                         |");
-        int dpt3 = scanner.nextInt();
-        scanner.nextLine();
+        int dpt3;
+        try{
+            dpt3 = scanner.nextInt();
+            scanner.nextLine();}
+        catch(Exception e){
+            tt.write_red("|Try again                              |");
+            scanner = new Scanner(System.in);
+            dpt3 = scanner.nextInt();
+            scanner.nextLine();
+        }
         tt.write_yellow("|Enter your organization                |");
         String org = scanner.nextLine();
         tt.write_yellow("|Enter a password                       |");   
@@ -451,25 +500,32 @@ public class Menu {
     public void menu(BDD base) throws SQLException, ParseException {
         while (global_menu){
             choix_compteB = true;
+            log_menu = true;
             int i1 = menu_depart();//menu principal
             switch (i1) {
                 case 0: 
                     global_menu = false;
                     break;
                 case 1: // creer un compte
-                    int i2 = choix_compte();
-                    switch (i2) {
-                        case 0: //retour
-                            break;   
-                        case 1: // Creation demandeur
-                            Applicant applicant = crea_demandeur(base);
-                            break;
-                        case 2: // creation benevole
-                            Volunteer volunteer= crea_bene(base);
-                            break;
-                        case 3: // compte valideur
-                            Validator validator = crea_valideur(base);
-                            break;
+                    while (log_menu){
+                        int i2 = choix_compte();
+                        switch (i2) {
+                            case 0: //retour
+                                log_menu = false;
+                                break;   
+                            case 1: // Creation demandeur
+                                Applicant applicant = crea_demandeur(base);
+                                break;
+                            case 2: // creation benevole
+                                Volunteer volunteer= crea_bene(base);
+                                break;
+                            case 3: // compte valideur
+                                Validator validator = crea_valideur(base);
+                                break;
+                            default:
+                                tt.write_red("|Wrong choice                         |");
+                                break;
+                        }
                     }
                     break;
                 case 2:// se connecter
@@ -551,6 +607,9 @@ public class Menu {
                                                 case 2: //Refuser
                                                     refuser_r(base, rchangeId, validator);
                                                     break;
+                                                default:
+                                                    tt.write_red("|Wrong choice                         |");
+                                                    break; 
                                             }
                                             break;
                                         case 2: //afficher mes requêtes
@@ -566,10 +625,12 @@ public class Menu {
                                             tt.write_red("|Wrong choice                         |");
                                             break;  
                                     }
-                                }
-                                break;
+                                }break;
+                                default:
+                                    tt.write_red("|Wrong choice                         |");
+                                    break;  
                         }
-                    } 
+                    } break;
                 default:
                     tt.write_red("|Wrong choice                         |");
                     break; 
