@@ -173,7 +173,7 @@ public class Menu {
         switch (i6){
             case 1 -> {
                 volunteer.choseRequest(rchosen);
-                base.updateRequestStatus(i5, "P");
+                base.updateRequestStatus(i5, "S");
                 base.updateRequestVolunteer(i5, volunteer);
                 tt.write_green("|You are the volunteer!                 |");
                 System.out.println("-----------------------------------------");
@@ -256,7 +256,7 @@ public class Menu {
     public int menu_valideur(){
         tt.write_yellow("-----------------------------------------");
         tt.write_yellow("|0 - Go back                            |");
-        tt.write_yellow("|1 - Print pending requests             |");
+        tt.write_yellow("|1 - Print assigned requests             |");
         tt.write_yellow("|2 - View my requests                   |");
         tt.write_yellow("-----------------------------------------");
         int i7 = scanner.nextInt();
@@ -264,9 +264,9 @@ public class Menu {
         return i7;
     }
 
-    public boolean print_request_validator(BDD base) throws SQLException{
-        System.out.println("|Pending requests:                      |");
-        boolean are_request = base.printRequestPending();
+    public boolean print_assigned_validator(BDD base) throws SQLException{
+        System.out.println("|Assigned requests:                      |");
+        boolean are_request = base.printRequestSelected();
         if (!are_request){
             tt.write_yellow("-----------------------------------------");
             return false;
@@ -518,7 +518,7 @@ public class Menu {
                                             validator_menu = false;
                                             break;
                                         case 1: //afficher requêtes en attente
-                                            boolean are_request = print_request_validator(base);
+                                            boolean are_request = print_assigned_validator(base);
                                             if (!are_request){
                                                 break;
                                             }
