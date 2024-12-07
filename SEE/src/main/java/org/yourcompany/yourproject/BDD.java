@@ -831,6 +831,37 @@ public class BDD {
 
     }
 
+    public void printVolunteer() throws SQLException{
+        String sql = "SELECT * FROM TVolunteer";
+        this.pstmt = conn.prepareStatement(sql);
+        
+        ResultSet rs = pstmt.executeQuery();
+
+        if(!rs.next()){
+            tt.write_red("No volunteer");
+            return;
+        }
+        
+        do {
+            System.out.println("-----------------------------------------");
+            int id = rs.getInt("id");
+            String nom = rs.getString("nom");
+            int age = rs.getInt("age");
+            int dpt = rs.getInt("dpt");
+            int note = rs.getInt("note");
+            int nb_avis = rs.getInt("nb_avis");
+            
+            System.out.println("Volunteer n°" + id);
+            System.out.println("Name: " + nom);
+            System.out.println("Age: " + age);
+            System.out.println("Department: " + dpt);
+            System.out.println("Score: " + note);
+            System.out.println("Number of comments: " + nb_avis);
+
+            System.out.println("-----------------------------------------");
+        } while (rs.next());
+    }
+
 
     //Changement 
     public boolean isValidStatus(String status) {
