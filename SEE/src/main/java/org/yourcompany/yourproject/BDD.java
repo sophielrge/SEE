@@ -398,6 +398,7 @@ public class BDD {
                 case "A" -> status = "Approved";
                 case "R" -> status = "Rejected";
                 case "C" -> status = "Completed";
+                case "S" -> status = "Assigned";
             }
             
             
@@ -447,6 +448,7 @@ public class BDD {
                 case "A" -> status = "Approved";
                 case "R" -> status = "Rejected";
                 case "C" -> status = "Completed";
+                case "S" -> status = "Assigned";
             }
     
             System.out.println("Request n°" + id);
@@ -506,6 +508,7 @@ public class BDD {
                 case "A" -> status = "Approved";
                 case "R" -> status = "Rejected";
                 case "C" -> status = "Completed";
+                case "S" -> status = "Assigned";
             }
             
             
@@ -555,6 +558,7 @@ public class BDD {
                 case "A" -> status = "Approved";
                 case "R" -> status = "Rejected";
                 case "C" -> status = "Completed";
+                case "S" -> status = "Assigned";
             }
             
             
@@ -600,6 +604,7 @@ public class BDD {
                 case "A" -> status = "Approved";
                 case "R" -> status = "Rejected";
                 case "C" -> status = "Completed";
+                case "S" -> status = "Assigned";
             }
             
             
@@ -644,6 +649,7 @@ public class BDD {
                 case "A" -> status = "Approved";
                 case "R" -> status = "Rejected";
                 case "C" -> status = "Completed";
+                case "S" -> status = "Assigned";
             }
             
             
@@ -658,6 +664,49 @@ public class BDD {
             System.out.println("-----------------------------------------");
         } while (rs.next());
         return true;
+    }
+
+    public void printRequestSelected() throws SQLException{
+        String sql = "SELECT * FROM TRequest " + "WHERE TRequest.statut = 'S'";
+        this.pstmt = conn.prepareStatement(sql);
+        
+        ResultSet rs = pstmt.executeQuery();
+
+        if(!rs.next()){
+            tt.write_red("No selected request");
+            return;
+        }
+        
+        do {
+            System.out.println("-----------------------------------------");
+            int id = rs.getInt("id");
+            Date date = rs.getDate("date_creation");
+            String subject= rs.getString("subj");
+            String status = rs.getString("statut");
+            Date helpD = rs.getDate("helpday");
+            String motif = rs.getString("motif");
+            int validator = rs.getInt("id_validator");
+            
+
+            switch(status){
+                case "P" -> status = "Pending";
+                case "A" -> status = "Approved";
+                case "R" -> status = "Rejected";
+                case "C" -> status = "Completed";
+                case "S" -> status = "Assigned";
+            }
+            
+            
+            System.out.println("Request n°" + id);
+            System.out.println("Subject: " + subject);
+            System.out.println("Date: " + helpD);
+            System.out.println("Status: " + status);
+            if("Rejected".equals(status)){
+                System.out.println("Reason: " + motif);
+                System.out.println("Validator: " + validator);
+            }
+            System.out.println("-----------------------------------------");
+        } while (rs.next());
     }
 
 
@@ -687,6 +736,7 @@ public class BDD {
                 case "A" -> status = "Approved";
                 case "R" -> status = "Rejected";
                 case "C" -> status = "Completed";
+                case "S" -> status = "Assigned";
             }
             
             
@@ -732,6 +782,7 @@ public class BDD {
                 case "A" -> status = "Approved";
                 case "R" -> status = "Rejected";
                 case "C" -> status = "Completed";
+                case "S" -> status = "Assigned";
             }
             
             
@@ -938,7 +989,7 @@ public class BDD {
         int newNb = nb_avis + 1;
         int newScore = (nowScore + score)/newNb;
 
-        String sql2 = "UPDATE TVolunteer SET note = ? AND nb_avis = ? WHERE id = ?";
+        String sql2 = "UPDATE TVolunteer SET note = ?, nb_avis = ? WHERE id = ?";
     
         this.pstmt = conn.prepareStatement(sql2);
         
