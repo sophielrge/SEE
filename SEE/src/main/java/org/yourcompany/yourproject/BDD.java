@@ -275,7 +275,7 @@ public class BDD {
         pstmt.executeUpdate();
     }
 
-    public void insertVolunteer(String nom, int age, int dpt, String psw) throws SQLException{
+    public Boolean insertVolunteer(String nom, int age, int dpt, String psw) throws SQLException{
         String sql = "INSERT INTO TVolunteer (nom, age, dpt, psw) VALUES (?,?,?,?)";
         this.pstmt = conn.prepareStatement(sql);
 
@@ -285,8 +285,13 @@ public class BDD {
         pstmt.setInt(3, dpt);
         pstmt.setString(4, psw);
 
+        if(age < 18){
+            tt.write_red("You must be at least 18 years old to be a volunteer");
+            return false;
+        }
 
         pstmt.executeUpdate();
+        return true;
     }
 
     public void deleteVolunteerByName(String nom) throws SQLException{
@@ -338,7 +343,7 @@ public class BDD {
         pstmt.executeUpdate();
     }
 
-    public void insertValidator(String nom, int age, int dpt, String orga, String psw) throws SQLException{
+    public Boolean insertValidator(String nom, int age, int dpt, String orga, String psw) throws SQLException{
         String sql = "INSERT INTO TValidator (nom, age, dpt, orga, psw) VALUES (?,?,?,?,?)";
         this.pstmt = conn.prepareStatement(sql);
 
@@ -349,7 +354,13 @@ public class BDD {
         pstmt.setString(4, orga); 
         pstmt.setString(5, psw);
 
+        if(age < 18){
+            tt.write_red("You must be at least 18 years old to be a validator");
+            return false;
+        }
+
         pstmt.executeUpdate();
+        return true;
     }
 
     public void deleteValidatorByName(String nom) throws SQLException{
