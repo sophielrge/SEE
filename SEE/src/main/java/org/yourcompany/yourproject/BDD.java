@@ -834,7 +834,7 @@ public class BDD {
 
     //Changement 
     public boolean isValidStatus(String status) {
-        return status.equals("P") || status.equals("A") || status.equals("R") || status.equals("C");
+        return status.equals("P") || status.equals("A") || status.equals("R") || status.equals("C") || status.equals("S");
     }
 
     public void updateRequestStatus(int requestId, String newStatus) throws SQLException {
