@@ -327,7 +327,7 @@ public class Menu {
         return true;
     }
 
-    public Applicant charge_applicant(BDD base) throws SQLException{
+    public Applicant charge_applicant(BDD base){
         boolean psw_ok = false;
         int id = -1;
         while(!psw_ok){
@@ -338,23 +338,36 @@ public class Menu {
                 scanner.nextLine();}
             catch(Exception e){
                 tt.write_red("|Try again                              |");
+                scanner = new Scanner(System.in);
                 id = scanner.nextInt();
                 scanner.nextLine();
             }
             tt.write_yellow("|Enter your password                    |");
             //String psw = scanner.nextLine();
             String psw = tt.ask_password_log();
-            if (psw.equals(base.get_psw_Applicant(id))){
-                psw_ok = true;
-            }else {
-                tt.write_red("|Wrong id or psw                    |");
+            try {
+                if (psw.equals(base.get_psw_Applicant(id))){
+                    psw_ok = true;
+                }else {
+                    tt.write_red("|Wrong id or psw                    |");
+                }
+            } catch (SQLException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
             }
         }
         tt.write_yellow("-----------------------------------------");
-        Applicant ap = base.getApplicant(id);
-        tt.write_green("|Welcome " + ap.getName() + "                   |");
-        tt.write_yellow("-----------------------------------------");
+        Applicant ap;
+        try {
+            ap = base.getApplicant(id);
+            tt.write_green("|Welcome " + ap.getName() + "                   |");
+            tt.write_yellow("-----------------------------------------");
         return ap;
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+            return null;
+        }
     }
 
     public Volunteer charge_volontaire(BDD base) throws SQLException{
@@ -368,6 +381,7 @@ public class Menu {
                 scanner.nextLine();}
             catch(Exception e){
                 tt.write_red("|Try again                              |");
+                scanner = new Scanner(System.in);
                 id = scanner.nextInt();
                 scanner.nextLine();
             }
@@ -398,6 +412,7 @@ public class Menu {
                 scanner.nextLine();}
             catch(Exception e){
                 tt.write_red("|Try again                              |");
+                scanner = new Scanner(System.in);
                 id = scanner.nextInt();
                 scanner.nextLine();
             }
