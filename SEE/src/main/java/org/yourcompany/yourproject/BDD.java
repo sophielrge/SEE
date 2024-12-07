@@ -312,7 +312,7 @@ public class BDD {
         pstmt.executeUpdate();
     }
 
-    public void insertApplicant(String nom, int age, int dpt, String psw) throws SQLException{
+    public Boolean insertApplicant(String nom, int age, int dpt, String psw) throws SQLException{
         String sql = "INSERT INTO TApplicant (nom, age, dpt, psw) VALUES (?,?,?,?)";
         this.pstmt = conn.prepareStatement(sql);
 
@@ -322,7 +322,12 @@ public class BDD {
         pstmt.setInt(3, dpt);
         pstmt.setString(4, psw);
 
-        pstmt.executeUpdate();
+        try {
+            pstmt.executeUpdate();
+            return true;
+        } catch (SQLException e) {
+            return false;
+        }
     }
 
     public void deleteApplicantByName(String nom) throws SQLException{
