@@ -674,7 +674,7 @@ public class BDD {
 
         if(!rs.next()){
             tt.write_red("No selected request");
-            return;
+            return false;
         }
         
         do {
@@ -707,6 +707,7 @@ public class BDD {
             }
             System.out.println("-----------------------------------------");
         } while (rs.next());
+        return true;
     }
 
 
