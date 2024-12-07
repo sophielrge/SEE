@@ -666,7 +666,7 @@ public class BDD {
         return true;
     }
 
-    public void printRequestSelected() throws SQLException{
+    public Boolean printRequestSelected() throws SQLException{
         String sql = "SELECT * FROM TRequest " + "WHERE TRequest.statut = 'S'";
         this.pstmt = conn.prepareStatement(sql);
         
