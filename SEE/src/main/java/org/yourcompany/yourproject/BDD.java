@@ -833,7 +833,7 @@ public class BDD {
         String nom = rs.getString("nom");
         int age = rs.getInt("age");
         int dpt = rs.getInt("dpt");
-        int note = rs.getInt("note");
+        float note = rs.getFloat("note");
         int nb_avis = rs.getInt("nb_avis");
         
         System.out.println("Volunteer n°" + id);
@@ -864,7 +864,7 @@ public class BDD {
             String nom = rs.getString("nom");
             int age = rs.getInt("age");
             int dpt = rs.getInt("dpt");
-            int note = rs.getInt("note");
+            float note = rs.getFloat("note");
             int nb_avis = rs.getInt("nb_avis");
             
             System.out.println("Volunteer n°" + id);
@@ -1032,26 +1032,26 @@ public class BDD {
             return;
         }
 
-        int nowScore = rs.getInt("note");
+        float nowScore = rs.getFloat("note");
         int nb_avis = rs.getInt("nb_avis");
         int newNb = nb_avis + 1;
-        int newScore = (nowScore + score)/newNb;
+        float newScore = (nowScore + score)/newNb;
 
         String sql2 = "UPDATE TVolunteer SET note = ?, nb_avis = ? WHERE id = ?";
     
         this.pstmt = conn.prepareStatement(sql2);
         
-        pstmt.setInt(1, newScore);
+        pstmt.setFloat(1, newScore);
         pstmt.setInt(2, newNb);
         pstmt.setInt(3, id_vol);
         
         pstmt.executeUpdate();
     }
 
-    public int get_score_Volunteer(Volunteer vol) throws SQLException{
+    public float get_score_Volunteer(Volunteer vol) throws SQLException{
         int id_vol = getID_Volunteer(vol);
 
-        int res = -1;
+        float res = -1;
         String sql = "SELECT note FROM TVolunteer WHERE id = ?";
 
         this.pstmt = conn.prepareStatement(sql);
@@ -1060,7 +1060,7 @@ public class BDD {
         ResultSet rs = pstmt.executeQuery();
 
         if(rs.next()){
-            res = rs.getInt("note");
+            res = rs.getFloat("note");
         }
 
         return res;
@@ -1079,21 +1079,15 @@ public class BDD {
         if (rs.next()) {  // Move to the first row of the result set
             System.out.println("-----------------------------------------");
     
-            // Handling NULL for score
-            Object scoreObj = rs.getObject("note");
-            if (scoreObj != null) {
-                int score = (int) scoreObj;
-                System.out.println("|Score: " + score );
-            } else {
-                tt.write_red("|You don't have a score yet         |");
-            }
+            float scoreObj = rs.getFloat("note");
+            float score = scoreObj;
+            System.out.println("|Score: " + score );
     
             // Handling NULL for number of reviews
-            Object nbAvisObj = rs.getObject("nb_avis");
-            if (nbAvisObj != null) {
-                int nb_avis = (int) nbAvisObj;
-                System.out.println("|Number of scores: " + nb_avis);
-            } 
+            int nbAvisObj = rs.getInt("nb_avis");
+            int nb_avis = nbAvisObj;
+            System.out.println("|Number of scores: " + nb_avis);
+            
     
             System.out.println("-----------------------------------------");
         } else {
