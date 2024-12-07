@@ -57,13 +57,18 @@ public class Menu {
         //String psw = scanner.nextLine();
         String psw = tt.ask_password_sign();
         Applicant applicant = new Applicant(name, age, dpt, psw);
-        base.insertApplicant(name, age, dpt, psw);
-        tt.write_green("-----------------------------------------");
-        tt.write_green("|Applicant account created with success |");
-        int id = base.getID_Applicant(applicant);
-        tt.write_purple("|Your id is: " +id+" remember it           ");
-        tt.write_green("-----------------------------------------");
-        return applicant;
+        boolean isInserted = base.insertApplicant(name, age, dpt, psw);;
+        if (!isInserted){
+            tt.write_red("Error in the account creation");
+            return null;
+        } else {
+            tt.write_green("-----------------------------------------");
+            tt.write_green("|Applicant account created with success |");
+            int id = base.getID_Applicant(applicant);
+            tt.write_purple("|Your id is: " +id+" remember it           ");
+            tt.write_green("-----------------------------------------");
+            return applicant;
+        }
     }
 
     public int menu_demandeur(){
@@ -127,13 +132,18 @@ public class Menu {
         //String psw = scanner.nextLine();
         String psw = tt.ask_password_sign();
         Volunteer volunteer = new Volunteer(name2, age2, dpt2, psw);
-        base.insertVolunteer(name2, age2, dpt2, psw);
-        tt.write_green("-----------------------------------------");
-        tt.write_green("|Volunteer account created with success!|");
-        int id = base.getID_Volunteer(volunteer);
-        tt.write_purple("|Your id is: " +id+" remember it           ");
-        tt.write_green("-----------------------------------------");
-        return volunteer;
+        boolean isInserted = base.insertVolunteer(name2, age2, dpt2, psw);
+        if (!isInserted){
+            tt.write_red("Error in the account creation");
+            return null;
+        }else {
+            tt.write_green("-----------------------------------------");
+            tt.write_green("|Volunteer account created with success!|");
+            int id = base.getID_Volunteer(volunteer);
+            tt.write_purple("|Your id is: " +id+" remember it           ");
+            tt.write_green("-----------------------------------------");
+            return volunteer;
+        }
     }
 
     public int menu_benevole(){ 
@@ -244,20 +254,26 @@ public class Menu {
         //String psw = scanner.nextLine();
         String psw = tt.ask_password_sign();
         Validator validator = new Validator(name3, age3, dpt3, org, psw);
-        base.insertValidator(name3, age3, dpt3, org, psw);
-        tt.write_green("-----------------------------------------");
-        tt.write_green("|Validator account created with success  |");
-        int id = base.getID_Validator(validator);
-        tt.write_purple("|Your id is: " +id+" remember it             |");
-        tt.write_green("-----------------------------------------");
-        return validator;
+        boolean isInserted = base.insertValidator(name3, age3, dpt3, org, psw);
+        if (!isInserted){
+            tt.write_red("Error in the account creation");
+            return null;
+        } else {
+            tt.write_green("-----------------------------------------");
+            tt.write_green("|Validator account created with success  |");
+            int id = base.getID_Validator(validator);
+            tt.write_purple("|Your id is: " +id+" remember it             |");
+            tt.write_green("-----------------------------------------");
+            return validator;
+        }
     }
 
     public int menu_valideur(){
         tt.write_yellow("-----------------------------------------");
         tt.write_yellow("|0 - Go back                            |");
-        tt.write_yellow("|1 - Print assigned requests             |");
+        tt.write_yellow("|1 - Print assigned requests            |");
         tt.write_yellow("|2 - View my requests                   |");
+        tt.write_yellow("|3 - View all volunteers                |");
         tt.write_yellow("-----------------------------------------");
         int i7 = scanner.nextInt();
         scanner.nextLine();
@@ -543,6 +559,9 @@ public class Menu {
                                                 break;
                                             }
                                             break;
+                                        case 3:
+                                            base.printVolunteer();
+                                            break;
                                         default:
                                             tt.write_red("|Wrong choice                         |");
                                             break;  
@@ -550,7 +569,10 @@ public class Menu {
                                 }
                                 break;
                         }
-                    }  
+                    } 
+                default:
+                    tt.write_red("|Wrong choice                         |");
+                    break; 
             }
         }
         System.exit(0);
