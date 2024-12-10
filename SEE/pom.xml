@@ -26,7 +26,13 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.11.0</version>
                 <configuration>
-                    <release>22</release>
+                     <archive>
+                        <manifest>
+                            <mainClass>org.yourcompany.yourproject.Main</mainClass>
+                        </manifest>
+                    </archive>
+                    <repositoryID>github</repositoryID>
+                    <url>http://maven.pkg.github.com/sophielrge/SEE</url>  
                 </configuration>
             </plugin>
             <plugin>
@@ -38,14 +44,7 @@
                         <include>**/Test*.java</include>
                         <include>**/*Test.java</include>
                         <include>**/*Tests.java</include>
-                    </includes>
-                    <archive>
-                        <manifest>
-                            <mainClass>org.yourcompany.yourproject.Main</mainClass>
-                        </manifest>
-                    </archive>
-                    <repositoryID>github</repositoryID>
-                    <url>http://maven.pkg.github.com/sophielrge/SEE</url>   
+                    </includes> 
                 </configuration>
             </plugin>
             <plugin>
