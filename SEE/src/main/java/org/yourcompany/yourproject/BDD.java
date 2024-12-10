@@ -268,9 +268,9 @@ public class BDD {
         this.pstmt = conn.prepareStatement(sql);
 
         // Paramètres à insérer
-        pstmt.setString(2, subj);  
-        pstmt.setInt(3, app);
-        pstmt.setDate(4, date);
+        pstmt.setString(1, subj);  
+        pstmt.setInt(2, app);
+        pstmt.setDate(3, date);
 
         pstmt.executeUpdate();
     }

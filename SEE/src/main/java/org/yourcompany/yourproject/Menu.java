@@ -9,7 +9,7 @@ import java.util.Scanner;
 public class Menu {
     Scanner scanner;
     boolean global_menu = true;
-    boolean log_menu = true;
+    boolean crea_menu = true;
     boolean choix_compteB = true;
     boolean applicant_menu = true;
     boolean volunteer_menu = true;
@@ -500,27 +500,30 @@ public class Menu {
     public void menu(BDD base) throws SQLException, ParseException {
         while (global_menu){
             choix_compteB = true;
-            log_menu = true;
+            crea_menu = true;
             int i1 = menu_depart();//menu principal
             switch (i1) {
                 case 0: 
                     global_menu = false;
                     break;
                 case 1: // creer un compte
-                    while (log_menu){
+                    while (crea_menu){
                         int i2 = choix_compte();
                         switch (i2) {
                             case 0: //retour
-                                log_menu = false;
+                                crea_menu = false;
                                 break;   
                             case 1: // Creation demandeur
                                 Applicant applicant = crea_demandeur(base);
+                                crea_menu = false;
                                 break;
                             case 2: // creation benevole
                                 Volunteer volunteer= crea_bene(base);
+                                crea_menu = false;
                                 break;
                             case 3: // compte valideur
                                 Validator validator = crea_valideur(base);
+                                crea_menu = false;
                                 break;
                             default:
                                 tt.write_red("|Wrong choice                         |");
