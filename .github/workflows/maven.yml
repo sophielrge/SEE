@@ -20,7 +20,7 @@ jobs:
       packages: write
     steps:
       - uses: actions/checkout@v4
-      - name: Set up JDK 17
+      - name: Set up JDK 22
         uses: actions/setup-java@v4
         with:
           java-version: '22'
@@ -28,8 +28,5 @@ jobs:
       - name: Build with Maven
         working-directory: ./SEE
         run: mvn package
-      - name: Deploy with Maven
-        working-directory: ./SEE
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: mvn --batch-mode deploy
+      - name: Test with Maven
+        run: mvn --batch-mode test
