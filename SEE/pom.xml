@@ -11,6 +11,14 @@
         <exec.mainClass>org.yourcompany.yourproject.SEE</exec.mainClass>
     </properties>
 
+    <distributionManagement>
+        <repository>
+            <id>githbub</id>
+            <name>GitHub OWNER Apache Maven Packages</name>
+            <url>http://maven.pkg.github.com/sophielrge/SEE</url>
+        </repository>
+    </distributionManagement>
+
     <build>
         <plugins>
             <plugin>
@@ -32,6 +40,10 @@
                         <include>**/*Tests.java</include>
                     </includes>
                 </configuration>
+            </plugin>
+            <plugin>
+                <artifactId>maven-failsafe-plugin</artifactId>
+                <version>2.22.2</version>
             </plugin>
         </plugins>
     </build>
