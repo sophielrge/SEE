@@ -13,7 +13,7 @@
 
     <distributionManagement>
         <repository>
-            <id>githbub</id>
+            <id>github</id>
             <name>GitHub OWNER Apache Maven Packages</name>
             <url>http://maven.pkg.github.com/sophielrge/SEE</url>
         </repository>
@@ -44,7 +44,7 @@
                             <mainClass>org.yourcompany.yourproject.Main</mainClass>
                         </manifest>
                     </archive>
-                    <repositoryID>githbub</repositoryID>
+                    <repositoryID>github</repositoryID>
                     <url>http://maven.pkg.github.com/sophielrge/SEE</url>   
                 </configuration>
             </plugin>
