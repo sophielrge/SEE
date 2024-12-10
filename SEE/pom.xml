@@ -39,8 +39,13 @@
                         <include>**/*Test.java</include>
                         <include>**/*Tests.java</include>
                     </includes>
+                    <archive>
+                        <manifest>
+                            <mainClass>org.yourcompany.yourproject.Main</mainClass>
+                        </manifest>
+                    </archive>
                     <repositoryID>githbub</repositoryID>
-                    <repositoryURL>http://maven.pkg.github.com/sophielrge/SEE</repositoryURL>   
+                    <url>http://maven.pkg.github.com/sophielrge/SEE</url>   
                 </configuration>
             </plugin>
             <plugin>
