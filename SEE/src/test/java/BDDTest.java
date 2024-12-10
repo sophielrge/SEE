@@ -6,8 +6,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.ZoneId;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -17,17 +15,11 @@ import org.junit.jupiter.api.Test;
 import static org.mockito.ArgumentMatchers.anyString;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.reset;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import org.mockito.MockitoAnnotations;
-import org.yourcompany.yourproject.Applicant;
 import org.yourcompany.yourproject.BDD;
-import org.yourcompany.yourproject.Request;
 import org.yourcompany.yourproject.Validator;
-import org.yourcompany.yourproject.Volunteer;
 
 public class BDDTest {
 
@@ -87,10 +79,9 @@ public class BDDTest {
 
         bdd.insertRequest(subj, app, date);
 
-        verify(pstmt).setString(2, subj);
-        verify(pstmt).setInt(3, app);
-        verify(pstmt).setDate(4, date);
-        verify(pstmt).setDate(4, date);
+        verify(pstmt).setString(1, subj);
+        verify(pstmt).setInt(2, app);
+        verify(pstmt).setDate(3, date);
         verify(pstmt).executeUpdate();
 
     }
@@ -104,10 +95,10 @@ public class BDDTest {
 
         bdd.insertVolunteer(nom, age, dpt, psw);
 
-        verify(pstmt).setString(2, nom);
-        verify(pstmt).setInt(3, age);
-        verify(pstmt).setInt(4, dpt);
-        verify(pstmt).setString(5, psw);
+        verify(pstmt).setString(1, nom);
+        verify(pstmt).setInt(2, age);
+        verify(pstmt).setInt(3, dpt);
+        verify(pstmt).setString(4, psw);
         verify(pstmt).executeUpdate();
     }
 
@@ -139,10 +130,10 @@ public class BDDTest {
 
         bdd.insertApplicant(nom, age, dpt, psw);
 
-        verify(pstmt).setString(2, nom);
-        verify(pstmt).setInt(3, age);
-        verify(pstmt).setInt(4, dpt);
-        verify(pstmt).setString(5, psw);
+        verify(pstmt).setString(1, nom);
+        verify(pstmt).setInt(2, age);
+        verify(pstmt).setInt(3, dpt);
+        verify(pstmt).setString(4, psw);
         verify(pstmt).executeUpdate();
     }
 
@@ -156,11 +147,11 @@ public class BDDTest {
 
         bdd.insertValidator(nom, age, dpt, orga,psw);
 
-        verify(pstmt).setString(2, nom);
-        verify(pstmt).setInt(3, age);
-        verify(pstmt).setInt(4, dpt);
-        verify(pstmt).setString(5, orga);
-        verify(pstmt).setString(6, psw);
+        verify(pstmt).setString(1, nom);
+        verify(pstmt).setInt(2, age);
+        verify(pstmt).setInt(3, dpt);
+        verify(pstmt).setString(4, orga);
+        verify(pstmt).setString(5, psw);
         verify(pstmt).executeUpdate();
     }
 
@@ -172,7 +163,7 @@ public class BDDTest {
         when(resultSet.getInt("id")).thenReturn(1);
         when(resultSet.getDate("date_creation")).thenReturn(new Date(System.currentTimeMillis()));
         when(resultSet.getString("subj")).thenReturn("Test Subject");
-        when(resultSet.getString("status")).thenReturn("A");
+        when(resultSet.getString("statut")).thenReturn("A");
         when(resultSet.getDate("helpday")).thenReturn(new Date(System.currentTimeMillis()));
         when(resultSet.getString("motif")).thenReturn("No reason");
         when(pstmt.executeQuery()).thenReturn(resultSet);
