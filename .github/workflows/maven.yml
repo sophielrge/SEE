@@ -26,10 +26,10 @@ jobs:
           java-version: '22'
           distribution: 'adopt'
       - name: Build with Maven
-        working-directory: ./java
+        working-directory: ./SEE
         run: mvn package
       - name: Deploy with Maven
-        working-directory: ./java
+        working-directory: ./SEE
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: mvn --batch-mode deploy
