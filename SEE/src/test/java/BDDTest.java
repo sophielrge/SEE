@@ -79,9 +79,9 @@ public class BDDTest {
 
         bdd.insertRequest(subj, app, date);
 
-        verify(pstmt).setString(1, subj);
-        verify(pstmt).setInt(2, app);
-        verify(pstmt).setDate(3, date);
+        verify(pstmt).setString(2, subj);
+        verify(pstmt).setInt(3, app);
+        verify(pstmt).setDate(4, date);
         verify(pstmt).executeUpdate();
 
     }
