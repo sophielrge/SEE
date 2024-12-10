@@ -1035,7 +1035,7 @@ public class BDD {
         float nowScore = rs.getFloat("note");
         int nb_avis = rs.getInt("nb_avis");
         int newNb = nb_avis + 1;
-        float newScore = (nowScore + score)/newNb;
+        float newScore = (nowScore*nb_avis + score)/newNb;
 
         String sql2 = "UPDATE TVolunteer SET note = ?, nb_avis = ? WHERE id = ?";
     
