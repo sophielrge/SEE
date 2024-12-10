@@ -39,6 +39,8 @@
                         <include>**/*Test.java</include>
                         <include>**/*Tests.java</include>
                     </includes>
+                    <repositoryID>githbub</repositoryID>
+                    <repositoryURL>http://maven.pkg.github.com/sophielrge/SEE</repositoryURL>   
                 </configuration>
             </plugin>
             <plugin>
