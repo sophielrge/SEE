@@ -31,3 +31,8 @@ jobs:
       - name: Test with Maven
         working-directory: ./SEE
         run: mvn test
+      - name: Deploy
+        working-directory: ./SEE
+        env: 
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: mvn --batch-mode deploy
