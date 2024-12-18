@@ -13,7 +13,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>22</maven.compiler.source>
         <maven.compiler.target>22</maven.compiler.target>
-        <exec.mainClass>fully-qualified-class-name</exec.mainClass>
+        <exec.mainClass>org.pdla.assistance_app.Main</exec.mainClass>
     </properties>
 
     <distributionManagement>
@@ -27,11 +27,20 @@
     <build>
         <plugins>
             <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>3.1.0</version>
+                <configuration>
+                    <mainClass>org.pdla.assistance_app.Main</mainClass>
+                </configuration>
+            </plugin>
+            <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.11.0</version>
                 <configuration>
                     <release>22</release>
+                    <mainClass>org.pdla.assistance_app.Main</mainClass>
                 </configuration>
             </plugin>
 
@@ -45,12 +54,21 @@
                         <include>**/*Test.java</include>
                         <include>**/*Tests.java</include>
                     </includes>
+                    <mainClass>org.pdla.assistance_app.Main</mainClass>
                 </configuration>
             </plugin>
 
             <plugin>
                 <artifactId>maven-failsafe-plugin</artifactId>
                 <version>2.22.2</version>
+                <configuration>
+                    <includes>
+                        <include>**/IT*.java</include>
+                        <include>**/*IT.java</include>
+                        <include>**/*ITCase.java</include>
+                    </includes>
+                    <mainClass>org.pdla.assistance_app.Main</mainClass>
+                </configuration>    
             </plugin>
         </plugins>
     </build>
