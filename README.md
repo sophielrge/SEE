@@ -34,7 +34,7 @@ Ce projet vise à développer une **application de bénévolat** permettant de c
 
 - **Langage** : Java
 - **Base de données** : MySQL
-- **Outils** : GitHub, GitActions Maven.
+- **Outils** : GitHub, GitHub Actions Maven.
 
 ## Structure 
 

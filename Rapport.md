@@ -13,7 +13,7 @@ Ce projet vise à concevoir une application destinée au bénévolat. Elle perme
 Pour organiser ce projet, nous avons utilisé Jira afin de définir et prioriser les user stories, suivre l’avancement des tâches et gérer les sprints de manière agile. Côté développement, nous avons choisi Java comme langage principal. Nous avons également utilisé GitHub pour le contrôle de version, facilitant la travail au sein de l’équipe.
 
 ## 2. Application de la méthode Agile
-Metchode Scrum :
+Methode Scrum :
 Avant de se lancer dans le développement, nous avons cherché à définir les acteurs concernés par l’application, ainsi que les fonctionnalités les plus importantes en se basant sur le cahier des charges. Il s’agit ici de trois types de personnes, celles en situation de vulnérabilité, les bénévoles, et des personnes responsables, dont l’approbation est indispensable pour permettre à un volontaire de répondre à un service. Pour s’organiser au mieux, nous avons planifié notre travail en suivant la méthode Scrum, à l’aide d’un Jira. 
 
 Gestion des user stories :
@@ -39,6 +39,27 @@ Exemple de commandes utilisées :
 git pull, git branch, git merge, git rebase, etc.
 
 ## 4. Mise en place de l'intégration continue (DevOps)
+
+Pour ce projet, nous avons choisi GitHub Actions pour automatiser le pipeline CI/CD. Cet outil nous a permis de simplifier le processus de développement en automatisant les étapes essentielles comme la compilation, les tests, et le déploiement.
+
+## Déroulement du pipeline
+
+Le pipeline se compose de plusieurs étapes :
+
+- Compilation avec Maven : Nous avons utilisé Maven pour compiler le code source et garantir qu'il est conforme aux exigences.
+
+- Exécution des tests unitaires : Les tests JUnit ont été automatisés pour s'assurer que chaque fonctionnalité fonctionne comme prévu. En cas d'échec, le pipeline s'interrompt automatiquement.
+
+- Génération d'un fichier .jar : Une fois le code validé, un artefact exécutable est produit pour faciliter le déploiement.
+
+## Difficultés rencontrées
+
+Nous avons rencontré plusieurs problèmes lors de la mise en place de ce pipeline. Par exemple, le déploiement était difficile à configurer en raison de permissions incorrectes et de problèmes avec les secrets. Nous avons dû reconfigurer nos fichiers pom.xml et maven.yml, en faisant attention à la syntaxe (ex : bien respecter les minsucules ou les majuscules).
+
+## Gestion du .gitignore
+
+Nous avons utilisé un fichier .gitignore pour exclure les fichiers inutiles ou sensibles du dépôt, comme les fichiers de compilation (ex : /target/) ou céer par le système (ex : .DS_Store). Cela nous a permis de garder le dépôt propre et organisé, tout en évitant les conflits inutiles.
+
 
 Outil choisi :
 Utilisation de GitHub Actions pour automatiser le pipeline CI/CD.
