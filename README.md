@@ -38,28 +38,29 @@ Ce projet vise à développer une **application de bénévolat** permettant de c
 
 ## Structure 
 
+```plaintext
 SEE/
 ├── .github/
 │   └── workflows/
 ├── .vscode/
 ├── SEE/
 │   ├── src/
-│       ├── main/java/org/pdla/assistance_app/
-│           ├── accounts/
-│               ├── User.java
-│               ├── Applicant.java
-│               ├── Validator.java
-│              └── Volunteer.java
-│           ├── structures/
-│               ├── BDD.java
-│               ├── Menu.java
-│               ├── Request.java
-│               └── Traitement_texte.java
-│           └── Main.java
-│       └── test/java/org/pdla/assistance_app/structure
-│           ├── BDDTest.java
-│           └── MenuTest.java
-│   ├── taget/
+│   │   ├── main/java/org/pdla/assistance_app/
+│   │   │   ├── accounts/
+│   │   │   │   ├── User.java
+│   │   │   │   ├── Applicant.java
+│   │   │   │   ├── Validator.java
+│   │   │   │   └── Volunteer.java
+│   │   │   ├── structures/
+│   │   │   │   ├── BDD.java
+│   │   │   │   ├── Menu.java
+│   │   │   │   ├── Request.java
+│   │   │   │   └── Traitement_texte.java
+│   │   │   └── Main.java
+│   │   └── test/java/org/pdla/assistance_app/structure
+│   │       ├── BDDTest.java
+│   │       └── MenuTest.java
+│   ├── target/
 │   ├── Makefile
 │   ├── pom.xml
 │   └── .gitignore
