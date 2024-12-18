@@ -1,4 +1,4 @@
-package org.yourcompany.yourproject;
+package org.pdla.assistance_app.accounts;
 
 public class User {
     private String name;

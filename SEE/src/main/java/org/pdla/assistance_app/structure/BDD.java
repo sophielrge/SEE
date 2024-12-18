@@ -1,4 +1,4 @@
-package org.yourcompany.yourproject;
+package org.pdla.assistance_app.structure;
 
 import java.sql.Connection;
 import java.sql.Date;
@@ -7,6 +7,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+
+import org.pdla.assistance_app.accounts.Applicant;
+import org.pdla.assistance_app.accounts.Validator;
+import org.pdla.assistance_app.accounts.Volunteer;
 
 public class BDD {
 

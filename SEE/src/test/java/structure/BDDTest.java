@@ -1,3 +1,4 @@
+package structure;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.sql.Connection;
@@ -10,6 +11,7 @@ import java.text.SimpleDateFormat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.mockito.ArgumentMatchers.anyString;
@@ -18,8 +20,8 @@ import org.mockito.Mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import org.mockito.MockitoAnnotations;
-import org.yourcompany.yourproject.BDD;
-import org.yourcompany.yourproject.Validator;
+import org.pdla.assistance_app.accounts.Validator;
+import org.pdla.assistance_app.structure.BDD;
 
 public class BDDTest {
 

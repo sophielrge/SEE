@@ -1,4 +1,4 @@
-package org.yourcompany.yourproject;
+package org.pdla.assistance_app.structure;
 
 import java.io.Console;
 import java.io.IOException;

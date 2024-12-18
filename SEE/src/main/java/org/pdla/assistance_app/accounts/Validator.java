@@ -1,7 +1,7 @@
-package org.yourcompany.yourproject;
-import java.time.LocalDate;
-import java.util.Date;
-import java.time.ZoneId;
+package org.pdla.assistance_app.accounts;
+
+import org.pdla.assistance_app.structure.Request;
+
 
 public class Validator extends User{
     private String orga;

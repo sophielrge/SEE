@@ -2,10 +2,13 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  */
 
-package org.yourcompany.yourproject;
+package org.pdla.assistance_app;
 
 import java.sql.SQLException;
 import java.text.ParseException;
+
+import org.pdla.assistance_app.structure.BDD;
+import org.pdla.assistance_app.structure.Menu;
 
 /**
  *

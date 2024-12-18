@@ -1,10 +1,14 @@
-package org.yourcompany.yourproject;
+package org.pdla.assistance_app.structure;
 
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Scanner;
+
+import org.pdla.assistance_app.accounts.Applicant;
+import org.pdla.assistance_app.accounts.Validator;
+import org.pdla.assistance_app.accounts.Volunteer;
 
 public class Menu {
     Scanner scanner;

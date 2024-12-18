@@ -1,19 +1,22 @@
+package structure;
 import java.io.ByteArrayInputStream;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.Scanner;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.pdla.assistance_app.accounts.Applicant;
+import org.pdla.assistance_app.structure.BDD;
+import org.pdla.assistance_app.structure.Menu;
+
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-import org.yourcompany.yourproject.Applicant;
-import org.yourcompany.yourproject.BDD;
-import org.yourcompany.yourproject.Menu;
 
 public class MenuTest {
     private BDD mockBDD;

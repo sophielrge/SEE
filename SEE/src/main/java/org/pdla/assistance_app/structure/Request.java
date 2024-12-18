@@ -1,6 +1,10 @@
-package org.yourcompany.yourproject;
+package org.pdla.assistance_app.structure;
 import java.time.LocalDate;
 import java.util.Date;
+
+import org.pdla.assistance_app.accounts.Applicant;
+import org.pdla.assistance_app.accounts.Validator;
+import org.pdla.assistance_app.accounts.Volunteer;
 
 
 public class Request {

@@ -1,7 +1,9 @@
-package org.yourcompany.yourproject;
+package org.pdla.assistance_app.accounts;
 
 import java.sql.Date;
 import java.util.Scanner;
+
+import org.pdla.assistance_app.structure.Request;
 
 public class Applicant extends User{
     

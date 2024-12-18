@@ -1,5 +1,6 @@
-package org.yourcompany.yourproject;
+package org.pdla.assistance_app.accounts;
 
+import org.pdla.assistance_app.structure.Request;
 
 public class Volunteer extends User{
     public Volunteer(String n, int age, int dpt, String psw){
