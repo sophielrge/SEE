@@ -32,11 +32,9 @@ Ce projet vise à développer une **application de bénévolat** permettant de c
 
 ## Technologies utilisées
 
-- **Langages** : [Java, Python, etc. selon vos choix]
-- **Frameworks** : [Spring Boot, Django, etc.]
-- **Base de données** : [MySQL, PostgreSQL, MongoDB, etc.]
-- **Interface utilisateur** : [JavaFX, React, ou autre technologie front-end]
-- **Outils** : [Git, Maven, Docker, etc.]
+- **Langage** : Java
+- **Base de données** : MySQL
+- **Outils** : GitHub, GitActions Maven.
 
 ## Structure 
 
@@ -45,34 +43,27 @@ SEE/
 │   └── workflows/
 ├── .vscode/
 ├── SEE/
-│   ├── src/main/java/org/pdla/assistance_app/
-│       ├── accounts/
-│           ├── User.java
-│           ├── Applicant.java
-│           ├── Validator.java
-│           └── Volunteer.java
-│       ├── structures/
-│           ├── BDD.java
-│           ├── Menu.java
-│           ├── Request.java
-│           └── Traitement_texte.java
-│       └── Main.java
-│   └── src/test/java/org/pdla/assistance_app/structure
-│       ├── accounts/
-│           ├── User.java
-├── .gitignore
+│   ├── src/
+│       ├── main/java/org/pdla/assistance_app/
+│           ├── accounts/
+│               ├── User.java
+│               ├── Applicant.java
+│               ├── Validator.java
+│              └── Volunteer.java
+│           ├── structures/
+│               ├── BDD.java
+│               ├── Menu.java
+│               ├── Request.java
+│               └── Traitement_texte.java
+│           └── Main.java
+│       └── test/java/org/pdla/assistance_app/structure
+│           ├── BDDTest.java
+│           └── MenuTest.java
+│   ├── taget/
+│   ├── Makefile
+│   ├── pom.xml
+│   └── .gitignore
 ├── BD_SEE.mwb
 ├── README.md
 └── Rapport.md
 
-## Explication test
-Pour tester BDD, on utilise Mockito pour simuler l'utilisation de la base. Comme ça, on ne touche pas réellement le Base de Données et donc on ne la rend pas éronnée.
-
-On peut creer:
-demandeur et ajouter requete
-Valideur et voir les requêtes 
-bénévole et voir les requêtes 
-il faut corriger sélectionner requête 
-donner l'id
-On peut se connecter:
-ajouter case compte
