@@ -1,4 +1,4 @@
-package structure;
+package org.pdla.assistance_app.structure;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.sql.Connection;

@@ -1,21 +1,69 @@
-# SEE
-## Application d’aide aux personnes vulnérables
+# SEE : Application d’aide aux personnes vulnérables
 
-## Elise
-il faut que le menu puisse tourner en boucle
+## Description
 
+Ce projet vise à développer une **application de bénévolat** permettant de connecter les personnes dans le besoin avec des bénévoles prêts à offrir leur aide. Il offre également un système de validation pour garantir la qualité et la pertinence des services proposés.
 
-## Sophie
-continuer les fonction dans bdd (afficher les requêtes avec des filtres)
-Faire ajout et supp du validator 
-C'est bon icrémentation, il faut enlever id dans toutes les premières parenthèses des insert
- 
-## Pour tous 
-pb avec target 
-gros pb avec les dates, y a rien qui marche
+## Objectifs
 
-## Problème GIT 
-git config pull.rebase false  
+- **Faciliter l'interaction entre les personnes dans le besoin et les bénévoles.**
+- **Permettre aux bénévoles de répondre aux demandes d'aide ou de proposer des services spontanés.**
+- **Assurer un processus de validation par des utilisateurs autorisés (ex. : hôpitaux).**
+- **Gérer les missions avec différents statuts : en attente, validée, réalisée.**
+- **Collecter les avis des utilisateurs pour améliorer les services.**
+
+## Fonctionnalités principales
+
+- **Gestion des utilisateurs :**
+  - Ajout des utilisateurs demandant de l’aide.
+  - Inscription des bénévoles.
+  - Création d’utilisateurs valideurs pour superviser les actions (ex. : personnel hospitalier).
+
+- **Gestion des demandes d’aide :**
+  - Ajout de demandes par les utilisateurs.
+  - Validation ou rejet des demandes avec un motif en cas de refus.
+  - Suivi des missions avec différents statuts : *en attente*, *validée*, *réalisée*.
+
+- **Propositions spontanées :**
+  - Les bénévoles peuvent proposer des services spontanés.
+
+- **Évaluation des services :**
+  - Les utilisateurs peuvent donner un avis après chaque mission.
+
+## Technologies utilisées
+
+- **Langages** : [Java, Python, etc. selon vos choix]
+- **Frameworks** : [Spring Boot, Django, etc.]
+- **Base de données** : [MySQL, PostgreSQL, MongoDB, etc.]
+- **Interface utilisateur** : [JavaFX, React, ou autre technologie front-end]
+- **Outils** : [Git, Maven, Docker, etc.]
+
+## Structure 
+
+SEE/
+├── .github/
+│   └── workflows/
+├── .vscode/
+├── SEE/
+│   ├── src/main/java/org/pdla/assistance_app/
+│       ├── accounts/
+│           ├── User.java
+│           ├── Applicant.java
+│           ├── Validator.java
+│           └── Volunteer.java
+│       ├── structures/
+│           ├── BDD.java
+│           ├── Menu.java
+│           ├── Request.java
+│           └── Traitement_texte.java
+│       └── Main.java
+│   └── src/test/java/org/pdla/assistance_app/structure
+│       ├── accounts/
+│           ├── User.java
+├── .gitignore
+├── BD_SEE.mwb
+├── README.md
+└── Rapport.md
 
 ## Explication test
 Pour tester BDD, on utilise Mockito pour simuler l'utilisation de la base. Comme ça, on ne touche pas réellement le Base de Données et donc on ne la rend pas éronnée.
