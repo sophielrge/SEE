@@ -7,20 +7,26 @@
 
 De nombreuses personnes se trouvent isolées, que ce soit à cause d’un éloignement familial ou de problèmes de santé invalidants. Ces situations créent des besoins spécifiques, souvent impossibles à satisfaire sans aide extérieure. Par exemple, il peut s’agir de récupérer un colis pour une personne âgée ou d’assurer le lavage de vêtements durant une hospitalisation, des tâches qui requièrent un soutien extérieur fiable.
 
-
 Ce projet vise à concevoir une application destinée au bénévolat. Elle permettra aux personnes en difficulté de faire leurs demandes, et que ces dernières soietn alors pris en charge par un bénévole.
 
 Pour organiser ce projet, nous avons utilisé Jira afin de définir et prioriser les user stories, suivre l’avancement des tâches et gérer les sprints de manière agile. Côté développement, nous avons choisi Java comme langage principal. Nous avons également utilisé GitHub pour le contrôle de version, facilitant la travail au sein de l’équipe.
 
 ## 2. Application de la méthode Agile
-Methode Scrum :
+### Methode Scrum :
 Avant de se lancer dans le développement, nous avons cherché à définir les acteurs concernés par l’application, ainsi que les fonctionnalités les plus importantes en se basant sur le cahier des charges. Il s’agit ici de trois types de personnes, celles en situation de vulnérabilité, les bénévoles, et des personnes responsables, dont l’approbation est indispensable pour permettre à un volontaire de répondre à un service. Pour s’organiser au mieux, nous avons planifié notre travail en suivant la méthode Scrum, à l’aide d’un Jira. 
 
-Gestion des user stories :
+### Gestion des user stories :
 Lors de nos premières réunions, nous avons réalisé le backlog de notre projet. Pour cela, nous avons exprimé toutes les fonctionnalités nécessaires sous la forme d’user stories. Par exemple “En tant que bénévole, je veux pouvoir créer un compte pour répondre à des demandes d’aide”. Nous avons ensuite ordonné ces tâches à l’aide de niveau de priorité afin de respecter les demandes du client.
 
-Planification et suivi des sprints :
+### Planification et suivi des sprints :
 Nous avons ensuite organisé notre avancement en sprints. Chaque semaine dans l’idéal, nous avons choisis deux ou trois user stories réalisable par les membres de notre équipe dans le temps imparti. Les réunions nous ont permise de discuter ensemble des sous-tâches nécessaires à concevoir, programmer et tester afin d’implémenter chaque nouvelle fonctionnalité. La semaine suivante, nous terminions le sprint en récapitulant ce qui fonctionnait ou non, puis planifions le suivant.
+
+### Répartition des tâches
+Nous nous sommes réparti les tâches de cette manière :
+-  **Ensemble** : création des tables
+-  **Sophie** : gestion de la base de données, des tests de celle-ci, et des requêtes
+-  **Elise** : gestion du menu et du traitement de texte, des tests de celui-ci, et des types de
+comptes.
 
 ## 3. Organisation de Git
 ### Structure du dépôt :
@@ -29,14 +35,6 @@ Afin de collaborer facilement et de pouvoir travailler à distance, nous avons u
 ### Ameliorations possibles
 Malgré nos précautions, nous avons parfois eu des conflits que nous avons heureusement pu résoudre dans le merge editor. Afin d’éviter ce genre de problème la prochaine fois, il faut en fait travailler sur différentes branches, principale et secondaires. La branche main contient les versions stables, et on créé une branche secondaire pour chaque fonctionnalité en cours d’implémentation. On s’assure qu’une branche est stable avant de la merge avec la branche principale. Cette méthode de travail permet d’éviter tout conflit.
 
-Workflow Git :
-Explication du processus de développement :
-Création de branches pour chaque fonctionnalité.
-Commits réguliers respectant une convention (ex. feat: ajout d’un utilisateur).
-Pull requests pour fusionner des branches.
-Gestion des conflits et validation des merges.
-Exemple de commandes utilisées :
-git pull, git branch, git merge, git rebase, etc.
 
 ## 4. Mise en place de l'intégration continue (DevOps)
 
@@ -61,39 +59,7 @@ Nous avons rencontré plusieurs problèmes lors de la mise en place de ce pipeli
 Nous avons utilisé un fichier .gitignore pour exclure les fichiers inutiles ou sensibles du dépôt, comme les fichiers de compilation (ex : /target/) ou céer par le système (ex : .DS_Store). Cela nous a permis de garder le dépôt propre et organisé, tout en évitant les conflits inutiles.
 
 
-Outil choisi :
-Utilisation de GitHub Actions pour automatiser le pipeline CI/CD.
-Configuration du pipeline :
-Déroulé des étapes :
-Build Maven : Compilation du code source.
-Tests automatisés : Exécution des tests JUnit.
-Analyse de qualité du code : Outils comme SonarQube ou Checkstyle (si applicable).
-Génération de l'artefact : Création d’un fichier .jar.
-Gestion des erreurs dans le pipeline.
-Notifications :
-Configuration d’alertes (par mail ou dans GitHub) pour signaler les erreurs ou succès.
-Difficultés et solutions :
-Problèmes rencontrés lors de la configuration ou des tests.
-parler du gitignore aussi je pense 
-
 ## 5. Conclusion
 Ce projet nous a permis de développer une application en Java avec la manipulation de base de données, tout en nous familiarisant avec des méthodes de travail indispensables pour le travail en équipe pour des clients. Nous avons aussi pu remarquer l’importance de l’utilisation des outils disponibles pour l’automatisation du développement tels que Maven et JUnit.  Le PDLA nous a ainsi apporté une expérience non négligeable dans la réalisation de projet autant par ses aspects techniques, qu’organisationnels.
 
-Résumé des réalisations :
-Points forts de la méthode agile, de l'organisation Git, et de l'intégration continue.
 
-Améliorations possibles :
-Ce qui pourrait être fait différemment ou optimisé (par ex. tests plus poussés, meilleure priorisation).
-
-Apprentissages :
-Ce que l'équipe a appris en termes techniques et organisationnels.
-
-
-## Annexes
-Captures d’écran :
-Jira (backlog, burndown chart, user stories).
-GitHub (branches, pull requests, historique des commits).
-Pipeline CI/CD (workflow GitHub Actions, logs).
-Code et configurations :
-Exemple de fichier YAML pour CI/CD.
-Fichier pom.xml pour Maven.
